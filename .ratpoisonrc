@@ -1,0 +1,4 @@
+unmanage panel
+set padding 0 0 0 26
+bind c exec urxvt
+bind d time

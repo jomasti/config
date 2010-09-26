@@ -1,0 +1,21 @@
+background no
+use_xft no
+# xftfont 123:size=8
+out_to_console yes
+out_to_x no
+update_interval 2
+total_run_times 0
+# own_window yes
+# own_window_type dock
+# own_window_transparent yes
+double_buffer yes
+border_inner_margin 0
+border_outer_margin 0
+use_spacer right
+if_up_strictness address
+pad_percents 2
+short_units yes
+
+TEXT
+
+CPU: ${cpu cpu1}%  ${cpu cpu2}% · MEM: ${mem}/${memmax} · Load: ${loadavg} · Root ${fs_used /}/${fs_size /} · FreeAgent ${fs_used /media/FreeAgent Drive}/${fs_size /media/FreeAgent Drive} · ${wireless_essid wlan0} ${wireless_link_bar 10,10 wlan0} ${wireless_link_qual wlan0} · Down: ${downspeed wlan0}  Up: ${upspeed wlan0} · ^fg(white)${time %m/%d/%Y %r}
