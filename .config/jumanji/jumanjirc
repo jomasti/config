@@ -1,0 +1,32 @@
+# jumanji config
+
+# search engines
+searchengine goog http://www.google.com/search?q=%s
+searchengine wiki http://en.wikipedia.org/w/index.php?search=%s
+searchengine awiki http://wiki.archlinux.org/index.php?search=%s
+
+# browser settings
+set homepage http://home.archlinux.ca
+set auto_save 60
+
+# downloads
+set download_dir ~/Downloads
+set download_command urxvt -e sh -c "wget --load-cookies /home/josh/.config/jumanji/cookies '%s' -O %s";
+
+# look
+set font helvetica regular 9
+set height 750
+set width 1000
+
+# key bindings
+map <C-q> quit
+map J nav_tabs next
+map K nav_tabs previous
+map H nav_history previous
+map L nav_history next
+
+# proxy
+set proxy 127.0.0.1:8118
+
+# scripts
+script /home/josh/.config/jumanji/scripts/hinting.js
