@@ -2,7 +2,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 gtk-theme-name="MurrezaSilver"
-gtk-icon-theme-name="elementary-monochrome"
+gtk-icon-theme-name="hydroxygen"
 gtk-font-name="Arial 8"
 gtk-cursor-theme-name="Neutral_Plus"
 gtk-cursor-theme-size=0
