@@ -17,10 +17,10 @@ fi
 xsetroot -cursor_name left_ptr
 
 # start programs
-start-pulseaudio-x11 &
-wicd-client &
-obmixer &
-parcellite &
+#start-pulseaudio-x11 &
+#wicd-client &
+#obmixer &
+#parcellite &
 
 if [[ $1 == "awesome" ]]
 then
