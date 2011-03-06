@@ -6,7 +6,6 @@ require("awful.rules")
 require("beautiful")
 -- Notification library
 require("naughty")
-require("revelation")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -44,18 +43,12 @@ layouts =
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
-tags = {
-  settings = {
-    { names  = { "www", "files", "misc" },
-      layout = { layouts[8], layouts[1], layouts[1] }
-    },
-    { names  = { "term1", "term2", "media", "vbox" },
-      layout = { layouts[4], layouts[4], layouts[1], layouts[8] }
-}}}
-
+tags = { 
+  settings = { names  = { "www", "term", "media", "thunar", "vbox", "misc" },
+      layout = { layouts[8], layouts[2], layouts[8], layouts[8], layouts[1], layouts[1] } } }
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag(tags.settings[s].names, s, tags.settings[s].layout)
+    tags[s] = awful.tag(tags.settings.names, s, tags.settings.layout)
 end
 -- }}}
 
@@ -69,15 +62,8 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
-mycommons = {
-   { "Firefox", "firefox" },
-   { "Thunar", "thunar" }
-}
-
-mymainmenu = awful.menu({ items = { { "Terminal", terminal },
-				    { "Firefox", "firefox" },
-				    { "Thunar", "thunar"},
-				    { "awesome", myawesomemenu, beautiful.awesome_icon }
+mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "open terminal", terminal }
                                   }
                         })
 
@@ -86,7 +72,6 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- }}}
 
 -- {{{ Wibox
-
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
 
@@ -225,8 +210,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
-    awful.key({ modkey },	     "e",     revelation.revelation),
-
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
 
@@ -311,7 +294,6 @@ awful.rules.rules = {
                      border_color = beautiful.border_normal,
                      focus = true,
                      keys = clientkeys,
-		     size_hints_honor = false,
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
@@ -319,24 +301,23 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
-    -- Set Firefox to always map on tags number 2 of screen 1.
-    { rule = { class = "Namoroka" },
+    { rule = { class = "Chromium" },
       properties = { tag = tags[1][1] } },
-    -- Set thunar to tag 3 of screen 1
     { rule = { class = "Thunar"},
-      properties = { tag = tags[1][2] } },
+      properties = { tag = tags[1][4] } },
     { rule = { class = "Osmo"},
-      properties = { tag = tags[1][3] } },
+      properties = { tag = tags[1][6] } },
     { rule = { class = "Jumanji"},
       properties = { tag = tags[1][1] } },
     { rule = { class = "Gtkpod"},
-      properties = { tag = tags[2][3] } },
-    { rule = { class = "VirtualBox"},
-      properties = { tag = tags[2][4] } },
-    { rule = { class = "Kid3-qt"},
-      properties = { tag = tags[2][3] } },
-    { rule = { class = "Keepassx"},
       properties = { tag = tags[1][3] } },
+    { rule = { class = "VirtualBox"},
+      properties = { tag = tags[1][5] } },
+    { rule = { class = "Quodlibet"},
+      properties = { tag = tags[1][3] } },
+    -- Set Firefox to always map on tags number 2 of screen 1.
+    -- { rule = { class = "Firefox" },
+    --   properties = { tag = tags[1][2] } },
 }
 -- }}}
 

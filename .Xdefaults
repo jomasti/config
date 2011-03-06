@@ -1,3 +1,4 @@
+URxvt.geometry: 100x25 
 URxvt.buffered: true
 URxvt.background: #101010
 URxvt.foreground: #f2f2f2

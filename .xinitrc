@@ -21,50 +21,46 @@ xsetroot -cursor_name left_ptr
 #wicd-client &
 #obmixer &
 #parcellite &
+#thunar --daemon &
+#xscreensaver -no-splash &
 
 if [[ $1 == "awesome" ]]
 then
-  exec ck-launch-session awesome
+  exec ck-launch-session dbus-launch awesome
 elif [[ $1 == "i3" ]]
 then
-  exec ck-launch-session i3
+  exec ck-launch-session dbus-launch i3
 elif [[ $1 == "xmonad" ]]
 then
 exec /usr/bin/trayer --edge top --align center --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 13 &
-  exec ck-launch-session xmonad
+  exec ck-launch-session dbus-launch xmonad
 elif [[ $1 == "scrotwm" ]]
 then
-  exec ck-launch-session scrotwm
+  exec ck-launch-session dbus-launch scrotwm
 elif [[ $1 == "subtle" ]]
 then
-  exec ck-launch-session subtle
+  exec ck-launch-session dbus-launch subtle
 elif [[ $1 == "ratpoison" ]]
 then
   xrandr --output VGA1 --off
   ( sleep 1; trayer --align right --edge bottom --distance 0 --expand true --transparent true --alpha 128 --tint 0 --SetDockType true --SetPartialStrut true & ) &
-  exec ck-launch-session ratpoison
+  exec ck-launch-session dbus-launch ratpoison
 elif [[ $1 == "openbox" ]]
 then
-  exec ck-launch-session openbox
+  exec ck-launch-session dbus-launch openbox-session
 elif [[ $1 == "catwm" ]]
 then
-  exec ck-launch-session catwm
+  exec ck-launch-session dbus-launch catwm
 elif [[ $1 == "dwm" ]]
 then
   xrandr --output VGA1 --off
-  exec ck-launch-session dwm
+  exec ck-launch-session dbus-launch dwm
 elif [[ $1 == "euclid" ]]
 then
-  exec ck-launch-session euclid-wm
-elif [[ $1 == "yeahwm" ]]
-then
-  exec ck-launch-session yeahwm
+  exec ck-launch-session dbus-launch euclid-wm
 elif [[ $1 == "stumpwm" ]]
 then
-  exec ck-launch-session stumpwm
-elif [[ $1 == "sawfish" ]]
-then
-  exec ck-launch-session sawfish
+  exec ck-launch-session dbus-launch stumpwm
 else
   echo "Choose a window manager"
 fi
