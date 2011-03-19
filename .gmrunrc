@@ -1,6 +1,6 @@
-Terminal = urxvt
-TermExec = urxvt -e
-URL_http = ~/bin/chromium-proxy %u
-URL_https = ~/bin/chromium-proxy %u
+Terminal = eval urxvtc
+TermExec = ${Terminal} -e
+URL_http = chromium
+URL_https = chromium
 
 URL_top = ${TermExec} '%s'

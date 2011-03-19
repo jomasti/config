@@ -1,0 +1,2 @@
+#!/bin/sh
+exe=`dmenu_path | dmenu -nb '#000000' -nf '#cd5c5c' -sb '#cd5c5c' -sf '#000000'` && exec $exe

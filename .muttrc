@@ -302,7 +302,7 @@ set smtp_url = 'smtp://facedelajunk@gmail.com@smtp.gmail.com:587/'
 # set hide_top_limited = no
 # set hide_top_missing = yes
 # set implicit_autoview = no
-# set mailcap_path = '(empty)'
+set mailcap_path = '/home/josh/.mailcap'
 set move = no
 # set pager = 'builtin'
 # set simple_search = '~f %s | ~s %s'
@@ -439,3 +439,4 @@ color status     yellow       blue
 color tilde      magenta      default
 color tree       magenta      default
 
+auto_view text/html

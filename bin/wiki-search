@@ -1,0 +1,148 @@
+#! /bin/bash
+
+if [ ! -d /usr/share/doc/arch-wiki/html ]; then
+	    echo "pacman -S arch-wiki-docs"
+		    exit 1
+			fi
+
+			cd /usr/share/doc/arch-wiki/html
+
+			tmp="/tmp/wiki-search.tmp"
+
+			html_text() {  # path -> raw text
+			    # this takes around 1 second per page, way too slow for bulk preprocess
+				    # better than other html->text apps as it is aware of wiki weirdness and has no deps
+					    # 1) get the content
+						    html=$(sed -n '/<body class/,/NewPP limit report/p' "$1")
+							    html=$(head -n-2 <<< "$html")
+								    html=$(sed '/<div class="toc noprint" style="text-align: center; margin-bottom: 1em">/,/<\/div>/d' <<< "$html")
+									    html=$(sed '/if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); }/d' <<< "$html")
+										    # 2) nuke tags
+											    html=$(sed 's/<[^>]*>//g' <<< "$html")
+												    # 3) unescape (incomplete list!)
+													    html=$(sed 's/&nbsp;/ /g' <<< "$html")
+														    html=$(sed 's/&quot;/"/g' <<< "$html")
+															    html=$(sed   's/&gt;/>/g' <<< "$html")
+																    html=$(sed   's/&lt;/</g' <<< "$html")
+																	    html=$(sed  "s/&#39;/'/g" <<< "$html")
+																		    html=$(sed  's/&#40;/(/g' <<< "$html")
+																			    html=$(sed  's/&#41;/)/g' <<< "$html")
+																			    html=$(sed  's/&#61;/=/g' <<< "$html")
+																				    html=$(sed 's/&#x3d;/=/g' <<< "$html")
+																					    html=$(sed  's/&#91;/[/g' <<< "$html")
+																						    html=$(sed  's/&#93;/]/g' <<< "$html")
+																							    html=$(sed 's/&#123;/{/g' <<< "$html")
+																								    html=$(sed 's/&#125;/}/g' <<< "$html")
+																									    html=$(sed  's/&#93;/]/g' <<< "$html")
+																										    html=$(sed  's/&#93;/]/g' <<< "$html")
+																											    html=$(sed 's/&#124;/|/g' <<< "$html")
+																												    html=$(sed  's/&#35;/#/g' <<< "$html")
+																													    html=$(sed  's/&amp;/&/g' <<< "$html")
+
+																														    if [ tty ]; then 
+																																        echo "$html" | ${PAGER:-less}
+																																		    else
+																																				        echo "$html"
+																																						    fi
+			}
+
+			almost_file() {  # fragment -> path
+			    ls *.html | grep -m 1 "0*$1.html"
+			}
+
+			toc_text() {  # none -> title path
+			    html=$(sed -n '/<P>/p' index.html)
+				    while read i; do
+						        # fragile!
+								        page=${i:12:13}
+										        title=${i:27}
+												        title=${title%%</A>}
+														        language=${title##*(}
+																        language=${language%)*}
+																		        if [ "$language" = "${wiki_lang:-$title}" ]; then
+																					            echo "${title:0:40} $page"
+																								        fi
+																										    done <<< "$html"
+			}
+
+			get_title() {  # path -> title
+			    i=$(grep -m 1 "$1" index.html)
+				    title=${i:27}
+					    title=${title%%</A>}
+						    echo "$title"
+			}
+
+			toc_languages() {  # none -> list of languages, sorted by count
+			    html=$(sed -n '/<P>/p' index.html)
+				    grep -o "(.*)" <<< "$html" | sort | uniq -c | sort -nr | awk '!/ *1 /' | tr -d '()'
+			}
+
+			regex_search()  {  # regex -> paths
+# this stupid thing is 50 times faster than grep -ic
+			    query=$(tr 'A-Z' 'a-z' <<< "$1")
+				    grep -H '' 0*.html | tr 'A-Z' 'a-z' | grep "$query" | cut -d: -f1 | uniq -c | sort -nr | awk '{print $2}'
+					    #awk 'NR < 11 {print $2}'
+			}
+
+			best_hits() {  # top 10 (english) matches
+			    i=0
+				    while read match; do
+						        title=$(get_title "$match")
+								        language=${title##*(}
+										        language=${language%)*}
+												        if [ "$language" = "${wiki_lang:-$title}" ]; then
+															            echo "$i $title $match"
+																		            i=$(( $i+1 ))
+																					        fi
+																							        if [[ "$i" = "10" ]]; then
+																										            break
+																													       fi
+																														       done <<< "$(regex_search "$1")"
+			}
+
+			case "$1" in
+			    -h|--help)
+				        echo "$0"
+						        echo "Search and view your local copy of the Arch wiki."
+								        echo "Read pages by search result number (0-9), page number (NNNN), or full name (0000NNNN.html)."
+										        echo "Supports case insensitive regex."
+												        echo "See every page title with --all."
+														        echo "Get a summary of languages with --lang."
+																        echo "Access non-english pages by exporting \$wiki_lang first."
+																		        echo "View pages with a webbrowser by exporting \$wiki_browser."
+																				        ;;
+																						    --lang)
+																							        toc_languages
+																									        ;;
+																											    --all)
+																												        if [ tty ]; then 
+																															            toc_text | column -t | ${PAGER:-less}
+																																		        else
+																																					            toc_text
+																																								        fi
+																																										        ;;
+																																												    [0-9])
+																																													        if [ ! -f "$tmp" ]; then
+																																																            exit 1
+																																																			        fi
+																																																					        full_name="$(awk "/^$1 .*/{print \$3}" $tmp)"
+																																																							        [ -n "$wiki_browser" ] && exec $wiki_browser "$full_name"
+																																																									        html_text "$full_name"
+																																																											        ;;
+																																																													    [0-9]*.html)
+																																																														        [ -n "$wiki_browser" ] && exec $wiki_browser "$1"
+																																																																        html_text "$1"
+																																																																		        ;;
+																																																																				    [0-9]*)
+																																																																					        full_name="$(almost_file "$1")"
+																																																																							        [ -n "$wiki_browser" ] && exec $wiki_browser "$full_name"
+																																																																									        html_text "$full_name"
+																																																																											        ;;
+																																																																													    *)
+																																																																														        best_hits "$*" | column -t > $tmp
+																																																																																        cat $tmp
+																																																																																		        # pipe to awk '{print "<br><a href=\"/usr/share/doc/arch-wiki/html/"$3"\">" $2"</a>"}' for html
+																																																																																				        ;;
+																																																																																						esac
+
+

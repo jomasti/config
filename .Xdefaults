@@ -1,54 +1,45 @@
-URxvt.geometry: 100x25 
-URxvt.buffered: true
-URxvt.background: #101010
-URxvt.foreground: #f2f2f2
-URxvt.cursorColor: white
+!Theme Eight
+urxvt*background: rgb:10/10/10
+urxvt*foreground: rgb:d3/d3/d3
+urxvt*color0:     rgb:10/10/10
+urxvt*color1:     rgb:cd/5c/5c
+urxvt*color2:     rgb:2e/8b/57
+urxvt*color3:     rgb:f0/e6/8c
+urxvt*color4:     rgb:b0/c4/de
+urxvt*color5:     rgb:ba/55/d3
+urxvt*color6:     rgb:46/82/b4
+urxvt*color7:     rgb:d3/d3/d3
+urxvt*color8:     rgb:4d/4d/4d
+urxvt*color9:     rgb:ff/6a/6a
+urxvt*color10:    rgb:8f/bc/8f
+urxvt*color11:    rgb:ff/fa/cd
+urxvt*color12:    rgb:1e/90/ff
+urxvt*color13:    rgb:db/70/93
+urxvt*color14:    rgb:5f/9e/a0
+urxvt*color15:    rgb:ff/ff/ff
+
+URxvt.internalBorder: 0
+
+#URxvt.inheritPixmap: true
 URxvt.transparent: true
-URxvt.tintColor: #000000
-URxvt.shading: 25
+#URxvt.tintColor: #000
+URxvt.shading: 50
 
-! Normal
-! color0 black
-! color1 red
-! color2 green
-! color3 yellow
-! color4 blue
-! color5 purple
-! color6 cyan
-! color7 white
+URxvt.depth:      32
+URxvt.background: rgba:3f00/3f00/3f00/dddd
 
-URxvt.color0: #6c6c6c
-URxvt.color1: #e9897c
-URxvt.color2: #b6e77d
-URxvt.color3: #ecebbe
-URxvt.color4: #a9cdeb
-URxvt.color5: #ea96eb
-URxvt.color6: #c9caec
-URxvt.color7: #f2f2f2
-
-! Light
-! color8 black
-! color9 red
-! color10 green
-! color11 yellow
-! color12 blue
-! color13 purple
-! color14 cyan
-! color15 white
-
-URxvt.color8: #747474
-URxvt.color9: #f99286
-URxvt.color10: #c3f786
-URxvt.color11: #fcfbcc
-URxvt.color12: #b6defb
-URxvt.color13: #fba1fb
-URxvt.color14: #d7d9fc
-URxvt.color15: #e2e2e2
-
-URxvt.font: xft:Terminus:pixelsize=12
-URxvt.boldFont: xft:Terminus:bold:pixelsize=12
+#urxvt*font: xft:Terminus:pixelsize=12:antialias=true:hinting=true
+urxvt*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+#urxvt*boldFont: xft:Terminus:pixelsize=12:antialias=true:bold:hinting=true
+urxvt*font: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+urxvt*italicFont: xft:Terminus:pixelsize=12:antialias=true:italic:autohint=true:hinting=true
+urxvt*bolditalicFont: xft:Terminus:pixelsize=12:antialias=true:bold:italic:autohint=true:hinting=true
 URxvt.scrollBar: false
 
 URxvt.perl-ext-common:  default,matcher
-URxvt.urlLauncher:      /usr/bin/jumanji
+URxvt.urlLauncher:      /usr/bin/chromium
 URxvt.matcher.button:   1 
+
+URxvt.perl-ext:      default,url-select
+URxvt.keysym.M-u:    perl:url-select:select_next
+URxvt.underlineURLs: true

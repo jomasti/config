@@ -1,0 +1,9 @@
+#!/bin/bash
+Xdialog --title "Save File As.." --inputbox "Save Files As.." 7 35 2> /home/josh/input
+
+INPUT=`cat /home/josh/input`
+INPUTLINK=`cat /home/josh/url`
+
+cd /home/josh/Downloads
+ 
+ wget $INPUTLINK -O $INPUT

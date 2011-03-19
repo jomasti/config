@@ -16,20 +16,25 @@ fi
 
 xsetroot -cursor_name left_ptr
 
-# start programs
-#start-pulseaudio-x11 &
-#wicd-client &
+#bmpanel2 &
 #obmixer &
+#wicd-client &
+start-pulseaudio-x11 &
+thunar --daemon &
+anamnesis --start
 #parcellite &
-#thunar --daemon &
-#xscreensaver -no-splash &
+xscreensaver -no-splash &
+#osmo &
+urxvtd -q -o -f
+#(sleep 2 && nitrogen --restore) &
+#dropboxd &
 
 if [[ $1 == "awesome" ]]
 then
   exec ck-launch-session dbus-launch awesome
 elif [[ $1 == "i3" ]]
 then
-  exec ck-launch-session dbus-launch i3
+  exec ck-launch-session dbus-launch i3 -V >>/home/josh/.i3/i3log >&1
 elif [[ $1 == "xmonad" ]]
 then
 exec /usr/bin/trayer --edge top --align center --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 13 &
@@ -39,7 +44,7 @@ then
   exec ck-launch-session dbus-launch scrotwm
 elif [[ $1 == "subtle" ]]
 then
-  exec ck-launch-session dbus-launch subtle
+  exec ck-launch-session dbus-launch subtle -D
 elif [[ $1 == "ratpoison" ]]
 then
   xrandr --output VGA1 --off
@@ -47,7 +52,8 @@ then
   exec ck-launch-session dbus-launch ratpoison
 elif [[ $1 == "openbox" ]]
 then
-  exec ck-launch-session dbus-launch openbox-session
+  bmpanel2 &
+  exec ck-launch-session dbus-launch openbox
 elif [[ $1 == "catwm" ]]
 then
   exec ck-launch-session dbus-launch catwm

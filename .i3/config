@@ -3,6 +3,7 @@
 
 # ISO 10646 = Unicode
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+#font -*-inconsolata-*-*-*-*-12-*-*-*-*-*-*-*
 
 # Use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
@@ -106,14 +107,14 @@ bindsym Mod1+y bp
 bindsym Mod1+u bb
 
 # Mod1+Enter starts a new terminal
-bind Mod1+36 exec /usr/bin/urxvt
+bind Mod1+36 exec /usr/bin/urxvtc
 
 # Mod1+Shift+q kills the current client
 bind Mod1+Shift+24 kill
 
 # Mod1+v starts dmenu and launches the selected application
 # for now, we don’t have a launcher of our own.
-bind Mod1+55 exec /usr/bin/dmenu_run
+bind Mod1+55 exec ~/bin/dmenu_i3
 
 # Mod1+Shift+e exits i3
 bind Mod1+Shift+26 exit
@@ -125,24 +126,92 @@ bind Mod1+Shift+27 restart
 # (i3-wsbar) or i3-msg (can be used to "remote-control" i3) to work.
 ipc-socket ~/.i3/ipc.sock
 
+# personal changes
+#------------------------
+
+# Mod1+Shift+w reloads i3 config
+bind Mod1+Shift+25 reload
+
+mode "resize" {
+		# These bindings trigger as soon as you enter the resize mode
+
+		# They resize the border in the direction you pressed, e.g.
+		# when pressing left, the window is resized so that it has
+		# more space on its left
+
+		bindsym n resize left -10
+		bindsym Shift+n resize left +10
+
+		bindsym r resize bottom +10
+		bindsym Shift+r resize bottom -10
+
+		bindsym t resize top -10
+		bindsym Shift+t resize top +10
+
+		bindsym d resize right +10
+		bindsym Shift+d resize right -10
+
+		bind 36 mode default
+}
+
+# Enter resize mode
+bindsym Mod1+r mode resize
+
+# Browse through workspaces
+bindsym Mod1+Control+Left pw
+bindsym Mod1+Control+Right nw
+
+# volume keys
+bindsym XF86AudioRaiseVolume exec /home/josh/bin/pa_vol_up 5
+bindsym XF86AudioLowerVolume exec /home/josh/bin/pa_vol_down 5
+
+# launch programs
+bindsym XF86Launch2 exec pavucontrol
+bindsym XF86HomePage exec chromium
+bindsym XF86Mail exec urxvtc -e mutt
+bindsym XF86Launch1 exec urxvtc -e sudo pacman -Su
 
 #set workspaces
-workspace 1 output LVDS1
-workspace 2 output VGA1
+#workspace 1 output LVDS1
+#workspace 2 output VGA1
+
+#colors
+client.focused			 	#cd5c4d		#cd5c5c		#ffffff
+client.focused_inactive		#cd5c5c		#000000		#ffffff
+client.unfocused			#cd5c5c		#000000		#ffffff
+client.urgent				#900000		#000000		#ffffff
+ba.focused					#cd5c4d		#cd5c5c		#ffffff
+bar.unfocused				#cd5c5c		#000000		#ffffff
+bar.urgent					#900000		#000000		#ffffff
 
 workspace_bar no
+new_window bp
 
-exec conky | i3-wsbar -c "dzen2 -x %x -expand r -ta r -fn -*-terminus-*-*-*-*-12-*-*-*-*-*-*-* -y 787" --show-all & 
+# workspace names
+workspace 1 web
+workspace 2 term
+workspace 3 file
+workspace 4 media
+workspace 5 misc
 
-exec /usr/bin/trayer --edge top --align left --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 13 &
+# status bar
+exec conky | i3-wsbar -c "dzen2 -x %x -expand r -bg black -ta r -fn -*-inconsolata-*-*-*-*-10-*-*-*-*-*-*-* -y 787" --show-all & 
 
+# system tray
+exec /usr/bin/trayer --edge top --align left --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 8 &
+
+# eye candy
 exec xcompmgr -cf -r 0 -D 6
 
-exec nitrogen --restore
+# background
+exec sh ~/.fehbg &
 
 # workspace assignments
+assign urxvtc → 2
 assign urxvt → 2
-assign namoroka → 1
+assign chromium → 1   
 assign jumanji → 1
-assign pcmanfm-mod → 3
-assign gtkpod → 4
+assign thunar → 3
+assign quodlibet → 4
+assign smplayer → 4
+assign qbittorrent → 1
