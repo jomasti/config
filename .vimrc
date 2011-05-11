@@ -18,6 +18,7 @@ set autoindent
 set smartindent
 set tabstop=4
 set shiftwidth=4
+set pastetoggle=<F3>
 
 " Searching
 set ignorecase

@@ -16,20 +16,29 @@ fi
 
 xsetroot -cursor_name left_ptr
 
+if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+	       eval "$(dbus-launch --sh-syntax --exit-with-session)"
+fi
+
 #bmpanel2 &
 #obmixer &
 #wicd-client &
 start-pulseaudio-x11 &
-thunar --daemon &
+#(sleep 5 && pcmanfm -d) &
 anamnesis --start
 #parcellite &
 xscreensaver -no-splash &
 #osmo &
 urxvtd -q -o -f
+xset +fp /usr/share/fonts/local
 #(sleep 2 && nitrogen --restore) &
 #dropboxd &
+sh ~/.fehbg
 
-if [[ $1 == "awesome" ]]
+if [[ $1 == "gnome" ]]
+then
+  exec ck-launch-session dbus-launch gnome-session
+elif [[ $1 == "awesome" ]]
 then
   exec ck-launch-session dbus-launch awesome
 elif [[ $1 == "i3" ]]
@@ -44,7 +53,7 @@ then
   exec ck-launch-session dbus-launch scrotwm
 elif [[ $1 == "subtle" ]]
 then
-  exec ck-launch-session dbus-launch subtle -D
+  exec ck-launch-session dbus-launch subtle
 elif [[ $1 == "ratpoison" ]]
 then
   xrandr --output VGA1 --off
@@ -61,12 +70,12 @@ elif [[ $1 == "dwm" ]]
 then
   xrandr --output VGA1 --off
   exec ck-launch-session dbus-launch dwm
-elif [[ $1 == "euclid" ]]
-then
-  exec ck-launch-session dbus-launch euclid-wm
 elif [[ $1 == "stumpwm" ]]
 then
   exec ck-launch-session dbus-launch stumpwm
+elif [[ $1 == "wmfs" ]]
+then
+  exec ck-launch-session dbus-launch wmfs
 else
   echo "Choose a window manager"
 fi

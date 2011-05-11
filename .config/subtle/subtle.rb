@@ -17,9 +17,6 @@
 #
 # Following options change behaviour and sizes of the window manager:
 #
-# Border size in pixel of the windows
-set :border, 2
-
 # Window move/resize steps in pixel per keypress
 set :step, 5
 
@@ -35,27 +32,15 @@ set :urgent, false
 # Honor resize size hints globally
 set :resize, false
 
-# Screen strut for e.g. other panels (left, right, top, bottom)
-set :strut, [ 0, 0, 0, 0 ]
-
 # Font string either take from e.g. xfontsel or use xft
-set :font, "-*-*-medium-*-*-*-14-*-*-*-*-*-*-*"
-#set :font, "xft:sans-8"
-
-# Space around windows
-set :gap, 0
-
-# Panel size padding (left, right, top, bottom)
-set :padding, [ 0, 0, 0, 0 ]
+#set :font, "-*-*-medium-*-*-*-14-*-*-*-*-*-*-*"
+set :font, "xft:droid sans mono-8"
 
 # Separator between sublets
 set :separator, "|"
 
-# Outline border size in pixel of panel items
-set :outline, 0
-
 # Set the WM_NAME of subtle (Java quirk)
-# set _wmname, "LG3D"
+set :wmname, "LG3D"
 
 #
 # == Screen
@@ -89,10 +74,10 @@ screen 1 do
   stipple false
 
   # Content of the top panel
-  top     [ :views, :title, :spacer, :tray, :sublets ]
+  top     [ :views, :title, :spacer, :tray, :clock ]
 
   # Content of the bottom panel
-  bottom  [ ]
+  bottom  [ :cpu, :separator, :memory, :center, :weather, :center, :spacer, :mpd ]
 end
 
 # Example for a second screen:
@@ -125,54 +110,70 @@ end
 #
 # http://subforge.org/wiki/subtle/Themes
 
-# Colors of focus window title
-color :title_fg,        "#fecf35"
-color :title_bg,        "#202020"
-color :title_border,    "#303030"
+style :title do
+  padding     0, 0, 0, 0
+  border      "#303030", 0
+  foreground  "#3465a4"
+  background  "#181818"
+end
 
-# Colors of the active views
-color :focus_fg,        "#fecf35"
-color :focus_bg,        "#202020"
-color :focus_border,    "#303030"
+style :focus do
+  padding     0, 0, 0, 0
+  border_bottom      "#3465a4", 2
+  foreground  "#3465a4"
+  background  "#181818"
+end
 
-# Colors of urgent window titles and views
-color :urgent_fg,       "#ff9800"
-color :urgent_bg,       "#202020"
-color :urgent_border,   "#303030"
+style :urgent do
+  padding     0, 0, 0, 0
+  border      "#303030", 0
+  foreground  "#367b00"
+  background  "#181818"
+end
 
-# Colors of occupied views (views with clients)
-color :occupied_fg,     "#b8b8b8"
-color :occupied_bg,     "#202020"
-color :occupied_border, "#303030"
+style :occupied do
+  padding     0, 0, 0, 0
+  border_bottom      "#B8B8B8", 2
+  foreground  "#B8B8B8"
+  background  "#181818"
+end
 
-# Color of view buttons
-color :views_fg,        "#757575"
-color :views_bg,        "#202020"
-color :views_border,    "#303030"
+style :views do
+  padding     0, 0, 0, 0
+  border      "#303030", 0
+  foreground  "#757575"
+  background  "#181818"
+end
 
-# Colors of sublets
-color :sublets_fg,      "#757575"
-color :sublets_bg,      "#202020"
-color :sublets_border,  "#303030"
+style :sublets do
+  padding     0, 0, 0, 0
+  border      "#303030", 0
+  foreground  "#757575"
+  background  "#181818"
+end
 
-# Border colors of active/inactive windows
-color :client_active,   "#303030"
-color :client_inactive, "#202020"
+style :separator do
+  padding     0, 0, 0, 0
+  border      0
+  background  "#181818"
+  foreground  "#757575"
+end
 
-# Background colors of panels
-color :panel,           "#202020"
+style :clients do
+  active      "#303030", 0
+  inactive    "#181818", 0
+  margin      0
+end
 
-# Background color of root background
-color :background,      "#3d3d3d"
+style :subtle do
+  padding     0, 0, 0, 0
+  panel       "#181818"
+  stipple     "#757575"
+  margin      0, 0, 0, 0
+end
 
-# Color of the stipple (if enabled)
-color :stipple,         "#757575"
+#color :background,      "#3D3D3D"
 
-# Color of the separator
-color :separator,       "#757575"
-
-#
-# == Gravities
 #
 # Gravities are predefined sizes a window can be set to. There are several ways
 # to set a certain gravity, most convenient is to define a gravity via a tag or
@@ -326,12 +327,16 @@ grab "W-S-1", :ViewJump1
 grab "W-S-2", :ViewJump2
 grab "W-S-3", :ViewJump3
 grab "W-S-4", :ViewJump4
+grab "W-S-5", :ViewJump5
+grab "W-S-6", :ViewJump6
 
 # Switch current view
 grab "W-1", :ViewSwitch1
 grab "W-2", :ViewSwitch2
 grab "W-3", :ViewSwitch3
 grab "W-4", :ViewSwitch4
+grab "W-5", :ViewSwitch5
+grab "W-6", :ViewSwitch6
 
 # Select next and prev view */
 grab "KP_Add",      :ViewNext
@@ -383,29 +388,56 @@ grab "W-Right", :WindowRight
 grab "W-S-k", :WindowKill
 
 # Cycle between given gravities
-grab "W-KP_7", [ :top_left,     :top_left66,     :top_left33     ]
-grab "W-KP_8", [ :top,          :top66,          :top33          ]
-grab "W-KP_9", [ :top_right,    :top_right66,    :top_right33    ]
-grab "W-KP_4", [ :left,         :left66,         :left33         ]
-grab "W-KP_5", [ :center,       :center66,       :center33       ]
-grab "W-KP_6", [ :right,        :right66,        :right33        ]
-grab "W-KP_1", [ :bottom_left,  :bottom_left66,  :bottom_left33  ]
-grab "W-KP_2", [ :bottom,       :bottom66,       :bottom33       ]
-grab "W-KP_3", [ :bottom_right, :bottom_right66, :bottom_right33 ]
+#grab "W-KP_7", [ :top_left,     :top_left66,     :top_left33     ]
+#grab "W-KP_8", [ :top,          :top66,          :top33          ]
+#grab "W-KP_9", [ :top_right,    :top_right66,    :top_right33    ]
+#grab "W-KP_4", [ :left,         :left66,         :left33         ]
+#grab "W-KP_5", [ :center,       :center66,       :center33       ]
+#grab "W-KP_6", [ :right,        :right66,        :right33        ]
+#grab "W-KP_1", [ :bottom_left,  :bottom_left66,  :bottom_left33  ]
+#grab "W-KP_2", [ :bottom,       :bottom66,       :bottom33       ]
+#grab "W-KP_3", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 
 # In case no numpad is available e.g. on notebooks
-#grab "W-q", [ :top_left,     :top_left66,     :top_left33     ]
-#grab "W-w", [ :top,          :top66,          :top33          ]
-#grab "W-e", [ :top_right,    :top_right66,    :top_right33    ]
-#grab "W-a", [ :left,         :left66,         :left33         ]
-#grab "W-s", [ :center,       :center66,       :center33       ]
-#grab "W-d", [ :right,        :right66,        :right33        ]
-#grab "W-y", [ :bottom_left,  :bottom_left66,  :bottom_left33  ]
-#grab "W-x", [ :bottom,       :bottom66,       :bottom33       ]
-#grab "W-c", [ :bottom_right, :bottom_right66, :bottom_right33 ]
+grab "W-q", [ :top_left,     :top_left66,     :top_left33     ]
+grab "W-w", [ :top,          :top66,          :top33          ]
+grab "W-e", [ :top_right,    :top_right66,    :top_right33    ]
+grab "W-a", [ :left,         :left66,         :left33         ]
+grab "W-s", [ :center,       :center66,       :center33       ]
+grab "W-d", [ :right,        :right66,        :right33        ]
+grab "W-y", [ :bottom_left,  :bottom_left66,  :bottom_left33  ]
+grab "W-x", [ :bottom,       :bottom66,       :bottom33       ]
+grab "W-c", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 
 # Exec programs
-grab "W-Return", "urxvt"
+grab "W-Return", "urxvtc -e tmux"
+grab "A-F2", "gmrun"
+grab "W-p", "dmenu_run"
+grab "XF86Launch1", "pcmanfm"
+
+# Multimedia Keys
+grab "XF86AudioPlay", "ncmpcpp toggle" 
+grab "XF86AudioNext", "ncmpcpp next" 
+grab "XF86AudioPrev", "ncmpcpp prev" 
+grab "XF86AudioStop", "ncmpcpp stop"
+grab "XF86AudioLowerVolume", "/home/josh/bin/pa_vol_down 5"  
+grab "XF86AudioRaiseVolume", "/home/josh/bin/pa_vol_up 5"
+
+# Launcher
+begin
+  require "#{ENV["HOME"]}/bin/subtle-contrib/ruby/launcher.rb" 
+  # Set fonts
+  Subtle::Contrib::Launcher.fonts = [
+    "xft:Droid Sans Mono:pixelsize=80:antialias=true",
+    "xft:Droid Sans Mono:pixelsize=12:antialias=true" 
+  ]
+rescue LoadError => error
+  puts error
+end
+
+grab "W-v" do
+  Subtle::Contrib::Launcher.run
+end
 
 # Run Ruby lambdas
 grab "S-F2" do |c|
@@ -537,7 +569,18 @@ end
 
 # Simple tags
 tag "terms",   "xterm|[u]?rxvt"
-tag "browser", "uzbl|opera|firefox|navigator"
+tag "browser", "uzbl|opera|firefox|navigator|chromium|dwb|jumanji|midori|luakit"
+tag "video", "[s]?mplayer|vlc"
+tag "audio", "deadbeef|quodlibet|lmms"
+tag "id3", "kid3|easytag|puddletag"
+tag "file", "thunar|pcmanfm|nautilus|qtfm"
+tag "text", "gedit|evince|drracket|geany|lowriter"
+tag "im", "pidgin|empathy|emesene|amsn|kopete"
+
+tag "match" do
+  match :name => "File Operation Progress"
+  float true
+end
 
 # Placement
 tag "editor" do
@@ -585,6 +628,12 @@ end
 tag "gimp_dock" do
   match   :role => "gimp-dock"
   gravity :gimp_dock
+end
+
+# Pidgin
+tag "buddy_list" do
+  match   :role => "buddy_list"
+  gravity :left
 end
 
 #
@@ -648,10 +697,36 @@ end
 # http://subforge.org/wiki/subtle/Tagging
 #
 
-view "terms", "terms|default"
-view "www",   "browser"
-view "gimp",  "gimp_.*"
-view "dev",   "editor"
+view "web" do
+  match "browser"
+  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/world.xbm")
+  icon_only true
+end
+view "term" do
+  match "terms"
+  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/terminal.xbm")
+  icon_only true
+end
+view "media" do
+  match "audio|video|gimp_.|id3"
+  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/movie.xbm")
+  icon_only true
+end
+view "files" do
+  match "file|text"
+  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/file1.xbm")
+  icon_only true
+end
+view "im" do
+  match "im"
+  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/quote.xbm")
+  icon_only true
+end
+view "misc" do
+  match "default"
+  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/shuffle.xbm")
+  icon_only true
+end
 
 #
 # == Sublets
@@ -687,12 +762,32 @@ view "dev",   "editor"
 #
 # === Example
 #
-#  sublet :clock do
-#    interval      30
-#    foreground    "#eeeeee"
-#    background    "#000000"
-#    format_string "%H:%M:%S"
-#  end
+sublet :cpu do
+  interval      1
+  foreground    "#eeeeee"
+  background    "#000000"
+end
+sublet :memory do
+  interval      1
+  foreground    "#eeeeee"
+  background    "#000000"
+  text_fg       "#eeeeee"
+end
+sublet :mpd do
+  interval      1
+  foreground    "#EEEEE0"
+end
+sublet :weather do
+  interval      60
+  location      "85308"
+end
+sublet :clock do
+  interval      60
+  foreground    "#eeeeee"
+  background    "#000000"
+  format_string "%b %d %I:%M %p"
+end
+
 #
 #  === Link
 #

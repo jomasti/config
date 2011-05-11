@@ -17,9 +17,9 @@ set download_command urxvtc -e sh -c "wget --load-cookies /home/josh/.config/jum
 set font helvetica regular 9
 set height 750
 set width 1000
-set inbutbar_fgcolor #cd5c5c
+set inbutbar_fgcolor #7fff00
 set statusbar_ssl_bgcolor #b0c4de
-set tabbar_focus_fgcolor #cd5c5c
+set tabbar_focus_fgcolor #7fff00
 
 # key bindings
 map <C-q> quit

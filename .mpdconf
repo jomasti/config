@@ -74,14 +74,14 @@ bind_to_address		"localhost"
 # This setting is the TCP port that is desired for the daemon to get assigned
 # to.
 #
-#port				"6600"
+port				"6600"
 #
 # This setting controls the type of information which is logged. Available 
 # setting arguments are "default", "secure" or "verbose". The "verbose" setting
 # argument is recommended for troubleshooting, though can quickly stretch
 # available resources on limited hardware storage.
 #
-#log_level			"default"
+log_level			"default"
 #
 # If you have a problem with your MP3s ending abruptly it is recommended that 
 # you set this argument to "no" to attempt to fix the problem. If this solves
@@ -240,7 +240,7 @@ audio_output {
 	name		"My Pulse Output"
 #	server		"remote_server"		# optional
 #	sink		"remote_server_sink"	# optional
-#}
+}
 #
 ## Example "pipe" output:
 #
@@ -262,6 +262,12 @@ audio_output {
 #	name		"My Null Output"
 #}
 #
+audio_output {
+    type            "fifo"
+    name            "My FIFO"
+    path            "/tmp/mpd.fifo"
+    format          "44100:16:1"
+}
 # This setting will change all decoded audio to be converted to the specified
 # format before being passed to the audio outputs. By default, this setting is
 # disabled.
