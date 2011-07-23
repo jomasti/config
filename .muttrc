@@ -440,3 +440,4 @@ color tilde      magenta      default
 color tree       magenta      default
 
 auto_view text/html
+macro pager \ca <pipe-entry>'urlview'<enter> 'Follow links with urlview'
