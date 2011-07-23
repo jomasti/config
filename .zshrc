@@ -4,8 +4,9 @@ SAVEHIST=50000
 DIRSTACKSIZE=8
 bindkey -v
 
-export EDITOR=vim
-export BROWSER=firefox
+export EDITOR='vim'
+export BROWSER='luakit'
+export PAGER='most'
 if [[ "${COLORTERM}" == "gnome-terminal" && "${TERM}" != "xterm"  ]]; then
 	export TERM="gnome-256color"
 fi
@@ -32,6 +33,8 @@ PROMPT=$'%{\e[0;34m%}%B┌─[%b%{\e[0m%}%n%{\e[0;34m%}@%{\e[0m%}%m%{\e[0;34m%}%
 alias mipod='sudo sh /home/josh/Scripts/ipodmount.sh'
 alias uipod='sudo sh /home/josh/Scripts/ipodumount.sh'
 alias ls='ls --color=auto'
+alias la='ls -a --color=auto'
+alias ll='ls -l --color=auto'
 alias asu-up='sshfs jstiefer@general.asu.edu:. /~ASU'
 alias asu-down='fusermount -u ~/ASU'
 alias ..='cd ..'
@@ -48,7 +51,7 @@ alias pacreps='pacman -Ss'             # Search for package(s) in the repositori
 alias pacloc='pacman -Qi'              # Display information about a given package in the local database
 alias paclocs='pacman -Qs'             # Search for package(s) in the local database
 alias pacupl='pacman -Qu'			   # List packages that have updates
-alias pacupd='sudo pacman -Sy && sudo abs'     # Update and refresh the local package and ABS databases against repositories
+alias pacupd='sudo pacman -Sy'     	   # Update and refresh the local package and ABS databases against repositories
 alias pacinsd='sudo pacman -S --asdeps'        # Install given package(s) as dependencies of another package
 alias pacmir='sudo pacman -Syy'                # Force refresh of all package lists after updating /etc/pacman.d/mirrorlist
 

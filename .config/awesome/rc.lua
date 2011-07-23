@@ -6,14 +6,16 @@ require("awful.rules")
 require("beautiful")
 -- Notification library
 require("naughty")
+-- Widget library
+require("vicious")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/usr/share/awesome/themes/strict/theme.lua")
+beautiful.init("/home/josh/.config/awesome/themes/custom/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
-editor = os.getenv("EDITOR") or "vim"
+terminal = "urxvtc"
+editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -44,7 +46,7 @@ layouts =
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = { 
-  settings = { names  = { "www", "term", "media", "thunar", "vbox", "misc" },
+  settings = { names  = { "www", "term", "media", "file", "im", "misc" },
       layout = { layouts[8], layouts[2], layouts[8], layouts[8], layouts[1], layouts[1] } } }
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -55,7 +57,6 @@ end
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-   { "lock", "xscreensaver-command-activate" },
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
    { "restart", awesome.restart },
@@ -80,6 +81,7 @@ mysystray = widget({ type = "systray" })
 
 -- Create a wibox for each screen and add it
 mywibox = {}
+statusbox = {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -94,11 +96,17 @@ mytaglist.buttons = awful.util.table.join(
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
                      awful.button({ }, 1, function (c)
-                                              if not c:isvisible() then
-                                                  awful.tag.viewonly(c:tags()[1])
+                                              if c == client.focus then
+                                                  c.minimized = true
+                                              else
+                                                  if not c:isvisible() then
+                                                      awful.tag.viewonly(c:tags()[1])
+                                                  end
+                                                  -- This will also un-minimize
+                                                  -- the client, if needed
+                                                  client.focus = c
+                                                  c:raise()
                                               end
-                                              client.focus = c
-                                              c:raise()
                                           end),
                      awful.button({ }, 3, function ()
                                               if instance then
@@ -152,6 +160,70 @@ for s = 1, screen.count() do
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
+
+	separator = widget({ type = "textbox" })
+	separator.text = " ::"
+	spacer 	  = widget({ type = "textbox" })
+	spacer.text = " "
+
+	-- Initialize widgets
+	cpuwidget = widget({ type = "textbox" })
+	memwidget = widget({ type = "textbox" })
+	mpdwidget = widget({ type = "textbox" })
+	weawidget = widget({ type = "textbox" })
+	hddwidget = widget({ type = "textbox" })
+	pkgwidget = widget({ type = "textbox" })
+	gmlwidget = widget({ type = "textbox" })
+	-- Widget icons
+	cpuicon = widget({ type = "imagebox" })
+	cpuicon.image = image(awful.util.getdir("config") .. "/icons/cpu.png")
+	cpuicon.resize = false
+	cpuicon.valign = "bottom"
+	memicon = widget({ type = "imagebox" })
+	memicon.image = image(awful.util.getdir("config") .. "/icons/memory.png")
+	memicon.resize = false
+	mpdicon = widget({ type = "imagebox" })
+	mpdicon.image = image(awful.util.getdir("config") .. "/icons/note1.png")
+	mpdicon.resize = false
+	hddicon = widget({ type = "imagebox" })
+	hddicon.image = image(awful.util.getdir("config") .. "/icons/shelf.png")
+	hddicon.resize = false
+	pkgicon = widget({ type = "imagebox" })
+	pkgicon.image = image(awful.util.getdir("config") .. "/icons/pacman.png")
+	pkgicon.resize = false
+	gmlicon = widget({ type = "imagebox" })
+	gmlicon.image = image(awful.util.getdir("config") .. "/icons/mail.png")
+	gmlicon.resize = false
+	-- Register widgets
+	vicious.register(cpuwidget, vicious.widgets.cpu, "$1%")
+	vicious.register(memwidget, vicious.widgets.mem, "$1% ($2MB/$3MB)", 13)
+	vicious.register(mpdwidget, vicious.widgets.mpd,
+    function (widget, args)
+        if args["{state}"] == "Stop" then 
+            return " - "
+        else 
+            return args["{Artist}"]..' - '.. args["{Title}"]
+        end
+    end, 10)
+	vicious.register(weawidget, vicious.widgets.weather, "${city} ${tempf}° ${sky}", 3600, "KGEU") 
+	vicious.register(hddwidget, vicious.widgets.fs, "${/ used_gb} GB/${/ size_gb} GB", 3600)
+	vicious.register(pkgwidget, vicious.widgets.pkg, "$1", 3600, "Arch")
+	vicious.register(gmlwidget, vicious.widgets.gmail, "${count}", 1800)
+
+	statusbox[s] = awful.wibox({ position = "bottom", height = 14, screen = s })
+	statusbox[s].widgets = {
+		{
+			cpuicon, cpuwidget, separator,
+			memicon, memwidget, separator,
+			hddicon, hddwidget, separator,
+			pkgicon, pkgwidget, separator,
+			spacer, weawidget, separator,
+			gmlicon, gmlwidget,
+			layout = awful.widget.layout.horizontal.leftright
+		},
+		mpdwidget, mpdicon,
+		layout = awful.widget.layout.horizontal.rightleft
+	}
 end
 -- }}}
 
@@ -197,7 +269,6 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/Pictures/ 2>/dev/null'") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -209,6 +280,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+
+    awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
@@ -230,7 +303,12 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
-    awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized    end),
+    awful.key({ modkey,           }, "n",
+        function (c)
+            -- The client currently has the input focus, so it cannot be
+            -- minimized, since minimized clients can't have the focus.
+            c.minimized = true
+        end),
     awful.key({ modkey,           }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
@@ -294,27 +372,30 @@ awful.rules.rules = {
                      border_color = beautiful.border_normal,
                      focus = true,
                      keys = clientkeys,
-                     buttons = clientbuttons } },
+                     buttons = clientbuttons,
+					 size_hints_honor = false } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
-      properties = { floating = true } },
-    { rule = { class = "Chromium" },
-      properties = { tag = tags[1][1] } },
-    { rule = { class = "Thunar"},
+      properties = { tag = tags[1][3],
+		  			 floating = true } },
+    { rule = { class = "Thunar" },
       properties = { tag = tags[1][4] } },
-    { rule = { class = "Osmo"},
-      properties = { tag = tags[1][6] } },
-    { rule = { class = "Jumanji"},
-      properties = { tag = tags[1][1] } },
-    { rule = { class = "Gtkpod"},
-      properties = { tag = tags[1][3] } },
-    { rule = { class = "VirtualBox"},
-      properties = { tag = tags[1][5] } },
-    { rule = { class = "Quodlibet"},
-      properties = { tag = tags[1][3] } },
+	{ rule = { class = "luakit" },
+	  properties = { tag = tags[1][1] } },
+	{ rule = { class = "dwb" },
+	  properties = { tag = tags[1][1] } },
+	{ rule = { class = "URxvt" },
+	  properties = { tag = tags[1][2] } },
+	{ rule = { class = "Chromium" },
+	  properties = { tag = tags[1][1] } },
+	{ rule = { class = "Ristretto" },
+	  properties = { tag = tags[1][3] } },
+ 	{ rule = { class = "Smplayer" },
+	  properties = { tag = tags[1][3],
+	  				 floating = true } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },

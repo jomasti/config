@@ -7,6 +7,8 @@ Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintslight
 
+Xcursor.theme:	Vanilla-DMZ
+
 !URxvt.background: grey0
 !URxvt.foreground: ivory2
 !URxvt.color0:     grey0
@@ -99,7 +101,7 @@ URxvt.bolditalicFont: xft:Droid Sans Mono:pixelsize=12:antialias=true:bold:itali
 URxvt.scrollBar: false
 
 URxvt.perl-ext-common:  default,matcher,url-select
-URxvt.urlLauncher:      /usr/bin/chromium
+URxvt.urlLauncher:      /usr/bin/luakit
 URxvt.keysym.M-u:       perl:url-select:select_next
 URxvt.underlineURLs: 	true
 URxvt.matcher.button:   1 

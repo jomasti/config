@@ -1,14 +1,9 @@
-# Check for an interactive session
-[ -z "$PS1" ] && return
+#
+# ~/.bashrc
+#
 
-alias ls='ls -a --color=auto'
-alias asu-up='sshfs jstiefer@general.asu.edu:. /~ASU'
-alias asu-down='fusermount -u ~/ASU'
-alias www='/usr/bin/chromium --proxy-server=127.0.0.1:8118'
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
 
-# PS1='[\u@\h \W]\$ '
-PS1="┌─[\A][\u@\h:\w]\n└─> "
-
-export EDITOR='vim'
-export PAGER='most'
-PATH=$PATH:~/bin
+alias ls='ls --color=auto'
+PS1='[\u@\h \W]\$ '

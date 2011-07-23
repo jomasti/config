@@ -111,49 +111,49 @@ end
 # http://subforge.org/wiki/subtle/Themes
 
 style :title do
-  padding     0, 0, 0, 0
+  padding     2, 10, 0, 10
   border      "#303030", 0
   foreground  "#3465a4"
   background  "#181818"
 end
 
 style :focus do
-  padding     0, 0, 0, 0
+  padding     2, 8, 0, 8
   border_bottom      "#3465a4", 2
   foreground  "#3465a4"
   background  "#181818"
 end
 
 style :urgent do
-  padding     0, 0, 0, 0
+  padding     2, 8, 0, 8
   border      "#303030", 0
   foreground  "#367b00"
   background  "#181818"
 end
 
 style :occupied do
-  padding     0, 0, 0, 0
+  padding     2, 8, 0, 8
   border_bottom      "#B8B8B8", 2
   foreground  "#B8B8B8"
   background  "#181818"
 end
 
 style :views do
-  padding     0, 0, 0, 0
+  padding     2, 8, 0, 8
   border      "#303030", 0
   foreground  "#757575"
   background  "#181818"
 end
 
 style :sublets do
-  padding     0, 0, 0, 0
+  padding     2, 10, 0
   border      "#303030", 0
   foreground  "#757575"
   background  "#181818"
 end
 
 style :separator do
-  padding     0, 0, 0, 0
+  padding     1, 0, 0
   border      0
   background  "#181818"
   foreground  "#757575"
@@ -413,15 +413,15 @@ grab "W-c", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 grab "W-Return", "urxvtc -e tmux"
 grab "A-F2", "gmrun"
 grab "W-p", "dmenu_run"
-grab "XF86Launch1", "pcmanfm"
+#grab "XF86Launch1", "pcmanfm"
 
 # Multimedia Keys
-grab "XF86AudioPlay", "ncmpcpp toggle" 
-grab "XF86AudioNext", "ncmpcpp next" 
-grab "XF86AudioPrev", "ncmpcpp prev" 
-grab "XF86AudioStop", "ncmpcpp stop"
-grab "XF86AudioLowerVolume", "/home/josh/bin/pa_vol_down 5"  
-grab "XF86AudioRaiseVolume", "/home/josh/bin/pa_vol_up 5"
+#grab "XF86AudioPlay", "ncmpcpp toggle" 
+#grab "XF86AudioNext", "ncmpcpp next" 
+#grab "XF86AudioPrev", "ncmpcpp prev" 
+#grab "XF86AudioStop", "ncmpcpp stop"
+#grab "XF86AudioLowerVolume", "/home/josh/bin/pa_vol_down 5"  
+#grab "XF86AudioRaiseVolume", "/home/josh/bin/pa_vol_up 5"
 
 # Launcher
 begin
@@ -572,7 +572,7 @@ tag "terms",   "xterm|[u]?rxvt"
 tag "browser", "uzbl|opera|firefox|navigator|chromium|dwb|jumanji|midori|luakit"
 tag "video", "[s]?mplayer|vlc"
 tag "audio", "deadbeef|quodlibet|lmms"
-tag "id3", "kid3|easytag|puddletag"
+tag "id3", "kid3|easytag|puddletag|picard"
 tag "file", "thunar|pcmanfm|nautilus|qtfm"
 tag "text", "gedit|evince|drracket|geany|lowriter"
 tag "im", "pidgin|empathy|emesene|amsn|kopete"

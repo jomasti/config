@@ -4,15 +4,15 @@
 #
 # Executed by startx (run your window manager from here)
 
-export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+#export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # Check whether the external monitor is connected
-xrandr | grep VGA | grep " connected "
+#xrandr | grep VGA | grep " connected "
 
 # 0 is returned on success
-if [ $? -eq 0 ]; then
-	xrandr --output LVDS1 --primary --mode 1280x800 --pos 0x0 --output VGA1 --mode 1024x768 --pos 1280x0
-fi
+#if [ $? -eq 0 ]; then
+#	xrandr --output LVDS1 --primary --mode 1280x800 --pos 0x0 --output VGA1 --mode 1024x768 --pos 1280x0
+#fi
 
 xsetroot -cursor_name left_ptr
 
@@ -23,23 +23,27 @@ fi
 #bmpanel2 &
 #obmixer &
 #wicd-client &
-start-pulseaudio-x11 &
+#start-pulseaudio-x11 &
 #(sleep 5 && pcmanfm -d) &
-anamnesis --start
+#anamnesis --start
 #parcellite &
-xscreensaver -no-splash &
+#xscreensaver -no-splash &
 #osmo &
-urxvtd -q -o -f
-xset +fp /usr/share/fonts/local
+#urxvtd -q -o -f
+#xset +fp /usr/share/fonts/local
 #(sleep 2 && nitrogen --restore) &
 #dropboxd &
-sh ~/.fehbg
+#sh ~/.fehbg
 
 if [[ $1 == "gnome" ]]
 then
   exec ck-launch-session dbus-launch gnome-session
+elif [[ $1 == "xfce4" ]]
+then
+  exec ck-launch-session dbus-launch startxfce4
 elif [[ $1 == "awesome" ]]
 then
+  /home/josh/bin/xinit.sh
   exec ck-launch-session dbus-launch awesome
 elif [[ $1 == "i3" ]]
 then
@@ -53,6 +57,7 @@ then
   exec ck-launch-session dbus-launch scrotwm
 elif [[ $1 == "subtle" ]]
 then
+  /home/josh/bin/xinit.sh
   exec ck-launch-session dbus-launch subtle
 elif [[ $1 == "ratpoison" ]]
 then
