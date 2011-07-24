@@ -208,7 +208,7 @@ for s = 1, screen.count() do
 	vicious.register(weawidget, vicious.widgets.weather, "${city} ${tempf}° ${sky}", 3600, "KGEU") 
 	vicious.register(hddwidget, vicious.widgets.fs, "${/ used_gb} GB/${/ size_gb} GB", 3600)
 	vicious.register(pkgwidget, vicious.widgets.pkg, "$1", 3600, "Arch")
-	vicious.register(gmlwidget, vicious.widgets.gmail, "${count}", 1800)
+	vicious.register(gmlwidget, vicious.widgets.gmail, "${count}", 300)
 
 	statusbox[s] = awful.wibox({ position = "bottom", height = 14, screen = s })
 	statusbox[s].widgets = {

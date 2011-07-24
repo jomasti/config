@@ -78,6 +78,9 @@ domain_props = {
         ["user-stylesheet-uri"]     = "file://" .. luakit.config_dir ..
         "/styles/lastfm-paint-it-black.css",
     },
+    ["pandora.com"] = {
+        ["enable-plugins"]          = true,
+    },
 }
   
 --[[
