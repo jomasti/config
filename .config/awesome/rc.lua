@@ -383,6 +383,8 @@ awful.rules.rules = {
 		  			 floating = true } },
     { rule = { class = "Thunar" },
       properties = { tag = tags[1][4] } },
+	{ rule = { class = "Pcmanfm" },
+	  properties = { tag = tags[1][4] } },
 	{ rule = { class = "luakit" },
 	  properties = { tag = tags[1][1] } },
 	{ rule = { class = "dwb" },

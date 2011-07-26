@@ -8,7 +8,7 @@
 # set alias_format = '%4n %2f %t %-10a   %r'
 # set hidden_host = no
 # set hostname = '(empty)'
-set realname = 'Josh Stiefer'
+set realname = 'Joshua Stiefer'
 # set reply_self = no
 # set reply_to = ask-yes
 # set reverse_name = no
