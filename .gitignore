@@ -2,3 +2,7 @@
 .config/dwb/default/history
 .config/jumanji/history
 .config/jumanji/cookies
+.scrobbyconf
+.herrie/config
+.netrc
+.mpdscribble/mpdscribble.conf
