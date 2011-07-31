@@ -162,14 +162,14 @@ bindsym Mod1+Control+Left pw
 bindsym Mod1+Control+Right nw
 
 # volume keys
-bindsym XF86AudioRaiseVolume exec /home/josh/bin/pa_vol_up 5
-bindsym XF86AudioLowerVolume exec /home/josh/bin/pa_vol_down 5
+#bindsym XF86AudioRaiseVolume exec /home/josh/bin/pa_vol_up 5
+#bindsym XF86AudioLowerVolume exec /home/josh/bin/pa_vol_down 5
 
 # launch programs
-bindsym XF86Launch2 exec pavucontrol
-bindsym XF86HomePage exec dwb
-bindsym XF86Mail exec urxvtc -e mutt
-bindsym XF86Launch1 exec urxvtc -e sudo pacman -Su
+#bindsym XF86Launch2 exec pavucontrol
+#bindsym XF86HomePage exec dwb
+#bindsym XF86Mail exec urxvtc -e mutt
+#bindsym XF86Launch1 exec urxvtc -e sudo pacman -Su
 
 #set workspaces
 #workspace 1 output LVDS1
@@ -180,7 +180,7 @@ client.focused			 	#cd5c4d		#cd5c5c		#ffffff
 client.focused_inactive		#cd5c5c		#000000		#ffffff
 client.unfocused			#cd5c5c		#000000		#ffffff
 client.urgent				#900000		#000000		#ffffff
-ba.focused					#cd5c4d		#cd5c5c		#ffffff
+bar.focused					#cd5c4d		#cd5c5c		#ffffff
 bar.unfocused				#cd5c5c		#000000		#ffffff
 bar.urgent					#900000		#000000		#ffffff
 
@@ -190,31 +190,33 @@ new_window bp
 # workspace names
 workspace 1 web
 workspace 2 term
-workspace 3 file
-workspace 4 media
+workspace 3 media
+workspace 4 file
 workspace 5 misc
 
 # status bar
-exec conky | i3-wsbar -c "dzen2 -x %x -expand r -bg black -ta r -fn '-*-droid sans mono-*-*-*-*-10-*-*-*-*-*-*-*' -y 787" --show-all & 
+exec conky | i3-wsbar -c "dzen2 -x %x -expand r -bg black -ta r -fn '-*-droid sans mono-*-*-*-*-10-*-*-*-*-*-*-*' -y 851" --show-all & 
 
 # system tray
 exec /usr/bin/trayer --edge top --align left --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 8 &
 
 # eye candy
-exec xcompmgr -cf -r 0 -D 6
+#exec xcompmgr -cf -r 0 -D 6
 
 # background
-exec sh ~/.fehbg &
+#exec sh ~/.fehbg &
 
 # tmux
-exec urxvtc -e tmux &
+#exec urxvtc -e tmux &
 
 # workspace assignments
 assign urxvtc → 2
 assign urxvt → 2
-assign chromium → 1   
+assign luakit → 1   
+assign dwb → 1   
 assign jumanji → 1
-assign thunar → 3
-assign quodlibet → 4
-assign smplayer → 4
-assign qbittorrent → 1
+assign thunar → 4 
+assign pcmanfm → 4 
+assign quodlibet → 3
+assign smplayer → 3
+assign transmission → 1

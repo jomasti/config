@@ -1,5 +1,7 @@
 " Color related
-set t_Co=256
+if ($TERM != "linux")
+	set t_Co=256 
+endif
 colorscheme ir_black
 
 " Line numbers

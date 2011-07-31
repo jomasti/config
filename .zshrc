@@ -11,6 +11,7 @@ if [[ "${COLORTERM}" == "gnome-terminal" && "${TERM}" != "xterm"  ]]; then
 	export TERM="gnome-256color"
 fi
 export PATH=$PATH:~/bin
+export UZBL_UTIL_DIR=$XDG_DATA_HOME/uzbl/util/
 
 autoload -U compinit compinit
 autoload colors zsh/terminfo
@@ -39,6 +40,7 @@ alias asu-up='sshfs jstiefer@general.asu.edu:. /~ASU'
 alias asu-down='fusermount -u ~/ASU'
 alias ..='cd ..'
 alias dh='dirs -v'
+alias uzbl='uzbl-tabbed'
 
 # Pacman aliases
 alias pacupg='sudo pacman -Su'         # Upgrade packages

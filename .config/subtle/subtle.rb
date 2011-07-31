@@ -74,7 +74,7 @@ screen 1 do
   stipple false
 
   # Content of the top panel
-  top     [ :views, :title, :spacer, :tray, :clock ]
+  top     [ :views, :title, :spacer, :tray, :volume, :clock ]
 
   # Content of the bottom panel
   bottom  [ :cpu, :separator, :memory, :center, :weather, :center, :spacer, :mpd ]
@@ -719,7 +719,7 @@ view "files" do
 end
 view "im" do
   match "im"
-  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/quote.xbm")
+  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/balloon.xbm")
   icon_only true
 end
 view "misc" do
@@ -786,6 +786,10 @@ sublet :clock do
   foreground    "#eeeeee"
   background    "#000000"
   format_string "%b %d %I:%M %p"
+end
+sublet :volume do
+  interval      60
+  foreground    "#eeeee0"
 end
 
 #

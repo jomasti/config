@@ -178,13 +178,15 @@ for s = 1, screen.count() do
 	cpuicon = widget({ type = "imagebox" })
 	cpuicon.image = image(awful.util.getdir("config") .. "/icons/cpu.png")
 	cpuicon.resize = false
-	cpuicon.valign = "bottom"
 	memicon = widget({ type = "imagebox" })
 	memicon.image = image(awful.util.getdir("config") .. "/icons/memory.png")
 	memicon.resize = false
 	mpdicon = widget({ type = "imagebox" })
 	mpdicon.image = image(awful.util.getdir("config") .. "/icons/note1.png")
 	mpdicon.resize = false
+	weaicon = widget({ type = "imagebox" })
+	weaicon.image = image(awful.util.getdir("config") .. "/icons/temp.png")
+	weaicon.resize = false
 	hddicon = widget({ type = "imagebox" })
 	hddicon.image = image(awful.util.getdir("config") .. "/icons/shelf.png")
 	hddicon.resize = false
@@ -205,7 +207,7 @@ for s = 1, screen.count() do
             return args["{Artist}"]..' - '.. args["{Title}"]
         end
     end, 10)
-	vicious.register(weawidget, vicious.widgets.weather, "${city} ${tempf}° ${sky}", 3600, "KGEU") 
+	vicious.register(weawidget, vicious.widgets.weather, "Glendale, AZ ${tempf}° ${sky}", 3600, "KGEU") 
 	vicious.register(hddwidget, vicious.widgets.fs, "${/ used_gb} GB/${/ size_gb} GB", 3600)
 	vicious.register(pkgwidget, vicious.widgets.pkg, "$1", 3600, "Arch")
 	vicious.register(gmlwidget, vicious.widgets.gmail, "${count}", 300)
@@ -217,7 +219,7 @@ for s = 1, screen.count() do
 			memicon, memwidget, separator,
 			hddicon, hddwidget, separator,
 			pkgicon, pkgwidget, separator,
-			spacer, weawidget, separator,
+			weaicon, weawidget, separator,
 			gmlicon, gmlwidget,
 			layout = awful.widget.layout.horizontal.leftright
 		},
@@ -292,7 +294,9 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end)
+              end),
+
+	awful.key({ modkey }, "v",				  function () awful.util.spawn("fehlstart --one-way") end)
 )
 
 clientkeys = awful.util.table.join(

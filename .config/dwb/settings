@@ -110,6 +110,6 @@ ssl-untrusted-color=#ff0000
 auto-load-images=true
 minimum-logical-font-size=5
 hint-font-family=monospace
-mail-client=xterm -e mutt 'dwb_uri'
+mail-client=tmux new-window -d "mutt 'dwb_uri'"
 complete-commands=true
 javascript-can-open-windows-automatically=false

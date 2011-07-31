@@ -14,7 +14,7 @@ set download_dir ~/Downloads
 set download_command urxvtc -e sh -c "wget --load-cookies /home/josh/.config/jumanji/cookies '%s' -O %s";
 
 # look
-set font helvetica regular 9
+set font droid sans regular 9
 set height 750
 set width 1000
 set inbutbar_fgcolor #7fff00
@@ -32,4 +32,4 @@ map L nav_history next
 script /home/josh/.config/jumanji/scripts/hinting.js
 
 # adblocking css
-set stylesheet /home/josh/.config/jumanji/fanboy-adblocklist-elements-v3.css
+set stylesheet /home/josh/.config/jumanji/fanboy-adblocklist-elements-v4.css

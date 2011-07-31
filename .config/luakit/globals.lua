@@ -6,7 +6,7 @@ globals = {
     zoom_step           = 0.1,
     max_cmd_history     = 100,
     max_srch_history    = 100,
-    http_proxy          = "http://127.0.0.1:8118",
+ -- http_proxy          = "127.0.0.1:8118",
     default_window_size = "1024x768",
 
  -- Disables loading of hostnames from /etc/hosts (for large host files)
@@ -72,14 +72,28 @@ domain_props = {
         ["enable-scripts"]          = true,
         ["enable-plugins"]          = false,
         ["enable-private-browsing"] = false,
-        ["user-stylesheet-uri"]     = "",
+        ["enable-spell-checking"]   = true,
+        ["spell-checking-languages"]= "en_US",
+        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
+        "/styles/adblock-elements.css",
     },
     ["last.fm"] = {
-        ["user-stylesheet-uri"]     = "file://" .. luakit.config_dir ..
+        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
         "/styles/lastfm-paint-it-black.css",
     },
     ["pandora.com"] = {
         ["enable-plugins"]          = true,
+    },
+    ["mpd.wikia.com"] = {
+        ["enable-scripts"]          = false,
+    },
+    ["facebook.com"] = {
+        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
+        "/styles/facebook.css",
+    },
+    ["en.wikipedia.org"] = {
+        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
+        "/styles/wiki.css",
     },
 }
   

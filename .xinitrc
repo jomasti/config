@@ -47,6 +47,7 @@ then
   exec ck-launch-session dbus-launch awesome
 elif [[ $1 == "i3" ]]
 then
+  /home/josh/bin/xinit.sh
   exec ck-launch-session dbus-launch i3 -V >>/home/josh/.i3/i3log >&1
 elif [[ $1 == "xmonad" ]]
 then
@@ -61,7 +62,7 @@ then
   exec ck-launch-session dbus-launch subtle
 elif [[ $1 == "ratpoison" ]]
 then
-  xrandr --output VGA1 --off
+  #xrandr --output VGA1 --off
   ( sleep 1; trayer --align right --edge bottom --distance 0 --expand true --transparent true --alpha 128 --tint 0 --SetDockType true --SetPartialStrut true & ) &
   exec ck-launch-session dbus-launch ratpoison
 elif [[ $1 == "openbox" ]]
@@ -73,14 +74,19 @@ then
   exec ck-launch-session dbus-launch catwm
 elif [[ $1 == "dwm" ]]
 then
-  xrandr --output VGA1 --off
+  #xrandr --output VGA1 --off
+  /home/josh/bin/xinit.sh
   exec ck-launch-session dbus-launch dwm
 elif [[ $1 == "stumpwm" ]]
 then
+  /home/josh/bin/xinit.sh
   exec ck-launch-session dbus-launch stumpwm
 elif [[ $1 == "wmfs" ]]
 then
   exec ck-launch-session dbus-launch wmfs
+elif [[ $1 == "musca" ]]
+then
+  exec ck-launch-session dbus-launch musca
 else
   echo "Choose a window manager"
 fi
