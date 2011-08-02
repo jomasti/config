@@ -7,3 +7,4 @@
 .netrc
 .mpdscribble/mpdscribble.conf
 .dwm/log
+bin/__pycache__

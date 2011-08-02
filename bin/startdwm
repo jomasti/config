@@ -1,0 +1,12 @@
+#!/bin/sh
+# Programs to start up
+sh ~/.fehbg
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
+urxvtd -q -o -f
+
+# Display volume and date with time
+while true; do
+	xsetroot -name "$(/home/josh/bin/mpd.py) | $(date +"%a, %b %d %I:%M %p")"
+	sleep 5s
+done | while true; do dwm 2> ~/.dwm/log; done 
