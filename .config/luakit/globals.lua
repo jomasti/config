@@ -87,6 +87,12 @@ domain_props = {
     ["mpd.wikia.com"] = {
         ["enable-scripts"]          = false,
     },
+    ["vim.wikia.com"] = {
+        ["enable-scripts"]          = false,
+    },
+    ["lyrics.wikia.com"] = {
+        ["enable-scripts"]          = false,
+    },
     ["facebook.com"] = {
         ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
         "/styles/facebook.css",

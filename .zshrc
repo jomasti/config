@@ -10,7 +10,6 @@ export PAGER='most'
 if [[ "${COLORTERM}" == "gnome-terminal" && "${TERM}" != "xterm"  ]]; then
 	export TERM="gnome-256color"
 fi
-export PATH=$PATH:~/bin
 export UZBL_UTIL_DIR=$XDG_DATA_HOME/uzbl/util/
 
 autoload -U compinit compinit
