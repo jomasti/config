@@ -79,7 +79,7 @@ domain_props = {
     },
     ["last.fm"] = {
         ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
-        "/styles/lastfm-paint-it-black.css",
+        "/styles/lastfm-rounded-striped.css",
     },
     ["pandora.com"] = {
         ["enable-plugins"]          = true,
@@ -100,6 +100,10 @@ domain_props = {
     ["en.wikipedia.org"] = {
         ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
         "/styles/wiki.css",
+    },
+    ["ubuntuforums.org"] = {
+        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
+        "/styles/ubuntuforums.css",
     },
 }
   

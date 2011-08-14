@@ -99,6 +99,11 @@ require "downloads_chrome"
 -- (depends on downloads)
 require "follow"
 
+-- To use a custom character set for the follow hint labels un-comment and
+-- modify the following:
+--local s = follow.styles
+--follow.style = s.sort(s.reverse(s.charset("asdfqwerzxcv"))) -- I'm a lefty
+
 -- Add command history
 require "cmdhist"
 
@@ -125,9 +130,6 @@ require "follow_selected"
 require "go_input"
 require "go_next_prev"
 require "go_up"
-
--- Adblock
-require "adblock"
 
 -----------------------------
 -- End user script loading --

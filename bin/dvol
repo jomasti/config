@@ -82,4 +82,4 @@ if [ ! -e "$PIPE" ]; then
 fi
 
 #Feed the pipe!
-(echo "$VOL" | gdbar -l "^i(${ICON})" -fg "$BAR_FG" -bg "$BAR_BG" -w "$BAR_WIDTH" -s o -nonl ; sleep "$SECS") > "$PIPE"
+(echo "$VOL" | gdbar -l "^i(${ICON})" -fg "$BAR_FG" -bg "$BAR_BG" -w "$BAR_WIDTH" -nonl ; sleep "$SECS") > "$PIPE"

@@ -34,12 +34,16 @@ alias mipod='sudo sh /home/josh/Scripts/ipodmount.sh'
 alias uipod='sudo sh /home/josh/Scripts/ipodumount.sh'
 alias ls='ls --color=auto'
 alias la='ls -a --color=auto'
-alias ll='ls -l --color=auto'
+alias ll='ls -lh --color=auto'
+alias lal='ls -lha --color=auto'
 alias asu-up='sshfs jstiefer@general.asu.edu:. /~ASU'
 alias asu-down='fusermount -u ~/ASU'
 alias ..='cd ..'
 alias dh='dirs -v'
 alias uzbl='uzbl-tabbed'
+alias grep='egrep --color=always'
+alias tmux='tmux -u -2'
+alias pacman='pacman-color'
 
 # Pacman aliases
 alias pacupg='sudo pacman -Su'         # Upgrade packages
@@ -53,6 +57,8 @@ alias pacloc='pacman -Qi'              # Display information about a given packa
 alias paclocs='pacman -Qs'             # Search for package(s) in the local database
 alias pacupl='pacman -Qu'			   # List packages that have updates
 alias pacupd='sudo pacman -Sy'     	   # Update and refresh the local package and ABS databases against repositories
+alias paclist='pacman -Ql'		   	   # List the files owned by a local package
+alias pacorph='pacman -Qdt'			   # List packages no longer required as dependencies
 alias pacinsd='sudo pacman -S --asdeps'        # Install given package(s) as dependencies of another package
 alias pacmir='sudo pacman -Syy'                # Force refresh of all package lists after updating /etc/pacman.d/mirrorlist
 
@@ -73,6 +79,7 @@ alias -s java=$EDITOR
 alias -s txt=$EDITOR
 alias -s PKGBUILD=$EDITOR
 
-define() {
-	    curl -s dict://dict.org/d:$1 | grep -v '^[0-9]'
-}
+# Functions
+define() { curl -s dict://dict.org/d:$1 | grep -v '^[0-9]' }
+
+fu() { curl -s "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ | openssl base64)/plaintext" | grep -v "^# commandlinefu" }
