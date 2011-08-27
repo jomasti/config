@@ -30,6 +30,12 @@ setopt interactivecomments
 PROMPT=$'%{\e[0;34m%}%B┌─[%b%{\e[0m%}%n%{\e[0;34m%}@%{\e[0m%}%m%{\e[0;34m%}%B]%b%{\e[0m%} - %{\e[0;34m%}%B[%b%{\e[0;34m%}'%D{"%a %b %d, %I:%M"}$'%{\e[0;34m%}%B]%b%{\e[0m%}
 %{\e[0;34m%}%B└─[%b%{\e[0m%}%~%{\e[0;34m%}%B]%b%{\e[0;34m%}>%{\e[0m%} '
 
+# allow approximate
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# aliases
 alias mipod='sudo sh /home/josh/Scripts/ipodmount.sh'
 alias uipod='sudo sh /home/josh/Scripts/ipodumount.sh'
 alias ls='ls --color=auto'
@@ -75,6 +81,7 @@ alias -s odt=libreoffice
 alias -s doc=libreoffice
 alias -s gz=tar -xzvf
 alias -s bz2=tar -xjvf
+alias -s zip=unzip
 alias -s java=$EDITOR
 alias -s txt=$EDITOR
 alias -s PKGBUILD=$EDITOR

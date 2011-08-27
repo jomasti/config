@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 # Try to determine how much RAM is currently being used per program.
 # Note per _program_, not per process. So for example this script
@@ -35,7 +35,7 @@
 #                           Patch from patrice.bouchand.fedora@gmail.com
 # V1.9      20 Feb 2008     Fix invalid values reported when PSS is available.
 #                           Reported by Andrey Borzenkov <arvidjaar@mail.ru>
-# V2.4      06 Mar 2011
+# V2.6      13 Aug 2011
 #   http://github.com/pixelb/scripts/commits/master/scripts/ps_mem.py
 
 # Notes:
@@ -116,13 +116,22 @@ our_pid=os.getpid()
 #(major,minor,release)
 def kernel_ver():
     kv=open(proc+"sys/kernel/osrelease", "rt").readline().split(".")[:3]
+    last=len(kv)
+    if last == 2:
+        kv.append('0')
+    last -= 1
     for char in "-_":
-        kv[2]=kv[2].split(char)[0]
+        kv[last]=kv[last].split(char)[0]
+    try:
+        int(kv[last])
+    except:
+        kv[last]=0
     return (int(kv[0]), int(kv[1]), int(kv[2]))
 
 try:
     kv=kernel_ver()
-except (IOError, OSError), value:
+except (IOError, OSError):
+    value = sys.exc_info()[1]
     if value.errno == errno.ENOENT:
         sys.stderr.write(
           "Couldn't access /proc\n"
@@ -311,6 +320,8 @@ def shared_val_accuracy():
         if (2,6,1) <= kv <= (2,6,9):
             return -1
         return 0
+    elif kv[0] > 2:
+        return 2
     else:
         return 1
 
