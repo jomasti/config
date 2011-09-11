@@ -110,3 +110,4 @@ open_nv= O
 Open_nw= wO
 open_nw= wo
 reload_scripts= gs
+fullscreen=Control F11

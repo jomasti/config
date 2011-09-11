@@ -131,32 +131,27 @@ style :title do
   background  "#181818"
 end
 
-style :focus do
-  padding     2, 8, 0, 8
-  border_bottom      "#3465a4", 2
-  foreground  "#3465a4"
-  background  "#181818"
-end
-
-style :urgent do
-  padding     2, 8, 0, 8
-  border      "#303030", 0
-  foreground  "#367b00"
-  background  "#181818"
-end
-
-style :occupied do
-  padding     2, 8, 0, 8
-  border_bottom      "#B8B8B8", 2
-  foreground  "#B8B8B8"
-  background  "#181818"
-end
 
 style :views do
   padding     2, 8, 0, 8
   border      "#303030", 0
   foreground  "#757575"
   background  "#181818"
+  
+  style :focus do
+    border_bottom      "#3465a4", 2
+    foreground  "#3465a4"
+  end
+
+  style :urgent do
+    border      "#303030", 0
+    foreground  "#367b00"
+  end
+
+  style :occupied do
+    border_bottom      "#B8B8B8", 2
+    foreground  "#B8B8B8"
+  end
 end
 
 style :sublets do
@@ -426,18 +421,18 @@ grab "W-x", [ :bottom,       :bottom66,       :bottom33       ]
 grab "W-c", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 
 # Exec programs
-grab "W-Return", "urxvtc -e tmux"
+grab "W-S-Return", "urxvtc"
 grab "A-F2", "gmrun"
 grab "W-p", "dmenu_run"
-#grab "XF86Launch1", "pcmanfm"
+grab "XF86Launch1", "thunar"
 
 # Multimedia Keys
-#grab "XF86AudioPlay", "ncmpcpp toggle" 
-#grab "XF86AudioNext", "ncmpcpp next" 
-#grab "XF86AudioPrev", "ncmpcpp prev" 
-#grab "XF86AudioStop", "ncmpcpp stop"
-#grab "XF86AudioLowerVolume", "/home/josh/bin/pa_vol_down 5"  
-#grab "XF86AudioRaiseVolume", "/home/josh/bin/pa_vol_up 5"
+grab "XF86AudioPlay", "ncmpcpp toggle" 
+grab "XF86AudioNext", "ncmpcpp next" 
+grab "XF86AudioPrev", "ncmpcpp prev" 
+grab "XF86AudioStop", "ncmpcpp stop"
+grab "XF86AudioLowerVolume", "/home/josh/bin/pa_vol_down 5"  
+grab "XF86AudioRaiseVolume", "/home/josh/bin/pa_vol_up 5"
 
 # Launcher
 begin

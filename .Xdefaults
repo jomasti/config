@@ -101,7 +101,7 @@ URxvt.bolditalicFont: xft:Droid Sans Mono:pixelsize=12:antialias=true:bold:itali
 URxvt.scrollBar: false
 
 URxvt.perl-ext-common:  default,matcher,url-select
-URxvt.urlLauncher:      /usr/bin/luakit
+URxvt.urlLauncher:      /usr/bin/firefox
 URxvt.keysym.M-u:       perl:url-select:select_next
 URxvt.underlineURLs: 	true
 URxvt.matcher.button:   1 

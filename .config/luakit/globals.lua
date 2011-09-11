@@ -106,17 +106,11 @@ domain_props = {
         ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
         "/styles/ubuntuforums.css",
     },
+    ["useragentstring.com"] = {
+        ["user-agent"]               = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.7 Safari/535.1",
+    },
 }
   
---[[
-    ["youtube.com"] = {
-        ["enable-scripts"] = true,
-        ["enable-plugins"] = true,
-    },
-    ["bbs.archlinux.org"] = {
-        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir .. "/styles/dark.css",
-        ["enable-private-browsing"] = true,
-    }, ]]
 
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80

@@ -114,3 +114,6 @@ mail-client=tmux new-window -d "mutt 'dwb_uri'"
 complete-commands=true
 javascript-can-open-windows-automatically=false
 hint-font=bold 10px monospace
+top-statusbar=false
+ssl-ca-cert=
+ssl-strict=true

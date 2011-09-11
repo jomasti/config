@@ -3,7 +3,6 @@
 sh ~/.fehbg
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
-urxvtd -q -o -f
 
 # Display volume and date with time
 while true; do

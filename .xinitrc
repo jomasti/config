@@ -29,7 +29,7 @@ fi
 #parcellite &
 #xscreensaver -no-splash &
 #osmo &
-#urxvtd -q -o -f
+urxvtd -q -o -f
 #xset +fp /usr/share/fonts/local
 #(sleep 2 && nitrogen --restore) &
 #dropboxd &
@@ -37,55 +37,54 @@ fi
 
 if [[ $1 == "gnome" ]]
 then
-  exec ck-launch-session gnome-session
+  exec gnome-session
 elif [[ $1 == "xfce4" ]]
 then
-  exec ck-launch-session startxfce4
+  exec startxfce4
 elif [[ $1 == "awesome" ]]
 then
   /home/josh/bin/xinit.sh
-  exec ck-launch-session awesome
+  exec awesome
 elif [[ $1 == "i3" ]]
 then
   /home/josh/bin/xinit.sh
-  exec ck-launch-session i3 -V >>/home/josh/.i3/i3log >&1
+  exec i3 -V >>/home/josh/.i3/i3log >&1
 elif [[ $1 == "xmonad" ]]
 then
   exec /usr/bin/trayer --edge top --align center --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 13 &
-  exec ck-launch-session xmonad
+  exec xmonad
 elif [[ $1 == "scrotwm" ]]
 then
-  exec ck-launch-session scrotwm
+  exec scrotwm
 elif [[ $1 == "subtle" ]]
 then
   /home/josh/bin/xinit.sh
-  exec ck-launch-session subtle
+  exec subtle
 elif [[ $1 == "ratpoison" ]]
 then
   #xrandr --output VGA1 --off
   ( sleep 1; trayer --align right --edge bottom --distance 0 --expand true --transparent true --alpha 128 --tint 0 --SetDockType true --SetPartialStrut true & ) &
-  exec ck-launch-session ratpoison
+  exec ratpoison
 elif [[ $1 == "openbox" ]]
 then
-  bmpanel2 &
-  exec ck-launch-session openbox
+  exec openbox-session
 elif [[ $1 == "catwm" ]]
 then
-  exec ck-launch-session catwm
+  exec catwm
 elif [[ $1 == "dwm" ]]
 then
   #xrandr --output VGA1 --off
-  exec ck-launch-session ~/bin/startdwm
+  exec ~/bin/startdwm
 elif [[ $1 == "stumpwm" ]]
 then
   /home/josh/bin/xinit.sh
-  exec ck-launch-session stumpwm
+  exec stumpwm
 elif [[ $1 == "wmfs" ]]
 then
-  exec ck-launch-session wmfs
+  exec wmfs
 elif [[ $1 == "musca" ]]
 then
-  exec ck-launch-session musca
+  exec musca
 else
   echo "Choose a window manager"
 fi

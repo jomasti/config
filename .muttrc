@@ -1,96 +1,95 @@
-set alias_file = '~/.mutt/aliases'
-set history_file = '~/.mutt/history'
-set mailcap_path = '~/.mutt/mailcap'
-set header_cache = '~/.mutt/cache/headers'
-set message_cachedir = '~/.mutt/cache/bodies'
-set certificate_file = '~/.mutt/certificates'
-set tmpdir = '~/.mutt/tmp'
+# options
+set mbox_type   = Maildir               # mailbox type
+set folder      = ~/Mail/GMail          # root folder
+set spoolfile   = "+INBOX"              # inbox
+set mbox        = "+archive"            # [Gmail]/All Mail
+set postponed   = "+drafts"             # [Gmail]/Drafts
+unset record                            # required to prevent duplicates in Sent
+
+set sendmail    = /usr/bin/msmtp        # use msmtp 'default' account
+
+set alias_file          = ~/.mutt/alias                         # alias file
+set header_cache        = ~/.mutt/cache/headers                 # where to store headers        
+set message_cachedir    = ~/.mutt/cache/bodies                  # where to store bodies
+set certificate_file    = ~/.mutt/certificates                  # where to store certs
+set mailcap_path        = ~/.mutt/mailcap                       # entrys for filetypes
+set signature           = ~/.mutt/sig                           # my signature file
+set tmpdir              = ~/.mutt/temp                          # where to keep temp files
+
+# mailboxes
+mailboxes +INBOX +archive +sent +drafts +spam +trash
+
+# bindings
+macro index D "<save-message>+trash<enter>"   "move message to the trash"
+macro index S "<save-message>+spam<enter>"    "mark message as spam"
+
+macro pager   \Ca   <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+
+# quick-sync ~/Mail immediately with offlineimap
+macro index Z   "<shell-escape>/usr/bin/offlineimap -q -o<enter>" "sync IMAP"
+
+# main options
+set realname            = "Joshua Stiefer"                   # who am i?
+set from                = "facedelajunk@gmail.com"              # who am i?
+set envelope_from                                       # which from?
+set mail_check          = 0                             # check for mail always
+unset move                                              # gmail does that
+set delete                                              # don't ask, just do
+unset confirmappend                                     # don't ask, just do!
+set quit                                                # don't ask, just do!!
+unset mark_old                                          # read/new is good enough for me
+set beep_new                                                     # bell on new mails
+set timeout             = 3                                      # idle time before scanning
+
+# index options
+set sort                = threads                       # like gmail 
+set sort_aux            = reverse-last-date-received    # like gmail
+set uncollapse_jump                                              # don't collapse on an unread message 
+set sort_re                                             # thread based on reply_regexp
+set reply_regexp        = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 
 
+# pager
+set pager_index_lines   = 10                             # show 8 messages when in pager
+set pager_context       = 5                             # show five lines when skipping in pager
+set pager_stop                                          # don't go to next message automatically
+set menu_scroll                                         # scroll in menus 
+set smart_wrap                                          # don't split words
+set tilde                                               # show tildes like in vim
+unset markers                                           # no ugly plus signs
+auto_view text/html 
 
-set realname = 'Joshua Stiefer'
-
-
-
-
-set edit_headers = yes
-set editor = 'vim'
-set postponed = '~+[Gmail]/Drafts'
-
-
-
-
-set reverse_alias = yes
-set timeout = '60'
-
-
-set markers = no
-set pager_index_lines = '5'
-
-
-set escape = '~'
-
-
-set folder = 'imaps://imap.gmail.com:993/'
-set from = 'facedelajunk@gmail.com'
+# composing mail
+set fcc_attach                                          # save attachments with the body
+unset mime_forward                                      # forward attachments as part of body
+set forward_format      = "Fwd: %s"                     # format for subject when forwarding
+set include                                             # include message in replies
+set forward_quote                                       # include message in forwards
+set attribution         = "On %d, %n wrote:"                    # set the attribution
+set reply_to                                                     # reply to Reply to: field
+set reverse_name                                                 # reply as whomever it was to
+set include                                                      # include message in replies
+set forward_quote                                                # include message in forwards
 
 
-set mail_check = '180'
-set save_empty = yes
-set spoolfile = '+INBOX'
+# headers to show
+ignore *                                                # ignore all headers
+unignore from: to: cc: date: subject:                   # show only these
+hdr_order from: to: cc: date: subject:                  # and in this order
 
+source ~/.mutt/colors.muttrc
+source ~/.mutt/gpg.rc
+source ~/.mutt/sidebar.muttrc
 
-set imap_check_subscribed = yes
-set imap_keepalive = '900'
-
-
-
+# lists
 lists arch-general@archlinux.org                                # Arch general list
 subscribe arch-general@archlinux.org
 
+lists arch-dev-publicv@archlinux.org
+subscribe arch-dev-public@archlinux.org
 
+lists aur-general@archlinux.org
+subscribe aur-general@archlinux.org
 
-
-set smtp_url = 'smtp://facedelajunk@gmail.com@smtp.gmail.com:587/'
-
-
-
-
-
-
-set move = no
-
-
-set sendmail = '/usr/sbin/sendmail -oem -oi'
-set use_from = yes
-set user_agent = yes
-
-
-
-
-set sort = 'threads'
-set sort_alias = 'alias'
-set sort_aux = 'last-date-received'
-
-
-set ssl_force_tls = yes
-
-
-
-
-color attachment brightmagenta default
-color error      brightred    default
-color hdrdefault red          default
-color indicator  brightyellow red
-color markers    brightcyan   default
-color message    brightcyan   default
-color normal     default      default
-color quoted     brightblue   default
-color search     default      green
-color signature  red          default
-color status     yellow       blue
-color tilde      magenta      default
-color tree       magenta      default
-
-auto_view text/html
-macro pager \ca <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+lists aur-dev@archlinux.org
+subscribe aur-dev@archlinux.org

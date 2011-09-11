@@ -51,6 +51,7 @@ static const Tag tags[] = {
 };
 
 /* key definitions */
+#define ALTKEY Mod1Mask
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
@@ -64,12 +65,18 @@ static const Tag tags[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "urxvtc", NULL };
+static const char *quitcmd[]  = { "killall", "startdwm", NULL };
+static const char *lockcmd[] = { "slock", NULL };
+static const char *suspendcmd[] = { "dbus-send", "--system", "--print-reply", "--dest=org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower.Suspend", NULL };
+static const char *hibernatecmd[] = { "dbus-send", "--system", "--print-reply", "--dest=org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower.Hibernate", NULL };
+static const char *rebootcmd[] = { "dbus-send", "--system", "--print-reply", "--dest=org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager", "org.freedesktop.ConsoleKit.Manager.Restart", NULL };
+static const char *shutdowncmd[] = { "dbus-send", "--system", "--print-reply", "--dest=org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager", "org.freedesktop.ConsoleKit.Manager.Stop", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,              XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
     { MODKEY,                       XK_a,      incnmaster,     {.i = +1} },
@@ -109,6 +116,12 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ALTKEY,				XK_q,	   spawn,		   {.v = quitcmd} },
+	{ 0,                            XK_Pause,  spawn,          {.v = lockcmd} },
+	{ ControlMask|ALTKEY,           XK_s,      spawn,          {.v = suspendcmd} },
+	{ ControlMask|ALTKEY,           XK_h,      spawn,          {.v = hibernatecmd} },
+	{ ControlMask|ALTKEY,           XK_r,      spawn,          {.v = rebootcmd} },
+	{ ControlMask|ALTKEY,           XK_q,      spawn,          {.v = shutdowncmd} },
 };
 
 /* button definitions */
