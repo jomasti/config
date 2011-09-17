@@ -1,9 +1,9 @@
 # options
 set mbox_type   = Maildir               # mailbox type
 set folder      = ~/Mail/GMail          # root folder
-set spoolfile   = "+INBOX"              # inbox
-set mbox        = "+archive"            # [Gmail]/All Mail
-set postponed   = "+drafts"             # [Gmail]/Drafts
+set spoolfile   = "+"              # inbox
+set mbox        = "+.Archive"            # [Gmail]/All Mail
+set postponed   = "+.Drafts"             # [Gmail]/Drafts
 unset record                            # required to prevent duplicates in Sent
 
 set sendmail    = /usr/bin/msmtp        # use msmtp 'default' account
@@ -17,7 +17,7 @@ set signature           = ~/.mutt/sig                           # my signature f
 set tmpdir              = ~/.mutt/temp                          # where to keep temp files
 
 # mailboxes
-mailboxes +INBOX +archive +sent +drafts +spam +trash
+mailboxes + +.Archive +.Sent +.Drafts +.Trash
 
 # bindings
 macro index D "<save-message>+trash<enter>"   "move message to the trash"
