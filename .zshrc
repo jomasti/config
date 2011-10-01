@@ -36,13 +36,11 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
 # aliases
-alias mipod='sudo sh /home/josh/Scripts/ipodmount.sh'
-alias uipod='sudo sh /home/josh/Scripts/ipodumount.sh'
 alias ls='ls --color=auto'
 alias la='ls -a --color=auto'
 alias ll='ls -lh --color=auto'
 alias lal='ls -lha --color=auto'
-alias asu-up='sshfs jstiefer@general.asu.edu:. /~ASU'
+alias asu-up='sshfs jstiefer@general.asu.edu:. ~/ASU'
 alias asu-down='fusermount -u ~/ASU'
 alias ..='cd ..'
 alias dh='dirs -v'
