@@ -11,6 +11,7 @@ if [[ "${COLORTERM}" == "gnome-terminal" && "${TERM}" != "xterm"  ]]; then
 	export TERM="gnome-256color"
 fi
 export UZBL_UTIL_DIR=$XDG_DATA_HOME/uzbl/util/
+export INTEL_BATCH=1
 
 autoload -U compinit compinit
 autoload colors zsh/terminfo

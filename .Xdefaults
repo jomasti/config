@@ -1,5 +1,5 @@
-xterm*foreground: #555555
-xterm*background: #eeeeee
+#xterm*foreground: #555555
+#xterm*background: #eeeeee
 
 Xft.dpi:        96
 Xft.antialias:  true
@@ -56,11 +56,11 @@ Xcursor.theme:	Vanilla-DMZ
 !URxvt.color7: #DDEEDD
 !URxvt.color15: #EFEFEF
 
-URxvt.foreground: #999999
-URxvt.background: #181818
+*foreground: #BBBBBB
+*background: #181818
 ! Black
 *color0:      #181818
-*color8:      #555753
+*color8:      #989b96
 ! Red
 *color1:      #ff6565
 *color9:      #ff8d8d
