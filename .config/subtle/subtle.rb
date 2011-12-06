@@ -17,6 +17,7 @@
 #
 # Following options change behaviour and sizes of the window manager:
 #
+
 # Window move/resize steps in pixel per keypress
 set :step, 5
 
@@ -33,12 +34,8 @@ set :urgent, false
 # Honor resize size hints globally
 set :resize, false
 
-# Font string either take from e.g. xfontsel or use xft
-#set :font, "-*-*-medium-*-*-*-14-*-*-*-*-*-*-*"
-set :font, "xft:droid sans mono-8"
-
-# Separator between sublets
-set :separator, "|"
+# Enable gravity tiling
+set :tiling, false
 
 # Set the WM_NAME of subtle (Java quirk)
 set :wmname, "LG3D"
@@ -51,6 +48,8 @@ set :wmname, "LG3D"
 # sublets screen wise. The default config uses top panel on the first screen
 # only, it's up to the user to enable the bottom panel or disable either one
 # or both.
+
+# === Properties
 #
 # [*stipple*]    This property adds a stipple pattern to both screen panels.
 #
@@ -78,9 +77,12 @@ set :wmname, "LG3D"
 # [*:center*]    Enclose items with :center to center them on the panel
 # [*:separator*] Insert separator
 #
-# === Link
+# Empty panels are hidden.
 #
-# http://subforge.org/wiki/subtle/Panel
+# === Links
+#
+# http://subforge.org/projects/subtle/wiki/Multihead
+# http://subforge.org/projects/subtle/wiki/Panel
 #
 
 screen 1 do
@@ -122,13 +124,15 @@ end
 #
 # === Link
 #
-# http://subforge.org/wiki/subtle/Themes
+# http://subforge.org/projects/subtle/wiki/Styles
 
-style :title do
+style :all do
   padding     2, 10, 0, 10
   border      "#303030", 0
   foreground  "#3465a4"
   background  "#181818"
+  font "xft:droid sans mono-8"
+  separator "|"
 end
 
 
@@ -168,6 +172,12 @@ style :separator do
   foreground  "#757575"
 end
 
+# Style for focus window title
+style :title do
+  foreground  "#3465a4"
+end
+
+# Style for active/inactive windows
 style :clients do
   active      "#303030", 0
   inactive    "#181818", 0

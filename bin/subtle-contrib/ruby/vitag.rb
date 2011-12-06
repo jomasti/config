@@ -13,21 +13,22 @@
 # http://subforge.org/projects/subtle-contrib/wiki/Vitag
 #
 
-require "tempfile"
+require 'tempfile'
+require 'digest/md5'
 
 begin
-  require "subtle/subtlext"
+  require 'subtle/subtlext'
 rescue LoadError
   puts ">>> ERROR: Couldn't find subtlext"
   exit
 end
 
 # Check if $EDITOR is set
-if(ENV["EDITOR"].nil?)
-  puts <<EOF
+if ENV['EDITOR'].nil?
+  puts <<-EOF
 >>> ERROR: Couldn't find $EDITOR envorinment variable
 >>>        Please set it like this: export EDITOR=vim
-EOF
+    EOF
   exit
 end
 
@@ -38,11 +39,11 @@ unless(Subtlext::Subtle.running?)
 end
 
 # Check for subtlext version
-major, minor, teeny = Subtlext::VERSION.split(".").map(&:to_i)
-if(2316 > teeny)
-  puts ">>> ERROR: vitag needs at least subtle `0.9.2316' (found: %s)" % [
+major, minor, teeny = Subtlext::VERSION.split('.').map(&:to_i)
+if major == 0 and minor == 10 and 3104 > teeny
+  puts ">>> ERROR: vitag needs at least subtle `0.10.3104' (found: %s)" % [
     Subtlext::VERSION
-  ]
+   ]
   exit
 end
 
@@ -51,62 +52,73 @@ views   = Subtlext::View.all
 clients = Subtlext::Client.all
 
 # Create temp file
-temp = Tempfile.new("vitag-")
+temp = Tempfile.new('vitag-')
 
 # Fill in tags
-temp.puts("# Views")
+temp.puts('# Views')
+
 views.each do |v|
-  temp.puts("@%s %s" % [
+  temp.puts('@%s %s' % [
     v.name,
-    v.tags.map { |t| "#%s" % [ t ] }.join(" ")
+    v.tags.map { |t| '#%s' % [ t ] }.join(' ')
   ])
 end
 
 # Fill in tags
-temp.puts("")
-temp.puts("# Clients")
+temp.puts('')
+temp.puts('# Clients')
+
 clients.each do |c|
-  temp.puts("%s %s" % [
-    c.instance,
-    c.tags.map { |t| "#%s" % [ t ] }.join(" ")
+  # Remove hashes from string
+  name = c.to_str.split('#').first
+
+  temp.puts('%s (%s) %s' % [
+    name, c.instance, c.tags.map { |t| '#%s' % [ t ] }.join(' ')
   ])
 end
 
 temp.flush
 
+# Store checksum for check
+md5 = Digest::MD5.file(temp.path)
+
 # Start editor
-system("$EDITOR %s" % [ temp.path ])
+system('$EDITOR %s' % [ temp.path ])
 
 temp.rewind
 
-# Read temp file
-temp.readlines.each do |l|
-  next if(l.start_with?("#") or l.empty?)
+# Check for changes
+if md5 != Digest::MD5.file(temp.path)
 
-  value, *tags = l.delete("@#").split(" ")
+  # Read temp file
+  temp.readlines.each do |line|
 
-  # Select type
-  case(value)
-    when /^@/ then cur = views.select { |v| v.name == value }.first
-    else           cur = clients.select { |c| c.instance == value }.first
-  end
-
-  # Check for valid objects and changed tags
-  if(cur and cur.tags.map(&:name) != tags)
-    tags.map! do |name|
-      # Find or create tags
-      tag = Subtlext::Tag[name] || Subtlext::Tag.new(name)
-      tag.save
-
-      tag
+    # Handle lines
+    case line[0]
+      when '@'            then cur = views.shift
+      when '#', ' ', "\n" then next
+      else                     cur = clients.shift
     end
 
-    p "#{cur.id}: cur=#{cur}, tags=#{tags}"
+    # Select tags and sanitize
+    tags = line.split('#')[1..-1].map(&:rstrip)
 
-    # Finally assign tags
-    cur.tags = tags
+    # Check for valid object
+    if cur and tags
 
-    cur = nil
+      # Find or create tags
+      tags.map! do |name|
+        tag = Subtlext::Tag.first(name) || Subtlext::Tag.new(name)
+        tag.save
+
+        tag
+      end
+
+      # Finally assign tags
+      cur.tags = tags
+
+      cur = nil
+    end
   end
 end
 

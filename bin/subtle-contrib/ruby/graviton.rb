@@ -22,7 +22,7 @@ end
 
 # Check for subtlext version
 major, minor, teeny = Subtlext::VERSION.split(".").map(&:to_i)
-if(major == 0 and minor == 9 and 2829 > teeny)
+if 0 == major and 9 == minor and 2829 > teeny)
   puts ">>> ERROR: launcher needs at least subtle `0.9.2829' (found: %s)" % [
     Subtlext::VERSION
    ]
@@ -86,12 +86,12 @@ module Subtle # {{{
       ##
 
       def normalize
-        if(0 > @width)
+        if 0 > @width
           @width *= -1
           @x      -= @width
         end
 
-        if(0 > @height)
+        if 0 > @height
           @height *= -1
           @y      -= @height
         end
@@ -105,13 +105,13 @@ module Subtle # {{{
       ##
 
       def is_edge?(x, y)
-        if(x == @x and y == @y)
+        if x == @x and y == @y
           :top_left
-        elsif(x == (@x + @width) and y == @y)
+        elsif x == (@x + @width) and y == @y
           :top_right
-        elsif(x == @x and y == (@y + @height))
+        elsif x == @x and y == (@y + @height)
           :bottom_left
-        elsif(x == (@x + @width) and y == (@y + @height))
+        elsif x == (@x + @width) and y == (@y + @height)
           :bottom_right
         else
           nil
@@ -360,7 +360,7 @@ module Subtle # {{{
         @y = @grid_y / 2 < mody ? event.y - mody + @grid_y : event.y - mody
 
         # Calculate new width/height
-        unless(@cur_rect.nil?)
+        unless @cur_rect.nil?
           case @cur_edge
             when :top_left
               @cur_rect.x      = @x
@@ -389,10 +389,10 @@ module Subtle # {{{
       end # }}}
 
       def press_event(widget, event) # {{{
-        if(1 == event.button)
+        if 1 == event.button
           # Find rectangles by edge
           @rectangles.each do |r|
-            case(r.is_edge?(@x, @y))
+            case r.is_edge?(@x, @y)
               when :top_left
                 @cur_rect = r
                 @cur_edge = :top_left
@@ -425,7 +425,7 @@ module Subtle # {{{
             end
           end
 
-          if(@rectangles.size < COLORS.size)
+          if @rectangles.size < COLORS.size
             # Create new rectangle
             @mode     = :resize
             @cur_edge = :bottom_right
@@ -448,8 +448,8 @@ module Subtle # {{{
       end # }}}
 
       def release_event(widget, event) # {{{
-        if(1 == event.button)
-          @cur_rect.normalize unless(@cur_rect.nil?)
+        if 1 == event.button
+          @cur_rect.normalize unless @cur_rect.nil?
           @cur_rect = nil
           @cur_edge = nil
           @sx       = 0
@@ -472,7 +472,7 @@ module Subtle # {{{
 end # }}}
 
 # Implicitly run<
-if(__FILE__ == $0)
+if __FILE__ == $0
   Gtk.init
   Subtle::Contrib::Graviton.new
   Gtk.main
