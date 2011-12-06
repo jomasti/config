@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+reflector -l 15 --sort rate --save /etc/pacman.d/mirrorlist
+diff /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
