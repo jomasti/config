@@ -58,6 +58,7 @@ set smart_wrap                                          # don't split words
 set tilde                                               # show tildes like in vim
 unset markers                                           # no ugly plus signs
 auto_view text/html 
+mime_lookup application/octet-stream
 
 # composing mail
 set fcc_attach                                          # save attachments with the body
