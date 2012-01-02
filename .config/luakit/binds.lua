@@ -14,7 +14,6 @@ local strip, split = lousy.util.string.strip, lousy.util.string.split
 local scroll_step = globals.scroll_step or 20
 local more, less = "+"..scroll_step.."px", "-"..scroll_step.."px"
 local zoom_step = globals.zoom_step or 0.1
-local homepage = globals.homepage or "http://luakit.org"
 
 -- Add binds to a mode
 function add_binds(mode, binds, before)
@@ -247,7 +246,6 @@ add_binds("normal", {
     
     -- Download and play video
     key({}, "v", function (w) 
-		local view = w:get_current()
 		local uri = view.hovered_uri or view.uri
 		if uri then
 			luakit.spawn(string.format("urxvt -e cclive -f hq --filename-format '%%t.%%s' " 
@@ -314,6 +312,9 @@ add_cmds({
     cmd("q[uit]",               function (w, a, o) w:close_win(o.bang) end),
     cmd({"viewsource",  "vs" }, function (w, a, o) w:toggle_source(not o.bang and true or nil) end),
     cmd({"writequit", "wq"},    function (w, a, o) w:save_session() w:close_win(o.bang) end),
+
+    --cmd({"private", "vp" },     function (w) w:view:enable_private_browsing = true end),
+
 
     cmd("lua", function (w, a)
         if a then

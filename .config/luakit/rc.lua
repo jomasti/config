@@ -124,12 +124,18 @@ require "completion"
 -- `,ts` to toggle scripts, `,tp` to toggle plugins, `,tr` to reset.
 -- Remove all "enable_scripts" & "enable_plugins" lines from your
 -- domain_props table (in config/globals.lua) as this module will conflict.
---require "noscript"
+require "noscript"
+
+noscript.enable_scripts = false
+noscript.enable_plugins = false
 
 require "follow_selected"
 require "go_input"
 require "go_next_prev"
 require "go_up"
+
+-- Like HTTPS Everywhere
+require "https"
 
 -----------------------------
 -- End user script loading --

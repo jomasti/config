@@ -7,7 +7,7 @@ globals = {
     zoom_step           = 0.1,
     max_cmd_history     = 100,
     max_srch_history    = 100,
- -- http_proxy          = "127.0.0.1:8118",
+    http_proxy          = "http://localhost:8118",
     default_window_size = "1024x768",
 
  -- Disables loading of hostnames from /etc/hosts (for large host files)
@@ -44,7 +44,7 @@ soup.ssl_strict = false
 
 -- Set cookie acceptance policy
 cookie_policy = { always = 0, never = 1, no_third_party = 2 }
-soup.accept_policy = cookie_policy.always
+soup.accept_policy = cookie_policy.no_third_party
 
 -- List of search engines. Each item must contain a single %s which is
 -- replaced by URI encoded search terms. All other occurances of the percent
@@ -68,50 +68,34 @@ search_engines.default = search_engines.google
 --search_engines.default = "%s"
 
 -- Per-domain webview properties
--- See http://webkitgtk.org/reference/webkitgtk-WebKitWebSettings.html
-domain_props = { 
+-- See http://webkitgtk.org/reference/WebKitWebSettings.html
+domain_props = {
     ["all"] = {
-        ["enable-scripts"]          = true,
-        ["enable-plugins"]          = false,
-        ["enable-private-browsing"] = false,
-        ["enable-spell-checking"]   = true,
-        ["spell-checking-languages"]= "en_US",
-        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
-        "/styles/adblock-elements.css",
+        enable_private_browsing     = false,
+        enable_spell_checking       = true,
+        spell_checking_languages    = "en_US",
+        user_stylesheet_uri         = "file://" .. luakit.data_dir ..
+        "/styles/adblock_elements.css",
     },
     ["last.fm"] = {
-        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
+        user_stylesheet_uri         = "file://" .. luakit.data_dir ..
         "/styles/lastfm-rounded-striped.css",
     },
-    ["pandora.com"] = {
-        ["enable-plugins"]          = true,
-    },
-    ["mpd.wikia.com"] = {
-        ["enable-scripts"]          = false,
-    },
-    ["vim.wikia.com"] = {
-        ["enable-scripts"]          = false,
-    },
-    ["lyrics.wikia.com"] = {
-        ["enable-scripts"]          = false,
-    },
-    ["facebook.com"] = {
-        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
+    --[[["facebook.com"] = {
+        user_stylesheet_uri         = "file://" .. luakit.data_dir ..
         "/styles/facebook.css",
     },
+    --]]
     ["en.wikipedia.org"] = {
-        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
+        user_stylesheet_uri         = "file://" .. luakit.data_dir ..
         "/styles/wiki.css",
     },
     ["ubuntuforums.org"] = {
-        ["user-stylesheet-uri"]     = "file://" .. luakit.data_dir ..
+        user_stylesheet_uri         = "file://" .. luakit.data_dir ..
         "/styles/ubuntuforums.css",
     },
-    ["useragentstring.com"] = {
-        ["user-agent"]               = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.7 Safari/535.1",
-    },
 }
-  
+
 
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80
