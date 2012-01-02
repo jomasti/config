@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+NOAA="http://weather.noaa.gov/pub/data/observations/metar/decoded/"
+CODE="KGEU"
+WEATHER=$(curl --connect-timeout 1 -fsm 3 $NOAA$CODE.TXT)
+if [[ -z "$WEATHER" ]]; then
+    echo "N/A"
+else
+    echo "$WEATHER"
+fi

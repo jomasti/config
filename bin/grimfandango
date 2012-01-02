@@ -1,0 +1,25 @@
+#!/bin/bash
+wine "C:\Program Files\LucasArts/Grim/grimfandango.exe" &
+
+# Get list of Grim Fandango threads. And don't forget to remove the grep ID from the list!
+GRIM_THREADS=`ps -LFfea | grep grimfandango.exe | grep -Ev 'grep' | awk '{printf($4); printf(" ")}'`
+
+# Wait until the 5 threads are created
+THREAD_COUNT=`echo $GRIM_THREADS | wc -w`
+while [ $THREAD_COUNT -lt 5 ]
+do
+echo "Waiting for threads to be ready. Hit Ctrl-C if it hangs here after closing the game."
+sleep 1
+GRIM_THREADS=`ps -LFfea | grep grimfandango.exe | grep -Ev 'grep' | awk '{printf($4); printf(" ")}'`
+THREAD_COUNT=`echo $GRIM_THREADS | wc -w`
+done
+
+# The 5 Grim Fandango threads are ready. Set affinity!!!
+for CURRENT_THREAD in $GRIM_THREADS
+do
+# Set affinity to the first system processor
+echo "Setting thread " $CURRENT_THREAD " affinity!"
+taskset -pc 0 $CURRENT_THREAD
+done
+
+echo "READY!!!" 
