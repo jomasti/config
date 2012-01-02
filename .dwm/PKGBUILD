@@ -4,7 +4,7 @@
 # Contributor: Grigorios Bouzakis <grbzks@gmail.com>
 
 pkgname=dwm
-pkgver=5.9
+pkgver=6.0
 pkgrel=2
 pkgdesc="A dynamic window manager for X"
 url="http://dwm.suckless.org"
@@ -22,14 +22,14 @@ source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 
 build() {
   cd $srcdir/$pkgname-$pkgver
-  patch -p1 < $srcdir/dwm-5.9-pertag2.diff
-  patch -p1 < $srcdir/dwm-5.9-push.diff
-  patch -p1 < $srcdir/dwm-5.9-cycle.diff
-  patch -p1 < $srcdir/dwm-5.9-gaplessgrid.diff
-  patch -p1 < $srcdir/dwm-5.9-gaps.diff
-  patch -p1 < $srcdir/dwm-5.9-bstack.diff
-  patch -p1 < $srcdir/dwm-5.9-focusonclick.diff
-  patch -p1 < $srcdir/dwm-5.9-viewontag.diff
+  patch -p1 < $srcdir/01-dwm-6.0-pertag2.diff
+  #patch -p1 < $srcdir/dwm-5.9-push.diff
+  #patch -p1 < $srcdir/dwm-5.9-cycle.diff
+  #patch -p1 < $srcdir/dwm-5.9-gaplessgrid.diff
+  #patch -p1 < $srcdir/dwm-5.9-gaps.diff
+  #patch -p1 < $srcdir/dwm-5.9-bstack.diff
+  #patch -p1 < $srcdir/dwm-5.9-focusonclick.diff
+  #patch -p1 < $srcdir/dwm-5.9-viewontag.diff
   cp $srcdir/config.h config.h
   sed -i 's/CPPFLAGS =/CPPFLAGS +=/g' config.mk
   sed -i 's/^CFLAGS = -g/#CFLAGS += -g/g' config.mk

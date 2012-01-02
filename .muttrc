@@ -1,9 +1,9 @@
 # options
 set mbox_type   = Maildir               # mailbox type
 set folder      = ~/Mail/GMail          # root folder
-set spoolfile   = "+"              # inbox
-set mbox        = "+.Archive"            # [Gmail]/All Mail
-set postponed   = "+.Drafts"             # [Gmail]/Drafts
+set spoolfile   = "+INBOX"              		# inbox
+set mbox        = "+Archive"           	# [Gmail]/All Mail
+set postponed   = "+Drafts"            	# [Gmail]/Drafts
 unset record                            # required to prevent duplicates in Sent
 
 set sendmail    = /usr/bin/msmtp        # use msmtp 'default' account
@@ -17,11 +17,15 @@ set signature           = ~/.mutt/sig                           # my signature f
 set tmpdir              = ~/.mutt/temp                          # where to keep temp files
 
 # mailboxes
-mailboxes + +.Archive +.Sent +.Drafts +.Trash
+mailboxes +INBOX +"Arch Dev" +"Arch General" +"AUR General" +"AUR Dev" +"AUR Notify" +"Arch Haskell" \
+		  +XMonad +Awesome +Luakit +ZSH +E17 \
+		  +Last.fm +Tumblr +Facebook \
+		  +ASU \
+		  +Archive +Sent +Drafts +Trash
 
 # bindings
-macro index D "<save-message>+trash<enter>"   "move message to the trash"
-macro index S "<save-message>+spam<enter>"    "mark message as spam"
+macro index D "<save-message>+Trash<enter>"   "move message to the trash"
+macro index S "<save-message>+Spam<enter>"    "mark message as spam"
 
 macro pager   \Ca   <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 

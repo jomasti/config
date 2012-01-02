@@ -1,13 +1,89 @@
-#xterm*foreground: #555555
-#xterm*background: #eeeeee
+! ----------------------------------------------------------------------------
+! file:     ~/.Xresources
+! author:   Joshua Stiefer
+! modified: December 2011
+! vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! ----------------------------------------------------------------------------
 
+! xft
 Xft.dpi:        96
 Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintslight
+Xft.lcdfilter:  lcddefault
 
+! cursor theme
 Xcursor.theme:	Vanilla-DMZ
+
+! general
+URxvt.urgentOnBell: true
+URxvt.saveLines: 65535
+URxvt.internalBorder: 0
+URxvt.externalBorder: 0
+URxvt.borderless: true
+
+! colors and transparency
+!URxvt.inheritPixmap: true
+!URxvt.transparent: true
+!URxvt.tintColor: #000
+!URxvt.shading: 50
+!URxvt.depth:      32
+
+! fonts
+URxvt.font: xft:Anka/Coder:pixelsize=12:antialias=true:hinting=true
+!URxvt.font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+URxvt.boldFont: xft:Anka/Coder:pixelsize=12:antialias=true:bold:hinting=true
+!URxvt.font: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+URxvt.italicFont: xft:Anka/Coder:pixelsize=12:antialias=true:italic:autohint=true:hinting=true
+URxvt.bolditalicFont: xft:Anka/Coder:pixelsize=12:antialias=true:bold:italic:autohint=true:hinting=true
+
+! scrollbar
+URxvt.scrollBar: true
+URxvt.scrollBar_right: true
+URxvt.scrollBar_floating: true
+URxvt.scrollColor: #cdff00
+
+! extensions
+URxvt.perl-ext-common:  default,matcher,url-select
+URxvt.urlLauncher:      /usr/bin/firefox
+URxvt.keysym.M-u:       perl:url-select:select_next
+URxvt.underlineURLs: 	true
+URxvt.matcher.button:   1
+
+! xscreensaver
+
+!font settings
+xscreensaver.Dialog.headingFont:        -*-dina-bold-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-dina-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-dina-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-dina-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-dina-bold-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-dina-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-dina-bold-r-*-*-12-*-*-*-*-*-*-*
+!general dialog box (affects main hostname, username, password text)
+xscreensaver.Dialog.foreground:         #757575
+xscreensaver.Dialog.background:         #181818
+xscreensaver.Dialog.topShadowColor:     #000000
+xscreensaver.Dialog.bottomShadowColor:  #000000
+xscreensaver.Dialog.Button.foreground:  #666666
+xscreensaver.Dialog.Button.background:  #ffffff
+!username/password input box and date text colour
+xscreensaver.Dialog.text.foreground:    #666666
+xscreensaver.Dialog.text.background:    #ffffff
+xscreensaver.Dialog.internalBorderWidth:24
+screensaver.Dialog.borderWidth:        20
+xscreensaver.Dialog.shadowThickness:    2
+!timeout bar (background is actually determined by Dialog.text.background)
+xscreensaver.passwd.thermometer.foreground:  #ff3b77
+xscreensaver.passwd.thermometer.background:  #000000
+xscreensaver.passwd.thermometer.width:       8
+!datestamp format--see the strftime(3) manual page for details
+xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
+
+
+
+! color schemes
 
 !URxvt.background: grey0
 !URxvt.foreground: ivory2
@@ -59,49 +135,44 @@ Xcursor.theme:	Vanilla-DMZ
 *foreground: #BBBBBB
 *background: #181818
 ! Black
-*color0:      #181818
-*color8:      #989b96
+!*color0:      #181818
+!*color8:      #989b96
 ! Red
-*color1:      #ff6565
-*color9:      #ff8d8d
+!*color1:      #ff6565
+!*color9:      #ff8d8d
 ! Green
-*color2:      #93d44f
-*color10:     #c8e7a8
+!*color2:      #93d44f
+!*color10:     #c8e7a8
 ! Yellow
-*color3:      #eab93d
-*color11:     #ffc123
+!*color3:      #eab93d
+!*color11:     #ffc123
 ! Blue
-*color4:      #0066ff
-*color12:     #3465a4
+!*color4:      #0066ff
+!*color12:     #3465a4
 ! Magenta
-*color5:      #ce5c00
-*color13:     #f57900
+!*color5:      #ce5c00
+!*color13:     #f57900
 ! Cyan
-*color6:      #89b6e2
-*color14:     #0198E1
+!*color6:      #89b6e2
+!*color14:     #0198E1
 ! White
-*color7:      #cccccc
-*color15:     #ffffff
+!*color7:      #cccccc
+!*color15:     #ffffff
 
-URxvt.internalBorder: 0
-
-#URxvt.inheritPixmap: true
-#URxvt.transparent: true
-#URxvt.tintColor: #000
-#URxvt.shading: 50
-
-#URxvt.depth:      32
-
-URxvt.font: xft:Droid Sans Mono:pixelsize=12:antialias=true:hinting=true
-#URxvt.font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt.boldFont: xft:Droid Sans Mono:pixelsize=12:antialias=true:bold:hinting=true
-#URxvt.font: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
-URxvt.italicFont: xft:Droid Sans Mono:pixelsize=12:antialias=true:italic:autohint=true:hinting=true
-URxvt.bolditalicFont: xft:Droid Sans Mono:pixelsize=12:antialias=true:bold:italic:autohint=true:hinting=true
-URxvt.scrollBar: false
-
-URxvt.perl-ext-common:  default,matcher,url-select
-URxvt.urlLauncher:      /usr/bin/firefox
-URxvt.keysym.M-u:       perl:url-select:select_next
-URxvt.underlineURLs: 	true
-URxvt.matcher.button:   1 
+! Digerati
+*color0:  #303030
+*color1:  #c03000
+*color2:  #b1d631
+*color3:  #fecf35
+*color4:  #426870
+*color5:  #6D506D
+*color6:  #4bb5c1
+*color7:  #e2e2e5
+*color8:  #5F5F5F
+*color9:  #FF3A78
+*color10: #A6CD07
+*color11: #B5C865
+*color12: #4A7781
+*color13: #FF3B77
+*color14: #4bb5c1
+*color15: #e2e2e5

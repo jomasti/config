@@ -1,6 +1,6 @@
 -- {{{ Main
 theme = {}
---theme.wallpaper_cmd = {}
+theme.wallpaper_cmd = {}
 -- }}}
 
 -- {{{ Styles

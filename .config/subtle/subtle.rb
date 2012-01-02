@@ -1,5 +1,5 @@
 #
-# Author::  Christoph Kappel <unexist@dorfelite.net>
+# Author::  Christoph Kappel <unexist@subforge.org>
 # Version:: $Id$
 # License:: GNU GPLv2
 #
@@ -19,23 +19,26 @@
 #
 
 # Window move/resize steps in pixel per keypress
-set :step, 5
+set :increase_step, 5
 
 # Window screen border snapping
-set :snap, 10
+set :border_snap, 10
 
 # Default starting gravity for windows. Comment out to use gravity of
 # currently active client
-set :gravity, :center
+set :default_gravity, :center
 
-# Make transient windows urgent
-set :urgent, false
+# Make dialog windows urgent and draw focus
+set :urgent_dialogs, false
 
 # Honor resize size hints globally
-set :resize, false
+set :honor_size_hints, false
 
-# Enable gravity tiling
-set :tiling, false
+# Enable gravity tiling for all gravities
+set :gravity_tiling, false
+
+# Enable click-to-focus focus model
+set :click_to_focus, false
 
 # Set the WM_NAME of subtle (Java quirk)
 set :wmname, "LG3D"
@@ -86,21 +89,15 @@ set :wmname, "LG3D"
 #
 
 screen 1 do
-  # Add stipple to panels
-  stipple false
-
   # Content of the top panel
   top     [ :views, :title, :spacer, :tray, :volume, :clock ]
 
   # Content of the bottom panel
-  bottom  [ :cpu, :separator, :memory, :center, :weather, :center, :spacer, :mpd ]
+  bottom  [ :cpu, :separator, :memory, :separator, :pacman, :center, :weather, :center, :spacer, :mpd ]
 end
 
 # Example for a second screen:
 #screen 2 do
-#  # Add stipple to panels
-#  stipple false
-#
 #  # Content of the top panel
 #  top     [ :views, :title, :spacer ]
 #
@@ -109,81 +106,95 @@ end
 #end
 
 #
-# == Colors
+# == Styles
 #
-# Colors directly define the look of subtle, valid values are:
+# Styles define various properties of styleable items in a CSS-like syntax.
 #
-# [*hexadecimal*] #0000ff
-# [*decimal*]     (0, 0, 255)
-# [*names*]       blue
+# If no background color is given no color will be set. This will ensure a
+# custom background pixmap won't be overwritten.
 #
-# Whenever there is no valid value for a color set - subtle will use a default
-# one. There is only one exception to this: If no background color is given no
-# color will be set. This will ensure a custom background pixmap won't be
-# overwritten.
+# Following properties are available for most the styles:
+#
+# [*foreground*] Foreground text color
+# [*background*] Background color
+# [*margin*]     Outer spacing
+# [*border*]     Border color and size
+# [*padding*]    Inner spacing
+# [*font*]       Font string (xftontsel or xft)
 #
 # === Link
 #
 # http://subforge.org/projects/subtle/wiki/Styles
 
+# Style for all style elements
 style :all do
   padding     2, 10, 0, 10
   border      "#303030", 0
-  foreground  "#3465a4"
+  foreground  "#cdff00"
   background  "#181818"
   font "xft:droid sans mono-8"
-  separator "|"
 end
 
-
+# Style for the all views
 style :views do
   padding     2, 8, 0, 8
   border      "#303030", 0
   foreground  "#757575"
-  background  "#181818"
-  
+  icon "#757575"
+
+  # Style for the active views
   style :focus do
-    border_bottom      "#3465a4", 2
-    foreground  "#3465a4"
+    border_bottom      "#cdff00", 2
+    foreground  "#cdff00"
+    icon  "#cdff00"
   end
 
+  # Style for urgent window titles and views
   style :urgent do
-    border      "#303030", 0
-    foreground  "#367b00"
+    border      "#ff3b77", 0
+    foreground  "#ff3b77"
+    icon  "ff3b77"
   end
 
+  # Style for occupied views (views with clients)
   style :occupied do
-    border_bottom      "#B8B8B8", 2
-    foreground  "#B8B8B8"
+    border_bottom      "#ff3b77", 2
+    foreground  "#ff3b77"
+    icon "#ff3b77"
   end
 end
 
+# Style for sublets
 style :sublets do
   padding     2, 10, 0
-  border      "#303030", 0
+  border      "#757575", 0
   foreground  "#757575"
   background  "#181818"
 end
 
+# Style for separator
 style :separator do
   padding     1, 0, 0
   border      0
   background  "#181818"
   foreground  "#757575"
+  separator   "|"
 end
 
 # Style for focus window title
 style :title do
-  foreground  "#3465a4"
+  foreground  "#cdff00"
 end
 
 # Style for active/inactive windows
 style :clients do
-  active      "#303030", 0
-  inactive    "#181818", 0
-  margin      0
+  active    "#303030", 2
+  inactive  "#181818", 0
+  margin    0
+  width     50
 end
 
+# Style for subtle
 style :subtle do
   padding     0, 0, 0, 0
   panel       "#181818"
@@ -191,8 +202,8 @@ style :subtle do
   margin      0, 0, 0, 0
 end
 
-#color :background,      "#3D3D3D"
-
+#
+# == Gravities
 #
 # Gravities are predefined sizes a window can be set to. There are several ways
 # to set a certain gravity, most convenient is to define a gravity via a tag or
@@ -242,7 +253,7 @@ gravity :center33,       [  33,  33,  33,  33 ]
 # Right
 gravity :right,          [  50,   0,  50, 100 ]
 gravity :right66,        [  34,   0,  66, 100 ]
-gravity :right33,        [  67,  50,  33, 100 ]
+gravity :right33,        [  67,   0,  33, 100 ]
 
 # Bottom left
 gravity :bottom_left,    [   0,  50,  50,  50 ]
@@ -301,19 +312,22 @@ gravity :gimp_dock,      [  90,   0,  10, 100 ]
 #
 # ==== Mouse buttons
 #
-# [*B1*] = Button1 (Left mouse button)
-# [*B2*] = Button2 (Middle mouse button)
-# [*B3*] = Button3 (Right mouse button)
-# [*B4*] = Button4 (Mouse wheel up)
-# [*B5*] = Button5 (Mouse wheel down)
+# [*B1*]  = Button1 (Left mouse button)
+# [*B2*]  = Button2 (Middle mouse button)
+# [*B3*]  = Button3 (Right mouse button)
+# [*B4*]  = Button4 (Mouse wheel up)
+# [*B5*]  = Button5 (Mouse wheel down)
+# [*...*]
+# [*B20*] = Button20 (Are you sure that this is a mouse and not a keyboard?)
 #
 # ==== Modifiers
 #
-# [*A*] = Alt key
+# [*A*] = Alt key (Mod1)
 # [*C*] = Control key
-# [*M*] = Meta key
+# [*M*] = Meta key (Mod3)
 # [*S*] = Shift key
-# [*W*] = Super (Windows) key
+# [*W*] = Super/Windows key (Mod4)
+# [*G*] = Alt Gr (Mod5)
 #
 # === Action
 #
@@ -388,7 +402,7 @@ grab "W-f", :WindowFloat
 grab "W-space", :WindowFull
 
 # Toggle sticky mode of window (will be visible on all views)
-grab "W-s", :WindowStick
+grab "W-C-s", :WindowStick
 
 # Toggle zaphod mode of window (will span across all screens)
 grab "W-equal", :WindowZaphod
@@ -441,8 +455,8 @@ grab "XF86AudioPlay", "ncmpcpp toggle"
 grab "XF86AudioNext", "ncmpcpp next" 
 grab "XF86AudioPrev", "ncmpcpp prev" 
 grab "XF86AudioStop", "ncmpcpp stop"
-grab "XF86AudioLowerVolume", "/home/josh/bin/pa_vol_down 5"  
-grab "XF86AudioRaiseVolume", "/home/josh/bin/pa_vol_up 5"
+grab "XF86AudioLowerVolume", "/home/josh/bin/sound.sh down"  
+grab "XF86AudioRaiseVolume", "/home/josh/bin/sound.sh up"
 
 # Launcher
 begin
@@ -625,10 +639,11 @@ end
 # Simple tags
 tag "terms",   "xterm|[u]?rxvt"
 tag "browser", "uzbl|opera|firefox|navigator|chromium|dwb|jumanji|midori|luakit"
+tag "internet", "deluge|zenmap"
 tag "video", "[s]?mplayer|vlc"
 tag "audio", "deadbeef|quodlibet|lmms"
-tag "id3", "kid3|easytag|puddletag|picard"
-tag "file", "thunar|pcmanfm|nautilus|qtfm"
+tag "id3", "kid3|easytag|puddletag|picard|exfalso"
+tag "file", "thunar|pcmanfm|nautilus|qtfm|tuxcmd"
 tag "text", "gedit|evince|drracket|geany|lowriter|zathura"
 tag "im", "pidgin|empathy|emesene|amsn|kopete"
 
@@ -685,10 +700,8 @@ tag "gimp_dock" do
   gravity :gimp_dock
 end
 
-# Pidgin
-tag "buddy_list" do
-  match   :role => "buddy_list"
-  gravity :left
+tag "gimp_scum" do
+  match role: "gimp-.*|screenshot"
 end
 
 #
@@ -753,7 +766,7 @@ end
 #
 
 view "web" do
-  match "browser"
+  match "browser|internet"
   icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/world.xbm")
   icon_only true
 end
@@ -846,6 +859,11 @@ sublet :volume do
   interval      60
   foreground    "#eeeee0"
 end
+sublet :pacman do
+  interval 60
+  separator "/"
+end
+
 
 #
 #  === Link

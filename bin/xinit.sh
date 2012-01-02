@@ -1,8 +1,8 @@
 #bmpanel2 &
-xcompmgr -c -t-5 -l-5 -r4.2 -o.55 -f -C &
-obmixer &
+#xcompmgr -c -t-5 -l-5 -r4.2 -o.55 -f -C &
+#obmixer &
 #wicd-client &
-start-pulseaudio-x11 &
+#start-pulseaudio-x11 &
 #(sleep 5 && pcmanfm -d) &
 anamnesis --start
 #parcellite &

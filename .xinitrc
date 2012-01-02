@@ -1,8 +1,4 @@
 #!/bin/sh
-#
-# ~/.xinitrc
-#
-# Executed by startx (run your window manager from here)
 
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
@@ -10,11 +6,13 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 #xrandr | grep VGA | grep " connected "
 
 # 0 is returned on success
-#if [ $? -eq 0 ]; then
-#	xrandr --output LVDS1 --primary --mode 1280x800 --pos 0x0 --output VGA1 --mode 1024x768 --pos 1280x0
-#fi
+if [ $? -eq 0 ]; then
+	xrandr --output LVDS1 --primary --mode 1280x800 --pos 0x0 --output VGA1 --mode 1024x768 --pos 1280x0
+fi
 
 xsetroot -cursor_name left_ptr
+
+setxkbmap -option compose:ralt
 
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
 	       eval "$(dbus-launch --sh-syntax --exit-with-session)"
@@ -23,17 +21,22 @@ fi
 #bmpanel2 &
 #obmixer &
 #wicd-client &
-#start-pulseaudio-x11 &
+start-pulseaudio-x11 &
 #(sleep 5 && pcmanfm -d) &
-#anamnesis --start
+anamnesis --start
 #parcellite &
-#xscreensaver -no-splash &
+xscreensaver -no-splash &
 #osmo &
 urxvtd -q -o -f
-#xset +fp /usr/share/fonts/local
+xset +fp /usr/share/fonts/local
+xrdb -merge ~/.Xresources
 #(sleep 2 && nitrogen --restore) &
 #dropboxd &
 #sh ~/.fehbg
+#autocutsel -fork &
+#autocutsel -selection PRIMARY -fork &
+volnoti &
+devmon &
 
 if [[ $1 == "gnome" ]]
 then
@@ -43,7 +46,6 @@ then
   exec startxfce4
 elif [[ $1 == "awesome" ]]
 then
-  /home/josh/bin/xinit.sh
   exec awesome
 elif [[ $1 == "i3" ]]
 then
@@ -51,7 +53,7 @@ then
   exec i3 -V >>/home/josh/.i3/i3log >&1
 elif [[ $1 == "xmonad" ]]
 then
-  exec /usr/bin/trayer --edge top --align center --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 13 &
+  #exec /usr/bin/trayer --edge top --align center --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 13 &
   exec xmonad
 elif [[ $1 == "scrotwm" ]]
 then
@@ -85,6 +87,9 @@ then
 elif [[ $1 == "musca" ]]
 then
   exec musca
+elif [[ $1 == "herbstluftwm" ]]
+then
+  exec herbstluftwm
 else
   echo "Choose a window manager"
 fi
