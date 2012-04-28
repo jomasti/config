@@ -16,8 +16,6 @@ export UZBL_UTIL_DIR=$XDG_DATA_HOME/uzbl/util/
 export INTEL_BATCH=1
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export ARCH_HASKELL="Joshua Stiefer <facedelajunk@gmail.com"
-export http_proxy="http://127.0.0.1:8118"
-export https_proxy="http://127.0.0.1:8118"
 
 autoload -U compinit promptinit colors zcalc zsh-mime-setup zsh/terminfo
 compinit

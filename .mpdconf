@@ -179,16 +179,16 @@ input {
 
 # An example of an ALSA output:
 #
-#audio_output {
-#	type		"alsa"
-#	name		"My ALSA Device"
+audio_output {
+	type		"alsa"
+	name		"My ALSA Device"
 # options "dev=dmixer"
 #	device		"default"	# optional
 #	format		"44100:16:2"	# optional
 #	mixer_device	"default"	# optional
 #	mixer_control	"Master"		# optional
 #	mixer_index	"0"		# optional
-#}
+}
 #
 # An example of an OSS output:
 #
@@ -236,12 +236,12 @@ input {
 #
 # An example of a pulseaudio output (streaming to a remote pulseaudio server)
 #
-audio_output {
-	type		"pulse"
-	name		"MPD PulseAudio"
+#audio_output {
+#	type		"pulse"
+#	name		"MPD PulseAudio"
 #	server		"remote_server"		# optional
 #	sink		"remote_server_sink"	# optional
-}
+#}
 #
 ## Example "pipe" output:
 #

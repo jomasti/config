@@ -85,3 +85,4 @@ ca w!! w !sudo tee >/dev/null "%"
 nnoremap <F12> :set invpaste paste?<CR>
 imap <F12> <C-O><F12>
 set pastetoggle=<F12>
+
