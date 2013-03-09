@@ -7,7 +7,7 @@ globals = {
     zoom_step           = 0.1,
     max_cmd_history     = 100,
     max_srch_history    = 100,
-    http_proxy          = "http://localhost:8118",
+ -- http_proxy          = "http://localhost:8118",
     default_window_size = "1024x768",
 
  -- Disables loading of hostnames from /etc/hosts (for large host files)
@@ -68,8 +68,8 @@ search_engines.default = search_engines.google
 --search_engines.default = "%s"
 
 -- Per-domain webview properties
--- See http://webkitgtk.org/reference/WebKitWebSettings.html
-domain_props = {
+-- See http://webkitgtk.org/reference/webkitgtk/stable/WebKitWebSettings.html
+domain_props = { --[[
     ["all"] = {
         enable_private_browsing     = false,
         enable_spell_checking       = true,
@@ -81,11 +81,6 @@ domain_props = {
         user_stylesheet_uri         = "file://" .. luakit.data_dir ..
         "/styles/lastfm-rounded-striped.css",
     },
-    --[[["facebook.com"] = {
-        user_stylesheet_uri         = "file://" .. luakit.data_dir ..
-        "/styles/facebook.css",
-    },
-    --]]
     ["en.wikipedia.org"] = {
         user_stylesheet_uri         = "file://" .. luakit.data_dir ..
         "/styles/wiki.css",
@@ -93,9 +88,7 @@ domain_props = {
     ["ubuntuforums.org"] = {
         user_stylesheet_uri         = "file://" .. luakit.data_dir ..
         "/styles/ubuntuforums.css",
-    },
+    }, ]]
 }
-
-
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80

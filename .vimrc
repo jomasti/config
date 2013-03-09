@@ -7,7 +7,7 @@
 
 " Color related
 set t_Co=16
-colorscheme digerati
+colorscheme github
 
 set nocompatible
 set ruler
@@ -49,7 +49,7 @@ if has('gui_running')
   " Make shift-insert work like in Xterm
   map <S-Insert> <MiddleMouse>
   map! <S-Insert> <MiddleMouse>
-  colorscheme gvim/bubblegum
+  colorscheme github
 endif
 
 "augroup vimrc

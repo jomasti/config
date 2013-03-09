@@ -1,22 +1,24 @@
 -- Standard awesome library
-require("awful")
+local gears = require("gears")
+local awful = require("awful")
+awful.rules = require("awful.rules")
 require("awful.autofocus")
-require("awful.rules")
 -- Widget and layout library
-require("wibox")
+local wibox = require("wibox")
 -- Theme handling library
-require("beautiful")
+local beautiful = require("beautiful")
 -- Notification library
-require("naughty")
+local naughty = require("naughty")
+local menubar = require("menubar")
 -- Widget library
-require("vicious")
+local vicious = require("vicious")
 -- Expose effect
-require("revelation")
+local revelation = require("revelation")
 -- Run shell scripts
-require("bashets")
+local bashets = require("bashets")
 bashets.set_script_path("/home/josh/.config/awesome/bashets/")
 -- Window switching
-require("aweswt")
+local aweswt = require("aweswt")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -60,7 +62,7 @@ editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-layouts =
+local layouts =
 {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
@@ -75,6 +77,14 @@ layouts =
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier
 }
+-- }}}
+
+-- {{{ Wallpaper
+if beautiful.wallpaper then
+    for s = 1, screen.count() do
+        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+    end
+end
 -- }}}
 
 -- {{{ Tags
@@ -105,18 +115,26 @@ mypowermenu = {
 }
 
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+mymainmenu = awful.menu({ 
+          items = { 
+                  { "awesome", myawesomemenu, beautiful.awesome_icon },
 									{ "-------------", nil },
-   									{ "&firefox", "firefox", "/usr/share/icons/hicolor/16x16/apps/firefox.png" },
-   									{ "&thunar", "thunar", "/usr/share/icons/hicolor/16x16/apps/Thunar.png" },
+   							  { "&chromium", "chromium", "/usr/share/icons/hicolor/16x16/apps/chromium.png" },
+   								{ "&nautilus", "nautilus", "/usr/share/icons/gnome/16x16/apps/file-manager.png" },
 									{ "-------------", nil },
-                                    { "open terminal", terminal },
+                  { "open terminal", terminal },
 									{ "power", mypowermenu }
-                                  }
-                        })
+          }
+})
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
+
+-- Menubar configuration
+menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+menubar.cache_entries = true
+menubar.app_folders = "/usr/bin/"
+menubar.show_categories = false
 -- }}}
 
 -- {{{ Wibox
@@ -134,8 +152,8 @@ mytaglist.buttons = awful.util.table.join(
                     awful.button({ modkey }, 1, awful.client.movetotag),
                     awful.button({ }, 3, awful.tag.viewtoggle),
                     awful.button({ modkey }, 3, awful.client.toggletag),
-                    awful.button({ }, 4, awful.tag.viewnext),
-                    awful.button({ }, 5, awful.tag.viewprev)
+                    awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
+                    awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
                     )
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
@@ -143,6 +161,9 @@ mytasklist.buttons = awful.util.table.join(
                                               if c == client.focus then
                                                   c.minimized = true
                                               else
+                                                  -- Without this, the following
+                                                  -- :isvisible() makes no sense
+                                                  c.minimized = false
                                                   if not c:isvisible() then
                                                       awful.tag.viewonly(c:tags()[1])
                                                   end
@@ -224,25 +245,25 @@ for s = 1, screen.count() do
 	gmlwidget = wibox.widget.textbox()
 	-- Widget icons
 	cpuicon = wibox.widget.imagebox()
-	cpuicon.image = oocairo.image_surface_create_from_png(awful.util.getdir("config") .. "/icons/cpu.png")
+	cpuicon:set_image(awful.util.getdir("config") .. "/icons/cpu.png")
 	cpuicon.resize = false
 	memicon = wibox.widget.imagebox()
-	memicon.image = oocairo.image_surface_create_from_png(awful.util.getdir("config") .. "/icons/memory.png")
+	memicon:set_image(awful.util.getdir("config") .. "/icons/memory.png")
 	memicon.resize = false
 	mpdicon = wibox.widget.imagebox()
-	mpdicon.image = oocairo.image_surface_create_from_png(awful.util.getdir("config") .. "/icons/note1.png")
+	mpdicon:set_image(awful.util.getdir("config") .. "/icons/note1.png")
 	mpdicon.resize = false
 	weaicon = wibox.widget.imagebox()
-	weaicon.image = oocairo.image_surface_create_from_png(awful.util.getdir("config") .. "/icons/temp.png")
+	weaicon:set_image(awful.util.getdir("config") .. "/icons/temp.png")
 	weaicon.resize = false
 	hddicon = wibox.widget.imagebox()
-	hddicon.image = oocairo.image_surface_create_from_png(awful.util.getdir("config") .. "/icons/shelf.png")
+	hddicon:set_image(awful.util.getdir("config") .. "/icons/shelf.png")
 	hddicon.resize = false
 	pkgicon = wibox.widget.imagebox()
-	pkgicon.image = oocairo.image_surface_create_from_png(awful.util.getdir("config") .. "/icons/pacman.png")
+	pkgicon:set_image(awful.util.getdir("config") .. "/icons/pacman.png")
 	pkgicon.resize = false
 	gmlicon = wibox.widget.imagebox()
-	gmlicon.image = oocairo.image_surface_create_from_png(awful.util.getdir("config") .. "/icons/mail.png")
+	gmlicon:set_image(awful.util.getdir("config") .. "/icons/mail.png")
 	gmlicon.resize = false
 	-- Register widgets
 	vicious.register(cpuwidget, vicious.widgets.cpu, "$2% $3%")
@@ -307,7 +328,7 @@ function coverart_show()
     -- destroy old popup, needed when bound to a key
     coverart_hide()
     local img = awful.util.pread("/home/josh/bin/coverart.sh")
-    local ico = oocairo.image_surface_create_from_png(img)
+    local ico = img
     local txt = awful.util.pread("/home/josh/bin/musicinfo.sh")
     -- set desired position of popup during creation
     coverart_nf = naughty.notify({icon = ico, icon_size = 100, text = txt, position = "bottom_right"})
@@ -326,7 +347,7 @@ function mpd_callback(data)
 		coverart_show()                       
 	end
 end
-bashets.register("mpd.sh", {update_time = 1, separator = "|", callback = mpd_callback})
+--bashets.register("mpd.sh", {update_time = 1, separator = "|", callback = mpd_callback})
 -- }}}
 
 -- {{{ Mouse bindings
@@ -353,7 +374,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
+    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -395,10 +416,12 @@ globalkeys = awful.util.table.join(
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
               end),
+	-- Menubar
+    awful.key({ modkey }, "p", function() menubar.show() end),
 
 	--awful.key({ modkey }, "v",				  function () awful.util.spawn("fehlstart --one-way") end)
 	awful.key({ modkey }, "e", revelation),
-	awful.key({ modkey }, "p", function () 
+	awful.key({ modkey }, "v", function () 
 		awful.util.spawn("dmenu_run -i -p 'Run command:' -nb '" .. 
  				beautiful.bg_normal .. "' -nf '" .. beautiful.fg_normal .. 
 				"' -sb '" .. beautiful.bg_focus .. 
@@ -432,7 +455,7 @@ clientkeys = awful.util.table.join(
 -- Compute the maximum number of digit we need, limited to 9
 keynumber = 0
 for s = 1, screen.count() do
-   keynumber = math.min(9, math.max(#tags[s], keynumber));
+   keynumber = math.min(9, math.max(#tags[s], keynumber))
 end
 
 -- Bind all key numbers to tags.
@@ -483,7 +506,7 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     focus = true,
+                     focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons,
 					 size_hints_honor = false } },
@@ -539,51 +562,46 @@ client.connect_signal("manage", function (c, startup)
             awful.placement.no_offscreen(c)
         end
     end
+
+    local titlebars_enabled = false
+    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
+        -- Widgets that are aligned to the left
+        local left_layout = wibox.layout.fixed.horizontal()
+        left_layout:add(awful.titlebar.widget.iconwidget(c))
+
+        -- Widgets that are aligned to the right
+        local right_layout = wibox.layout.fixed.horizontal()
+        right_layout:add(awful.titlebar.widget.floatingbutton(c))
+        right_layout:add(awful.titlebar.widget.maximizedbutton(c))
+        right_layout:add(awful.titlebar.widget.stickybutton(c))
+        right_layout:add(awful.titlebar.widget.ontopbutton(c))
+        right_layout:add(awful.titlebar.widget.closebutton(c))
+
+        -- The title goes in the middle
+        local title = awful.titlebar.widget.titlewidget(c)
+        title:buttons(awful.util.table.join(
+                awful.button({ }, 1, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.move(c)
+                end),
+                awful.button({ }, 3, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.resize(c)
+                end)
+                ))
+
+        -- Now bring it all together
+        local layout = wibox.layout.align.horizontal()
+        layout:set_left(left_layout)
+        layout:set_right(right_layout)
+        layout:set_middle(title)
+
+        awful.titlebar(c):set_widget(layout)
+    end
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
-require("lfs") 
--- {{{ Run programm once
-local function processwalker()
-   local function yieldprocess()
-      for dir in lfs.dir("/proc") do
-        -- All directories in /proc containing a number, represent a process
-        if tonumber(dir) ~= nil then
-          local f, err = io.open("/proc/"..dir.."/cmdline")
-          if f then
-            local cmdline = f:read("*all")
-            f:close()
-            if cmdline ~= "" then
-              coroutine.yield(cmdline)
-            end
-          end
-        end
-      end
-    end
-    return coroutine.wrap(yieldprocess)
-end
-
-local function run_once(process, cmd)
-   assert(type(process) == "string")
-   local regex_killer = {
-      ["+"]  = "%+", ["-"] = "%-",
-      ["*"]  = "%*", ["?"]  = "%?" }
-
-   for p in processwalker() do
-      if p:find(process:gsub("[-+?*]", regex_killer)) then
-	 return
-      end
-   end
-   return awful.util.spawn(cmd or process)
-end
--- }}}
-
-run_once("obmixer")
-run_once("wicd-client")
-run_once("anamnesis --start")
-run_once("start-pulseaudio-x11")
-run_once("xscreensaver -no-splash")
-run_once("sh /home/josh/.bgrc")

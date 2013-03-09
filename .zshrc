@@ -1,5 +1,5 @@
 # zsh syntax highlighting (obviously)
-source /usr/share/zsh/plugins/zsh-syntax-highlight/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 HISTFILE=~/.histfile
 HISTSIZE=50000
@@ -16,6 +16,7 @@ export UZBL_UTIL_DIR=$XDG_DATA_HOME/uzbl/util/
 export INTEL_BATCH=1
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export ARCH_HASKELL="Joshua Stiefer <facedelajunk@gmail.com"
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 autoload -U compinit promptinit colors zcalc zsh-mime-setup zsh/terminfo
 compinit
@@ -103,6 +104,7 @@ alias pacinsd='sudo pacman -S --asdeps'        # Install given package(s) as dep
 alias pacmir='sudo pacman -Syy'                # Force refresh of all package lists after updating /etc/pacman.d/mirrorlist
 alias pacexpl='sudo pacman -D --asexplicit'
 alias pacowns='pacman -Qo'
+alias pacaur='pacman -Qm'
 
 # Set up auto extension stuff
 alias -s html=$BROWSER

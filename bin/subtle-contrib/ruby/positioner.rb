@@ -2,7 +2,7 @@
 #
 # @file Positioner
 #
-# @copyright (c) 2011, Christoph Kappel <unexist@dorfelite.net>
+# @copyright (c) 2011-2013, Christoph Kappel <unexist@subforge.org>
 # @version $Id$
 #
 # This program can be distributed under the terms of the GNU GPLv2.
@@ -39,8 +39,8 @@ end
 
 # Check for subtlext version
 major, minor, teeny = Subtlext::VERSION.split('.').map(&:to_i)
-if major == 0 and minor == 10 and 3104 > teeny
-  puts ">>> ERROR: merger needs at least subtle `0.10.3104' (found: %s)" % [
+if major == 0 and minor == 10 and 3216 > teeny
+  puts ">>> ERROR: positioner needs at least subtle `0.10.3216' (found: %s)" % [
     Subtlext::VERSION
    ]
   exit
@@ -99,7 +99,7 @@ module Subtle # {{{
 
         # Handler
         @win.on(:key_down, method(:key_down))
-        @win.on(:draw, method(:redraw))
+        @win.on(:draw,     method(:redraw))
       end # }}}
 
       ## run {{{
@@ -119,38 +119,46 @@ module Subtle # {{{
       # @param [String]  key  Pressed key
       ##
 
-      def key_down(key)
+      def key_down(key, mods)
         ret = true
 
         case key
           when :left, :up # {{{
             idx       = @views.index(@cur_sel)
-            idx      -= 1 if(0 < idx)
+            idx      -= 1 if 0 < idx
             @cur_sel  = @views[idx] # }}}
           when :right, :down # {{{
             idx       = @views.index(@cur_sel)
-            idx      += 1 if(idx < (@views.size - 1))
+            idx      += 1 if idx < (@views.size - 1)
             @cur_sel  = @views[idx] # }}}
           when :space # {{{
             if @selected.include?(@cur_sel)
               @selected.delete(@cur_sel)
+              @unselected << @cur_sel
             else
               @selected << @cur_sel
             end # }}}
           when :return # {{{
             tags = @cur_client.tags
 
+            # Add view tags
             @selected.each do |sel|
-              # Untag or tag
               unless @cur_views.include?(sel)
                 # Find or create tag
-                tag = Subtlext::Tag.find(sel.name) || Subtlext::Tag.new(sel.name)
+                tag = Subtlext::Tag.first(sel.name) || Subtlext::Tag.new(sel.name)
                 tag.save
+
+                # Add tag to view
+                sel.tag(tag) unless sel.tags.include?(sel.name)
 
                 tags << tag
               end
             end
 
+            # Remove unselected views from tags
+            tags -= @unselected.map(&:name).map { |n| Subtlext::Tag.first(n) }
+
+            # Finally apply tags
             @cur_client.tags = tags
 
             ret = false # }}}
@@ -170,9 +178,20 @@ module Subtle # {{{
       def update
         @views      = Subtlext::View.all
         @selected   = []
+        @unselected = []
         @cur_client = Subtlext::Client.current
         @cur_views  = @cur_client.views
         @cur_sel    = Subtlext::View.current
+
+        names = @views.map(&:name)
+
+        # Updated selected list
+        @cur_client.tags.each do |t|
+          if names.include?(t.name)
+            @selected << @views[names.index(t.name)]
+          end
+        end
+
         arrange
       end # }}}
 

@@ -161,22 +161,19 @@ module Subtle # {{{
       end # }}}
 
       def load_colors # {{{
-        @colors = {}
+        @colors = Hash[*(16.times.to_a.map { |i|
+          [ "color#{i}", "#000000" ]
+        } << ["forground", "#ffffff", "background", "#000000"]).flatten]
 
         # Load and parse Xdefaults
         File.open("#{ENV["HOME"]}/.Xdefaults") do |f|
           while(line = f.gets)
-            if(line.match(REGEXP))
+            if line.match(REGEXP)
               @colors[$~[1]] = $~[2]
             end
           end
         end
-
-        # Check success
-        if(@colors.empty?)
-          puts ">>> ERROR: Couldn't find valid colors"
-          raise
-        end
+      rescue
       end # }}}
 
       def scale_round(val, factor) # {{{
@@ -283,7 +280,7 @@ module Subtle # {{{
 end # }}}
 
 # Implicitly run<
-if(__FILE__ == $0)
+if __FILE__ == $0
   Gtk.init
   Subtle::Contrib::TermStyler.new
   Gtk.main

@@ -2,7 +2,7 @@
 #
 # @file Graviton
 #
-# @copyright (c) 2010-2011, Christoph Kappel <unexist@dorfelite.net>
+# @copyright (c) 2010-2013, Christoph Kappel <unexist@subforge.org>
 # @version $Id$
 #
 # This program can be distributed under the terms of the GNU GPLv2.
@@ -22,7 +22,7 @@ end
 
 # Check for subtlext version
 major, minor, teeny = Subtlext::VERSION.split(".").map(&:to_i)
-if 0 == major and 9 == minor and 2829 > teeny)
+if 0 == major and 9 == minor and 2829 > teeny
   puts ">>> ERROR: launcher needs at least subtle `0.9.2829' (found: %s)" % [
     Subtlext::VERSION
    ]

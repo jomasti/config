@@ -2,7 +2,7 @@
 #
 # @file Styler
 #
-# @copyright (c) 2010-2011, Christoph Kappel <unexist@dorfelite.net>
+# @copyright (c) 2010-2013, Christoph Kappel <unexist@subforge.org>
 # @version $Id$
 #
 # This program can be distributed under the terms of the GNU GPLv2.
@@ -629,8 +629,8 @@ STYLE
 
         # Styles and pages
         [
-          'all', 'title', 'focus',   'urgent',
-          'occupied', 'unoccupied', 'sublets', 'separator'
+          'all', 'title', 'views', 'focus', 'urgent',
+          'occupied', 'sublets', 'separator'
         ].each do |caption|
           sym          = caption.to_sym
           @styles[sym] = StyleNormal.new(caption.capitalize, colors)
@@ -650,8 +650,8 @@ STYLE
           [ :top, :right, :bottom, :left ].each do |side|
             @styles[:all].buttons[name][side].callback do |value|
               [
-                :title, :focus, :urgent, :occupied,
-                :unoccupied, :sublets, :separator
+                :title, :views, :focus, :urgent,
+                :occupied, :sublets, :separator
               ].each do |style|
                 @styles[style].buttons[name][side].value = value
               end
@@ -663,8 +663,8 @@ STYLE
         [ :fg, :bg, :top, :right, :bottom, :left ].each do |name|
           @styles[:all].buttons[name].callback do |value|
             [
-              :title, :focus, :urgent, :occupied,
-              :unoccupied, :sublets, :separator
+              :title, :views, :focus, :urgent,
+              :occupied, :sublets, :separator
             ].each do |style|
               @styles[style].buttons[name].value = value
             end
@@ -730,8 +730,8 @@ STYLE
         panel_height = @font_height
 
         [
-          :title, :focus, :urgent,
-          :occupied, :unoccupied, :sublets, :separator
+          :title, :views, :focus, :urgent,
+          :occupied, :sublets, :separator
         ].each do |panel|
           value = @font_height + @styles[panel].sum([ :top, :bottom ])
 
@@ -771,7 +771,7 @@ STYLE
         x = BORDER_WIDTH
 
         [
-          'focus', 'unoccupied', 'urgent', 'occupied', 'title'
+          'focus', 'views', 'urgent', 'occupied', 'title'
         ].each do |name|
           sym     = name.to_sym
           extents = cr.text_extents(name)
@@ -850,7 +850,7 @@ STYLE
 end # }}}
 
 # Implicitly run<
-if(__FILE__ == $0)
+if __FILE__ == $0
   Gtk.init
   Subtle::Contrib::Styler.instance
   Gtk.main

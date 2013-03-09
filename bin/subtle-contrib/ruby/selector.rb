@@ -2,7 +2,7 @@
 #
 # @file Selector
 #
-# @copyright (c) 2011, Christoph Kappel <unexist@dorfelite.net>
+# @copyright (c) 2011-2013, Christoph Kappel <unexist@subforge.org>
 # @version $Id$
 #
 # Client selector that works like the subscription selector in google reader.
@@ -37,8 +37,8 @@ end
 
 # Check for subtlext version
 major, minor, teeny = Subtlext::VERSION.split('.').map(&:to_i)
-if major == 0 and minor == 10 and 3104 > teeny
-  puts ">>> ERROR: selector needs at least subtle `0.10.3104' (found: %s)" % [
+if major == 0 and minor == 10 and 3216 > teeny
+  puts ">>> ERROR: selector needs at least subtle `0.10.3216' (found: %s)" % [
     Subtlext::VERSION
    ]
   exit
@@ -54,17 +54,27 @@ module Subtle # {{{
       LETTERS = ((49..57).to_a|(65..89).to_a).map(&:chr)
 
       # Default values
-      @@font = '-*-*-medium-*-*-*-14-*-*-*-*-*-*-*'
+      @@font        = '-*-*-medium-*-*-*-14-*-*-*-*-*-*-*'
+      @@show_titles = false
 
       # Singleton methods
 
-      ## fonts {{{
+      ## font= {{{
       # Set font strings
-      # @param [String]  fonts  Fonts array
+      # @param [String]  font  Font desciption
       ##
 
       def self.font=(font)
         @@font = font
+      end # }}}
+
+      ## show_titles {{{
+      # Show window titles when selecting them
+      # @param [Boolean]  value  Value to set this flag to (defaults to 'true')
+      ##
+
+      def self.show_titles(value = true)
+        @@show_titles = value
       end # }}}
 
       ## run {{{
@@ -126,24 +136,24 @@ module Subtle # {{{
       # @param [String]  key  Pressed key
       ##
 
-      def key_down(key)
+      def key_down(key, mods)
         ret = true
 
         case key
           when :left, :up # {{{
             idx       = @clients.index(@current) || 0
-            idx      -= 1 if(0 < idx)
+            idx      -= 1 if 0 < idx
             @current  = @clients[idx] # }}}
           when :right, :down # {{{
             idx       = @clients.index(@current) || 0
-            idx      += 1 if(idx < (@clients.size - 1))
+            idx      += 1 if idx < (@clients.size - 1)
             @current  = @clients[idx] # }}}
           when :return # {{{
             @current.focus
 
             ret = false # }}}
           when :escape # {{{
-            if(@expanded)
+            if @expanded
               @buffer   = ''
               @expanded = false
             else
@@ -177,6 +187,8 @@ module Subtle # {{{
 
               @current = clients[idx]
             end # }}}
+          when :space # {{{
+            @buffer << " " # }}}
           else # {{{
             str = key.to_s
 
@@ -222,22 +234,23 @@ module Subtle # {{{
       ##
 
       def arrange
-        geo     = Subtlext::Screen.current.geometry
-        @width  = geo.width * 50 / 100 #< Max width
-        @height = @font_height
-        wx      = 0
-        wy      = 0
-        len     = 0
-        wwidth  = 0
+        geo       = Subtlext::Screen.current.geometry
+        @width    = geo.width * 50 / 100 #< Max width
+        @height   = @font_height
+        wx        = 0
+        wy        = 0
+        len       = 0
+        wwidth    = 0
+        @expanded = false
 
         # Toggle expand
-        if @buffer.empty?
-          @height   = @font_height
-          @expanded = false
-        else
+        unless @buffer.empty?
           @height   += @font_height
           @expanded  = true
         end
+
+        # Need another line for showing title
+        @height += @font_height if @@show_titles
 
         # Calculate window width
         @clients.each_with_index do |c, i|
@@ -245,8 +258,8 @@ module Subtle # {{{
           len  = @win.font_width(str) + 6
 
           # Wrap lines
-          if(wx + len > @width)
-            wwidth  = wx if(wx > wwidth)
+          if wx + len > @width
+            wwidth  = wx if wx > wwidth
             wx      = 0
             wy     += @font_height
           end
@@ -254,8 +267,17 @@ module Subtle # {{{
           wx += len
         end
 
+        # Check width
+        wwidth = wx if 0 == wwidth
+
+        # Longest title
+        if @@show_titles
+          name_len = @clients.map { |c| @win.font_width(c.name) + 6 }.max
+          wwidth   = [name_len, @width, wwidth * 2].min if name_len > wwidth
+        end
+
         # Update window geometry
-        @width   = 0 == wwidth ? wx : wwidth
+        @width   = wwidth
         @height += wy
         @x       = geo.x + ((geo.width - @width) / 2)
         @y       = geo.y + ((geo.height - @height) / 2)
@@ -269,11 +291,12 @@ module Subtle # {{{
       ##
 
       def redraw(w)
-        @win.clear
+        wx     = 0
+        wy     = 0
+        len    = 0
+        wwidth = 0
 
-        wx  = 0
-        wy  = 0
-        len = 0
+        @win.clear
 
         # Render window
         @clients.each_with_index do |c, i|
@@ -281,8 +304,8 @@ module Subtle # {{{
           len  = @win.font_width(str) + 6
 
           # Wrap lines
-          if(wx + len > @width)
-            wwidth  = wx if(wx > wwidth)
+          if wx + len > @width
+            wwidth  = wx if wx > wwidth
             wx      = 0
             wy     += @font_height
           end
@@ -305,9 +328,15 @@ module Subtle # {{{
           wx += len
         end
 
+        # Draw title
+        if @@show_titles
+          @win.draw_text(3, wy + @font_height + @font_y + 3,
+            @current.name, @colors[:focus_fg])
+        end
+
         # Draw input buffer
         unless @buffer.empty?
-          @win.draw_text(6, @height - @font_height + @font_y + 3,
+          @win.draw_text(3, @height - @font_height + @font_y + 3,
             'Input: %s' % [ @buffer ])
         end
       end # }}}
@@ -336,6 +365,9 @@ if __FILE__ == $0
   # Set font
   #Subtle::Contrib::Selector.font =
   # 'xft:DejaVu Sans Mono:pixelsize=80:antialias=true'
+
+  # Show window titles
+  # Subtle::Contrib::Selector.show_titles
 
   Subtle::Contrib::Selector.run
 end
