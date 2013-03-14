@@ -14,8 +14,11 @@ xsetroot -cursor_name left_ptr
 
 setxkbmap -option compose:ralt
 
-if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-	       eval "$(dbus-launch --sh-syntax --exit-with-session)"
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+	for f in /etc/X11/xinit/xinitrc.d/* ; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
 fi
 
 #bmpanel2 &
@@ -31,12 +34,12 @@ urxvtd -q -o -f
 xset +fp /usr/share/fonts/local
 xrdb -merge ~/.Xresources
 #(sleep 2 && nitrogen --restore) &
-#dropboxd &
-#sh ~/.fehbg
+dropboxd &
+sh ~/.fehbg
 #autocutsel -fork &
 #autocutsel -selection PRIMARY -fork &
 volnoti &
-devmon &
+#devmon &
 
 if [[ $1 == "gnome" ]]
 then
@@ -49,7 +52,6 @@ then
   exec awesome
 elif [[ $1 == "i3" ]]
 then
-  /home/josh/bin/xinit.sh
   exec i3 -V >>/home/josh/.i3/i3log >&1
 elif [[ $1 == "xmonad" ]]
 then
@@ -93,3 +95,5 @@ then
 else
   echo "Choose a window manager"
 fi
+
+exec i3

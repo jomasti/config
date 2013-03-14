@@ -11,7 +11,7 @@
 #
 #mpd_port = "6600"
 #
-mpd_music_dir = "/media/FreeAgent Drive/Music"
+mpd_music_dir = "/run/media/josh/FreeAgent Drive/Music"
 #
 #mpd_connection_timeout = "5"
 #

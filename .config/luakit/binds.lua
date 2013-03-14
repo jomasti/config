@@ -74,10 +74,7 @@ add_binds("all", {
                     w:new_tab(uri, false)
                 else -- Open selection in current tab
                     uri = luakit.selection.primary
-                    -- Ignore multi-line selection contents
-                    if uri and not string.match(uri, "\n.+") then
-                        w:navigate(w:search_open(uri))
-                    end
+                    if uri then w:navigate(w:search_open(uri)) end
                 end
             end
         end),
@@ -88,9 +85,6 @@ add_binds("all", {
             local uri = w.view.hovered_uri
             if uri then
                 w:new_tab(uri, false)
-            else -- Open selection in current tab
-                uri = luakit.selection.primary
-                if uri then w:navigate(w:search_open(uri)) end
             end
         end),
 
@@ -320,7 +314,7 @@ add_binds("normal", {
         function (w) w:enter_cmd(":tabopen " .. (w.view.uri or "")) end),
 
     key({}, "W",
-        "Open one or more URLs based on current location in a new window.",
+        "Open one or more URLs based on current locaton in a new window.",
         function (w) w:enter_cmd(":winopen " .. (w.view.uri or "")) end),
 
     -- History

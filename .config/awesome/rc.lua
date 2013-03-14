@@ -114,7 +114,6 @@ mypowermenu = {
    { "poweroff", "ktsuss systemctl poweroff" }
 }
 
-
 mymainmenu = awful.menu({ 
           items = { 
                   { "awesome", myawesomemenu, beautiful.awesome_icon },
@@ -509,7 +508,9 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons,
-					 size_hints_honor = false } },
+                     maximized_vertical   = false,
+                     maximized_horizontal = false,
+					           size_hints_honor = false } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
@@ -543,6 +544,18 @@ awful.rules.rules = {
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c, startup)
+    -- Automatically give window a titlebar
+    processfloating = function(c)
+        if awful.client.floating.get(c) then
+            awful.titlebar(c)
+        else
+            awful.titlebar(c, {size = 0})
+        end
+    end
+
+    processfloating(c)
+    c:connect_signal("property::floating", processfloating)
+    
     -- Enable sloppy focus
     c:connect_signal("mouse::enter", function(c)
         if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier

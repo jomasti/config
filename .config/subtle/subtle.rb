@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #
 # Author::  Christoph Kappel <unexist@subforge.org>
 # Version:: $Id$
@@ -39,6 +40,12 @@ set :gravity_tiling, false
 
 # Enable click-to-focus focus model
 set :click_to_focus, false
+
+# Skip pointer movement on e.g. gravity change
+set :skip_pointer_warp, false
+
+# Skip pointer movement to urgent windows
+set :skip_urgent_warp, false
 
 # Set the WM_NAME of subtle (Java quirk)
 set :wmname, "LG3D"
@@ -90,10 +97,10 @@ set :wmname, "LG3D"
 
 screen 1 do
   # Content of the top panel
-  top     [ :views, :title, :spacer, :tray, :volume, :clock ]
+  top     [ :views, :title, :spacer, :keychain, :spacer, :tray, :volume, :clock ]
 
   # Content of the bottom panel
-  bottom  [ :cpu, :separator, :memory, :separator, :pacman, :center, :weather, :center, :spacer, :mpd ]
+  bottom  [ :cpu, :separator, :memory, :separator, :pacman, :center, :weather_mod, :center, :spacer, :mpd ]
 end
 
 # Example for a second screen:
@@ -402,7 +409,7 @@ grab "W-f", :WindowFloat
 grab "W-space", :WindowFull
 
 # Toggle sticky mode of window (will be visible on all views)
-grab "W-C-s", :WindowStick
+grab "W-s", :WindowStick
 
 # Toggle zaphod mode of window (will span across all screens)
 grab "W-equal", :WindowZaphod
@@ -445,7 +452,7 @@ grab "W-x", [ :bottom,       :bottom66,       :bottom33       ]
 grab "W-c", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 
 # Exec programs
-grab "W-S-Return", "urxvtc"
+grab "W-Return", "urxvtc"
 grab "A-F2", "gmrun"
 grab "W-p", "dmenu_run"
 grab "XF86Launch1", "thunar"
@@ -587,15 +594,23 @@ end
 #                Example: position [ 10, 10 ]
 #                Link:    http://subforge.org/projects/subtle/wiki/Tagging#Position
 #
-# [*resize*]     This property enables the float mode for tagged clients.
+# [*resize*]     This property enables the float mode for tagged clients. When set,
+#                subtle honors size hints, that define various size constraints like
+#                sizes for columns and rows of a terminal.
 #
 #                Example: resize true
 #                Links:   http://subforge.org/projects/subtle/wiki/Tagging#Resize
 #                         http://subforge.org/projects/subtle/wiki/Clients#Resize
 #
-# [*stick*]      This property enables the float mode for tagged clients.
+# [*stick*]      This property enables the stick mode for tagged clients. When set,
+#                clients are visible on all views, even when they don't have matching
+#                tags. On multihead, sticky clients keep the screen they are assigned
+#                on.
+#
+#                Supported values are either true or a number to specify a screen.
 #
 #                Example: stick true
+#                         stick 1
 #                Links:   http://subforge.org/projects/subtle/wiki/Tagging#Stick
 #                         http://subforge.org/projects/subtle/wiki/Clients#Stick
 #
@@ -617,19 +632,20 @@ end
 #                Example: type :desktop
 #                Link:    http://subforge.org/projects/subtle/wiki/Tagging#Type
 #
-# [*urgent*]     This property enables the urgent mode for tagged clients.
+# [*urgent*]     This property enables the urgent mode for tagged clients. When set,
+#                subtle automatically sets this client to urgent.
 #
-#                Example: stick true
+#                Example: urgent true
 #                Links:   http://subforge.org/projects/subtle/wiki/Tagging#Stick
 #                         http://subforge.org/projects/subtle/wiki/Clients#Urgent
 #
-# [*zaphod*]     This property enables the zaphod mode for tagged clients.
+# [*zaphod*]     This property enables the zaphod mode for tagged clients. When set,
+#                the client spans across all connected screens.
 #
 #                Example: zaphod true
 #                Links:   http://subforge.org/projects/subtle/wiki/Tagging#Zaphod
 #                         http://subforge.org/projects/subtle/wiki/Clients#Zaphod
 #
-#              Example: urgent true
 #
 # === Link
 #
@@ -845,7 +861,7 @@ sublet :mpd do
   interval      1
   foreground    "#EEEEE0"
 end
-sublet :weather do
+sublet :weather_mod do
   interval      60
   location      "85308"
 end

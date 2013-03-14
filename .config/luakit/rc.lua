@@ -56,6 +56,8 @@ require "binds"
 -- Optional user script loading --
 ----------------------------------
 
+require "webinspector"
+
 -- Add sqlite3 cookiejar
 require "cookies"
 
@@ -138,9 +140,6 @@ require "completion"
 -- Remove all "enable_scripts" & "enable_plugins" lines from your
 -- domain_props table (in config/globals.lua) as this module will conflict.
 require "noscript"
-
-noscript.enable_scripts = false
-noscript.enable_plugins = false
 
 require "follow_selected"
 require "go_input"
