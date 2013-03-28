@@ -4,7 +4,7 @@
 #
 # Dzen conf
 source ~/.dzen/disps.zsh
-source ~/.dzen/colors.zsh
+source ~/.dzen/colors2.zsh
 
 while true; do
     SONG=$(fmpd)

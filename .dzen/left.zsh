@@ -5,7 +5,7 @@
 # Dzen colors and icons
 #
 source ~/.dzen/disps.zsh
-source ~/.dzen/colors.zsh
+source ~/.dzen/colors2.zsh
 
 # Configuration
 DISKIVAL=360

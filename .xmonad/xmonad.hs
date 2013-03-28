@@ -13,8 +13,10 @@ import XMonad.Actions.GridSelect
 import XMonad.Actions.OnScreen
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.SwapWorkspaces
+import XMonad.Actions.WindowGo
 
 import XMonad.Hooks.DynamicLog hiding (dzen)
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -55,7 +57,7 @@ main = do
   --xmproc <- spawnPipe "/usr/bin/xmobar /home/josh/.xmonad/xmobarrc"
   dzen <- spawnPipe myStatusBar
   other <- spawnPipe left
-  other <- spawnPipe right
+  --other <- spawnPipe right
   xmonad $ withUrgencyHook NoUrgencyHook defaultConfig
     { manageHook          = manageHooks
     , layoutHook          = layouts
@@ -66,11 +68,12 @@ main = do
     , focusFollowsMouse   = True
     , workspaces          = workspaceNames
     , startupHook         = setWMName "LG3D"
+    , handleEventHook    = fullscreenEventHook
     } `additionalKeysP` keys
 
 myIconDir = "/home/josh/.dzen/dzenIcons/"
 myStatusBar = "dzen2 -x '0' -y '0' -h '20' -w '640' -ta 'l' -bg '" ++ myDBGColor ++ "' -fn '" ++ myFont ++ "'"
-left = ".dzen/left.zsh | dzen2 -xs 1 -x '640' -y '0' -h '20' -w '640' -ta 'r' -bg '" ++ myDBGColor ++ "' -fg '" ++ myDFGColor ++ "' -fn '" ++ myFont ++ "'"
+left = ".dzen/left.zsh | dzen2 -xs 1 -x '640' -y '0' -h '20' -ta 'r' -bg '" ++ myDBGColor ++ "' -fg '" ++ myDFGColor ++ "' -fn '" ++ myFont ++ "'"
 right = ".dzen/right.zsh | dzen2 -xs 2 -y '0' -h '20' -ta 'r' -bg '" ++ myDBGColor ++ "' -fg '" ++ myDFGColor ++ "' -fn '" ++ myFont ++ "'"
 myFont = "xft:Anka/Coder:pixelsize=10"
 
@@ -81,7 +84,7 @@ keys =
     [ "M-<Tab>"   ~> namedScratchpadAction pads "scratch"
     , "M-r"       ~> runOrRaisePrompt promptConfig
     , "M-s"       ~> shellPrompt promptConfig
-    , "M-S-z"     ~> spawn "xscreensaver-command -lock"
+    , "<XF86ScreenSaver>"     ~> spawn "xscreensaver-command -lock"
     , "C-<Print>" ~> spawn "sleep 0.2; scrot -s"
     , "<Print>"   ~> spawn "scrot"
     , "M-f"       ~> goToSelected myGSConfig
@@ -90,9 +93,20 @@ keys =
     , "M-z"       ~> prevWS
     , "M-M1-x"    ~> swapTo Next
     , "M-M1-z"    ~> swapTo Prev
-    , "<XF86AudioRaiseVolume>"  ~> spawn "sound.sh up"
-    , "<XF86AudioLowerVolume>"  ~> spawn "sound.sh down"
-    , "<XF86Sleep>" ~> spawn "ktsuss pm-suspend"
+
+    -- Apps
+    , "M-d"       ~> raiseMaybe (spawn "dwb -r") (className =? "Dwb")
+
+    -- Media
+    , "<XF86AudioRaiseVolume>"  ~> spawn "~/bin/sound-alsa.sh up"
+    , "<XF86AudioLowerVolume>"  ~> spawn "~/bin/sound-alsa.sh down"
+    , "<XF86AudioMute>" ~> spawn "~/bin/sound-alsa.sh mute"
+    , "<XF86AudioPlay>" ~> spawn "ncmpcpp toggle"
+    
+    -- Power
+    , "M-C-x" ~> spawn "ktsuss pm-suspend"
+    , "M-C-s" ~> spawn "ktsuss systemctl poweroff"
+    , "M-C-r" ~> spawn "ktsuss systemctl reboot"
     ]
 
 pads =
@@ -111,7 +125,11 @@ layouts = smartBorders $ avoidStruts $ onWorkspace "5:im" imLayout $ lessBorders
                 delta = 0.03
                 ratio = 0.5
 
-workspaceNames = ["1:web","2:term","3:media","4:file","5:im","6:games","7:misc"]
+workspaceNames :: [String]
+workspaceNames = clickable . (map dzenEscape) $ ["1:web","2:term","3:media","4:file","5:im","6:games","7:misc"]
+      where clickable l = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
+                          (i, ws) <- zip [1..] l,
+                          let n = i ]
 
 additionalManageHooks = composeOne $
       [transience]
@@ -165,11 +183,11 @@ myLogHook = fadeInactiveLogHook fadeAmount
 
 myDFGColor = "#757575" -- Dzen
 myDBGColor = "#181818"
-myFFGColor = "#cdff00" -- Focused
+myFFGColor = "#e3fc3f" -- Focused
 myFBGColor = myDBGColor
-myVFGColor = "#ff3b77" -- Visible
+myVFGColor = "#ef3c73" -- Visible
 myVBGColor = myDBGColor
-myUFGColor = "#ff3b77" -- Urgent
+myUFGColor = "#ef3c7e" -- Urgent
 myUBGColor = myDBGColor
 myIFGColor = myDFGColor -- Icon
 myIBGColor = myDBGColor

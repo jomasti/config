@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source .dzen/colors.zsh
+source .dzen/colors2.zsh
 
 fweather() { 
     WEATHER=$(get-weather)
@@ -32,8 +32,8 @@ fmemp() {
 
 if [[ `hostname` == "arrowhead" ]]; then
     fdiskusage1() { df -h / | sed -ne 's/^.* \([0-9]*\)% .*/\1/p' | gdbar -h 8 -w 40 -fg $BARFG -bg $BARBG -ss 1 -sw 3 -nonl    };
-    fdiskusagep1() { df -h / | awk '/sda3/ {print $5;}' };
-    fdiskusagef1() { df -h / | awk '/sda3/ {print $3"/"$2;}' };
+    fdiskusagep1() { df -h / | awk '/sda1/ {print $5;}' };
+    fdiskusagef1() { df -h / | awk '/sda1/ {print $3"/"$2;}' };
 else
     fdiskusage1() { echo "" };
     fdiskusagep1() { echo "" };

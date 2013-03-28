@@ -1,0 +1,9 @@
+#!/bin/zsh
+ICONDIR=~/.dzen/dzenIcons
+ICONCOL1="#ef3c7e"
+ICONCOL2="#fdfdfd"
+BARFG="#e3fc3f"
+BARBG="#e3fc3f"
+BAROL="#252521"
+SEGCOL=$BARBG
+FONTCOL="#e3fc3f"

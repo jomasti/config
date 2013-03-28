@@ -7,34 +7,13 @@
 # If you want to use GNOME config tools...
 #
 #if test -x /usr/lib/openbox/gnome-settings-daemon >/dev/null; then
-#	/usr/lib/openbox/gnome-settings-daemon &
+#  /usr/lib/openbox/gnome-settings-daemon &
 #elif which gnome-settings-daemon >/dev/null 2>&1; then
-#	gnome-settings-daemon &
+#  gnome-settings-daemon &
 #fi
 
 # If you want to use XFCE config tools...
 #
 #xfce-mcs-manager &
-#
 
-#D-bus
-if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-	eval `dbus-launch --sh-syntax --exit-with-session`
-fi
-
-eval $(cat ~/.bgrc)
-#/usr/lib/gnome-settings-daemon/gnome-settings-daemon &
-#cairo-compmgr &
-#xcompmgr -c -t-5 -l-5 -r4.2 -o.55 -f -C &
-(sleep 2 && tint2) &
-start-pulseaudio-x11 &
-xscreensaver -no-splash &
-/usr/lib/notification-daemon-1.0/notification-daemon &
-(sleep 5 && guake) &
-obmixer &
-weatherboy -l 2411084 -u f -a &
-anamnesis --start
-
-# Expose Effect
-(sleep 1s && xautolock -locker "xte 'key F11'" -corners 0+00 -cornerdelay 1) &
-(sleep 1s && skippy-xd) &
+tint2 &
