@@ -32,6 +32,9 @@ macro pager   \Ca   <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 # quick-sync ~/Mail immediately with offlineimap
 macro index Z   "<shell-escape>/usr/bin/offlineimap -q -o<enter>" "sync IMAP"
 
+# mark all messages in a folder as read
+macro index .c "T.*\n;WN" "Mark all messages as read"
+
 # main options
 set realname            = "Joshua Stiefer"                   # who am i?
 set from                = "facedelajunk@gmail.com"              # who am i?
@@ -47,6 +50,7 @@ set timeout             = 3                                      # idle time bef
 
 # index options
 set sort                = threads                       # like gmail 
+set sort_browser        = date
 set sort_aux            = reverse-last-date-received    # like gmail
 set uncollapse_jump                                              # don't collapse on an unread message 
 set sort_re                                             # thread based on reply_regexp

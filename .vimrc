@@ -5,9 +5,11 @@
 " vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=vimrc:
 " ----------------------------------------------------------------------------
 
+execute pathogen#infect()
+
 " Color related
 set t_Co=16
-colorscheme github
+colorscheme kolor
 
 set nocompatible
 set ruler
@@ -49,7 +51,7 @@ if has('gui_running')
   " Make shift-insert work like in Xterm
   map <S-Insert> <MiddleMouse>
   map! <S-Insert> <MiddleMouse>
-  colorscheme github
+  colorscheme digerati
 endif
 
 "augroup vimrc

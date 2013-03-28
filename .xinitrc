@@ -14,6 +14,8 @@ xsetroot -cursor_name left_ptr
 
 setxkbmap -option compose:ralt
 
+synclient TouchpadOff=1
+
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/* ; do
 		[ -x "$f" ] && . "$f"
@@ -21,25 +23,16 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
-#bmpanel2 &
-#obmixer &
-#wicd-client &
-start-pulseaudio-x11 &
-#(sleep 5 && pcmanfm -d) &
-anamnesis --start
-#parcellite &
+anamnesis --start &
 xscreensaver -no-splash &
-#osmo &
-urxvtd -q -o -f
+urxvtd -q -o -f &
 xset +fp /usr/share/fonts/local
 xrdb -merge ~/.Xresources
-#(sleep 2 && nitrogen --restore) &
 dropboxd &
 sh ~/.fehbg
-#autocutsel -fork &
-#autocutsel -selection PRIMARY -fork &
 volnoti &
-#devmon &
+mpd &
+scrobby &
 
 if [[ $1 == "gnome" ]]
 then
@@ -57,9 +50,9 @@ elif [[ $1 == "xmonad" ]]
 then
   #exec /usr/bin/trayer --edge top --align center --SetDockType true --SetPartialStrut true  --expand true --width 10 --transparent true --tint 0x000000 --alpha 0 --height 13 &
   exec xmonad
-elif [[ $1 == "scrotwm" ]]
+elif [[ $1 == "spectrwm" ]]
 then
-  exec scrotwm
+  exec spectrwm
 elif [[ $1 == "subtle" ]]
 then
   /home/josh/bin/xinit.sh
@@ -96,4 +89,4 @@ else
   echo "Choose a window manager"
 fi
 
-exec i3
+exec xmonad

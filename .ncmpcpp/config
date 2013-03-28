@@ -11,11 +11,11 @@
 #
 #mpd_port = "6600"
 #
-mpd_music_dir = "/run/media/josh/FreeAgent Drive/Music"
+mpd_music_dir = "/home/josh/Music"
 #
 #mpd_connection_timeout = "5"
 #
-#mpd_crossfade_time = "5"
+mpd_crossfade_time = "3"
 #
 #mpd_communication_mode = "notifications" (polling/notifications)
 #
@@ -61,7 +61,9 @@ visualizer_output_name = "My FIFO"
 ## you need to compile ncmpcpp with fftw3 support.
 ##
 #
-visualizer_type = "wave" (spectrum/wave)
+#visualizer_type = "wave" (spectrum/wave)
+#
+#visualizer_look = "◆│"
 #
 ##### system encoding #####
 ##
@@ -142,10 +144,9 @@ playlist_disable_highlight_delay = "5"
 ## Note: colors can be nested.
 ##
 #
-#song_list_format = "{%a - }{%t}|{$8%f$9}$R{$3(%l)$9}"
-song_list_format = "{$3[%l]$9 }{$5%a$9 }{$6%t$9 }{%y} $R {%n} {$3%b$9}"
+song_list_format = "$3[%l]$9 $5%a$9 $6%t$9 {$4%y$9} $R %n $3%b$9"
 #
-song_status_format = "{{%a{ \"%b\"{ (%y)}} - }{%t}}|{%f}"
+song_status_format = "{{$5%a$9{ $3\"%b\"$9{ ($4%y$9)}} - }{$6%t$9}}|{%f}"
 #
 #song_library_format = "{%n - }{%t}|{%f}"
 #
@@ -178,10 +179,12 @@ song_status_format = "{{%a{ \"%b\"{ (%y)}} - }{%t}}|{%f}"
 ##
 #
 #now_playing_prefix = "$b"
+now_playing_prefix = ">"
 #
 #now_playing_suffix = "$/b"
+now_playing_suffix = ""
 #
-#browser_playlist_prefix = "$2playlist$9 "
+#browser_playlist_prefix = "$2plist »$9 "
 #
 #selected_item_prefix = "$6"
 #
@@ -251,7 +254,9 @@ playlist_display_mode = "classic"
 #
 browser_display_mode = "columns"
 #
-#search_engine_display_mode = "classic" (classic/columns)
+search_engine_display_mode = "columns"
+#
+playlist_editor_display_mode = "columns"
 #
 #discard_colors_if_item_is_selected = "yes"
 #
@@ -259,9 +264,9 @@ browser_display_mode = "columns"
 #
 #seek_time = "1"
 #
-#autocenter_mode = "no"
+autocenter_mode = "yes"
 #
-#centered_cursor = "no"
+centered_cursor = "yes"
 #
 ##
 ## Note: You can specify third character which will
@@ -271,7 +276,7 @@ progressbar_look = "─╼·"
 #
 default_place_to_search_in = "database" (database/playlist)
 #
-user_interface = "classic" (classic/alternative)
+user_interface = "alternative" (classic/alternative)
 #
 #media_library_left_column = "a" (possible values: a,y,g,c,p, legend above)
 #
@@ -283,9 +288,9 @@ user_interface = "classic" (classic/alternative)
 #
 default_tag_editor_pattern = "%n - %a - %t"
 #
-#header_visibility = "yes"
+header_visibility = "yes"
 #
-#statusbar_visibility = "yes"
+statusbar_visibility = "yes"
 #
 titles_visibility = "no"
 #
@@ -299,7 +304,9 @@ titles_visibility = "no"
 #
 follow_now_playing_lyrics = "yes"
 #
-store_lyrics_in_song_dir = "yes"
+#fetch_lyrics_for_current_song_in_background = "no"
+#
+#store_lyrics_in_song_dir = "no"
 #
 ##
 ## Note: If you set this variable, ncmpcpp will try to
@@ -351,13 +358,13 @@ jump_to_now_playing_song_at_start = "yes"
 #
 ask_before_clearing_main_playlist = "no"
 #
-clock_display_seconds = "yes"
+#clock_display_seconds = "no"
 #
 display_volume_level = "yes"
 #
 display_bitrate = "yes"
 #
-#display_remaining_time = "no"
+display_remaining_time = "no"
 #
 #regular_expressions = "basic" (basic/extended)
 #
@@ -366,11 +373,11 @@ display_bitrate = "yes"
 ## "The" word while sorting items in browser, tags in
 ## media library, etc.
 ##
-#ignore_leading_the = "no"
+ignore_leading_the = "yes"
 #
 #block_search_constraints_change_if_items_found = "yes"
 #
-#mouse_support = "yes"
+mouse_support = "no"
 #
 #mouse_list_scroll_whole_page = "yes"
 #
@@ -379,6 +386,8 @@ display_bitrate = "yes"
 #tag_editor_extended_numeration = "no"
 #
 #media_library_display_date = "yes"
+#
+#media_library_display_empty_tag = "yes"
 #
 #media_library_disable_two_column_mode = "no"
 #
@@ -414,37 +423,37 @@ use_console_editor = "yes"
 #
 ##### colors definitions #####
 #
-#colors_enabled = "yes"
+colors_enabled = "yes"
 #
-#empty_tag_color = "cyan"
+empty_tag_color = "magenta"
 #
-#header_window_color = "default"
+header_window_color = "default"
 #
-#volume_color = "default"
+volume_color = "default"
 #
-#state_line_color = "default"
+state_line_color = "default"
 #
-#state_flags_color = "default"
+state_flags_color = "default"
 #
-#main_window_color = "yellow"
+main_window_color = "white"
 #
-#color1 = "white"
+color1 = "blue"
 #
-#color2 = "green"
+color2 = "white"
 #
-#main_window_highlight_color = "yellow"
+main_window_highlight_color = "cyan"
 #
 progressbar_color = "blue"
 #
-#statusbar_color = "default"
+statusbar_color = "magenta"
 #
-#alternative_ui_separator_color = "black"
+alternative_ui_separator_color = "black"
 #
-#active_column_color = "red"
+active_column_color = "blue"
 #
-#visualizer_color = "yellow"
+visualizer_color = "blue"
 #
-#window_border_color = "green"
+window_border_color = "white"
 #
-#active_window_border = "red"
+active_window_border = "red"
 #

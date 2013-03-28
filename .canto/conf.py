@@ -2,7 +2,7 @@ from canto.extra import *
 import os
 
 # Feeds
-add("http://pukingdevilsblood.blogspot.com/feeds/posts/default", tags=[None, "music"])
+add("http://thiseternalrotation.blogspot.com/feeds/posts/default", tags=[None, "music"])
 add("http://433rpm.blogspot.com/feeds/posts/default", tags=[None, "music"])
 add("http://experimentaletc.blogspot.com/feeds/posts/default", tags=[None, "music"])
 
