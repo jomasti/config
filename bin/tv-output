@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+if [[ $1 == "enable" ]]
+then
+  xrandr --output HDMI1 --right-of LVDS1 --auto
+  cp ~/.asoundrc-hdmi ~/.asoundrc
+elif [[ $1 == "disable" ]]
+then
+  xrandr --output HDMI1 --off
+  cp ~/.asoundrc-51 ~/.asoundrc
+else
+  echo "either enable or disable the output"
+fi
