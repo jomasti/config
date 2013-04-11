@@ -82,7 +82,6 @@ alias dh='dirs -v'
 alias uzbl='uzbl-tabbed'
 alias grep='egrep --color=always'
 alias tmux='tmux -u -2'
-alias pacman='pacman-color'
 alias mmaker='mmaker --no-legacy --no-debian -t Gterm OpenBox -f'
 alias packer='TMPDIR=/home/josh/build packer'
 

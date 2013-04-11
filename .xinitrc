@@ -31,8 +31,10 @@ xrdb -merge ~/.Xresources
 dropboxd &
 sh ~/.fehbg
 volnoti &
+start-pulseaudio-x11 &
 mpd &
-scrobby &
+(sleep 2 && mpdas) &
+dunst &
 
 if [[ $1 == "gnome" ]]
 then
@@ -89,4 +91,4 @@ else
   echo "Choose a window manager"
 fi
 
-exec xmonad
+exec xfce4-session

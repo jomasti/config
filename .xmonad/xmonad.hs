@@ -1,4 +1,6 @@
-{-# OPTIONS_GHC -W -fwarn-unused-imports -fno-warn-missing-signatures #-}
+{-# optiONS_GHC -W -fwarn-unused-imports -fno-warn-missing-signatures #-}
+
+--uses xmonad-contrib and xmonad-extras
 
 import System.IO
 
@@ -68,7 +70,7 @@ main = do
     , focusFollowsMouse   = True
     , workspaces          = workspaceNames
     , startupHook         = setWMName "LG3D"
-    , handleEventHook    = fullscreenEventHook
+    , handleEventHook     = fullscreenEventHook <+> docksEventHook
     } `additionalKeysP` keys
 
 myIconDir = "/home/josh/.dzen/dzenIcons/"
@@ -104,7 +106,7 @@ keys =
     , "<XF86AudioPlay>" ~> spawn "ncmpcpp toggle"
     
     -- Power
-    , "M-C-x" ~> spawn "ktsuss pm-suspend"
+    , "M-C-x" ~> spawn "ktsuss systemctl suspend"
     , "M-C-s" ~> spawn "ktsuss systemctl poweroff"
     , "M-C-r" ~> spawn "ktsuss systemctl reboot"
     ]
@@ -116,7 +118,7 @@ pads =
       scratchHook   = doRectFloat $ rr 0.51 0.52 0.46 0.44
       rr = W.RationalRect -- in fractions of screen: x y w h
 
-layouts = smartBorders $ avoidStruts $ onWorkspace "5:im" imLayout $ lessBorders (Combine Difference Screen OnlyFloat) (standardLayouts)
+layouts = smartBorders $ avoidStruts $ onWorkspace (workspaceNames !! 4) imLayout $ lessBorders (Combine Difference Screen OnlyFloat) (standardLayouts)
           where standardLayouts = tiled ||| Mirror tiled ||| fullscreenLayout
                 imLayout = withIM (2/10) (Role "buddy_list") (standardLayouts)
                 fullscreenLayout = smartBorders Full
@@ -126,11 +128,12 @@ layouts = smartBorders $ avoidStruts $ onWorkspace "5:im" imLayout $ lessBorders
                 ratio = 0.5
 
 workspaceNames :: [String]
-workspaceNames = clickable . (map dzenEscape) $ ["1:web","2:term","3:media","4:file","5:im","6:games","7:misc"]
+workspaceNames = clickable . (map dzenEscape) $ ["web","term","media","file","im","games","netflix","misc"]
       where clickable l = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
                           (i, ws) <- zip [1..] l,
                           let n = i ]
 
+additionalManageHooks :: ManageHook
 additionalManageHooks = composeOne $
       [transience]
       ++
@@ -142,12 +145,15 @@ additionalManageHooks = composeOne $
       ++
       [ name =? n                                 -?> doCenterFloat | n <- centerFloatCN ]
       ++
-      [ className =? c                            -?> doShift "1:web" | c <- webApps ]
+      [ className =? c                            -?> doShift (workspaceNames !! 0) | c <- webApps ]
       ++
-      [ className =? "URxvt" -?> doShift "2:term"
-      , className =? "Thunar" -?> doShift "4:file"
+      [ className =? c                            -?> doShift (workspaceNames !! 2) | c <- mediaApps ]
+      ++
+      [ className =? "URxvt" -?> doShift (workspaceNames !! 1)
+      , className =? "Thunar" -?> doShift (workspaceNames !! 3)
       , className =? "feh"      -?> doF W.shiftMaster <+> doFloat
-      , className =? "Pidgin" -?> doShift "5:im"
+      , className =? "Pidgin" -?> doShift (workspaceNames !! 4)
+      , className =? "Wine" -?> doFloat
       ]
       where
         name = stringProperty "WM_NAME"
@@ -155,7 +161,8 @@ additionalManageHooks = composeOne $
         ignoreC = [ "trayer" ]
         centerFloatC = [ "File-roller", "Xmessage", "Ktsuss" ]
         centerFloatCN = [ "File Operation Progress", "Install user style", "MusicBrainz lookup" ]
-        webApps = [ "Firefox", "luakit", "jumanji", "dwb" ]
+        webApps = [ "Firefox", "luakit", "jumanji", "dwb", "Chromium" ]
+        mediaApps = [ "SMPlayer", "Puddletag", "Lmms" ]
 
 manageHooks = manageDocks
               <+> additionalManageHooks

@@ -457,13 +457,20 @@ grab "A-F2", "gmrun"
 grab "W-p", "dmenu_run"
 grab "XF86Launch1", "thunar"
 
+# Power related
+grab "W-C-x", "ktsuss systemctl suspend"
+grab "W-C-z", "ktsuss systemctl reboot"
+grab "W-C-s", "ktsuss systemctl poweroff"
+grab "XF86ScreenSaver", "xscreensaver-command -lock"
+
 # Multimedia Keys
 grab "XF86AudioPlay", "ncmpcpp toggle" 
 grab "XF86AudioNext", "ncmpcpp next" 
 grab "XF86AudioPrev", "ncmpcpp prev" 
 grab "XF86AudioStop", "ncmpcpp stop"
-grab "XF86AudioLowerVolume", "/home/josh/bin/sound.sh down"  
-grab "XF86AudioRaiseVolume", "/home/josh/bin/sound.sh up"
+grab "XF86AudioLowerVolume", "/home/josh/bin/sound-pulse.sh down"  
+grab "XF86AudioRaiseVolume", "/home/josh/bin/sound-pulse.sh up"
+grab "XF86AudioMute", "/home/josh/bin/sound-pulse.sh mute"
 
 # Launcher
 begin
@@ -488,6 +495,36 @@ end
 
 grab "S-F3" do
   puts Subtlext::VERSION
+end
+
+grab "W-Tab" do
+  if (c = Subtlext::Client.first("scratch"))
+    c.toggle_stick
+    c.focus
+  elsif (c = Subtlext::Client.spawn("urxvtc -name scratch"))
+    c.tags  = [] 
+    c.flags = [ :stick ]
+  end
+end
+
+grab "A-Tab" do
+  clients = Subtlext::Client.visible
+ 
+  clients.last.instance_eval do
+    focus
+    raise
+  end
+end
+ 
+grab "A-S-Tab" do 
+  clients = Subtlext::Client.visible
+ 
+  clients.first.instance_eval do                                                 
+    lower                                                                        
+  end
+  clients.first.instance_eval do
+    focus
+  end                                                                            
 end
 
 #
@@ -655,13 +692,13 @@ end
 # Simple tags
 tag "terms",   "xterm|[u]?rxvt"
 tag "browser", "uzbl|opera|firefox|navigator|chromium|dwb|jumanji|midori|luakit"
-tag "internet", "deluge|zenmap"
+tag "internet", "deluge|transmission|zenmap"
 tag "video", "[s]?mplayer|vlc"
 tag "audio", "deadbeef|quodlibet|lmms"
 tag "id3", "kid3|easytag|puddletag|picard|exfalso"
-tag "file", "thunar|pcmanfm|nautilus|qtfm|tuxcmd"
+tag "file", "thunar|pcmanfm|nautilus|qtfm|tuxcmd|spacefm"
 tag "text", "gedit|evince|drracket|geany|lowriter|zathura"
-tag "im", "pidgin|empathy|emesene|amsn|kopete"
+tag "im", "pidgin|empathy|emesene|amsn|kopete|skype"
 
 tag "match" do
   match :name => "File Operation Progress"
@@ -690,7 +727,7 @@ end
 
 # Modes
 tag "stick" do
-  match "mplayer"
+  match "mplayer|ktsuss"
   float true
   stick true
 end
@@ -871,10 +908,6 @@ sublet :clock do
   background    "#000000"
   format_string "%b %d %I:%M %p"
 end
-sublet :volume do
-  interval      60
-  foreground    "#eeeee0"
-end
 sublet :pacman do
   interval 60
   separator "/"
@@ -924,5 +957,9 @@ end
 #
 # http://subforge.org/projects/subtle/wiki/Hooks
 #
+
+on :client_create do |c|
+  c.focus if("ktsuss" == c.instance)
+end
 
 # vim:ts=2:bs=2:sw=2:et:fdm=marker
