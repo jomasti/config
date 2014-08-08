@@ -1,7 +1,9 @@
 .config/dwb/default/cookies
 .config/dwb/default/history
+.config/dwb/default/bookmarks
 .config/jumanji/history
 .config/jumanji/cookies
+.config/jumanji/bookmarks
 .scrobbyconf
 .herrie/config
 .netrc
