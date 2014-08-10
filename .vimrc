@@ -5,6 +5,8 @@
 " vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=vimrc:
 " ----------------------------------------------------------------------------
 
+let $PYTHONPATH="/usr/lib/python3.4/site-packages"
+
 execute pathogen#infect()
 
 " Color related
@@ -87,4 +89,6 @@ ca w!! w !sudo tee >/dev/null "%"
 nnoremap <F12> :set invpaste paste?<CR>
 imap <F12> <C-O><F12>
 set pastetoggle=<F12>
+
+au! BufRead,BufNewFile *.json set filetype=json foldmethod=syntax
 

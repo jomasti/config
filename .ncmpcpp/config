@@ -3,38 +3,62 @@
 ## ~/.ncmpcpp/config and set up your preferences  ##
 ####################################################
 #
+##### directories ######
+##
+## Directory for storing ncmpcpp related files.
+## Changing it is useful if you want to store
+## everything somewhere else and provide command
+## line setting for alternative location to config
+## file which defines that while launching ncmpcpp.
+##
+#
+#ncmpcpp_directory = "~/.ncmpcpp"
+#
+##
+## Directory for storing downloaded lyrics. It
+## defaults to ~/.lyrics since other MPD clients
+## (eg. ncmpc) also use that location.
+##
+#
+#lyrics_directory = "~/.lyrics"
+#
 ##### connection settings #####
 #
 ## set it in order to make tag editor and renaming files work properly
 #
-#mpd_host = "localhost"
+mpd_host = "127.0.0.1"
 #
-#mpd_port = "6600"
+mpd_port = "6600"
 #
-mpd_music_dir = "/home/josh/Music"
+mpd_music_dir = "/mnt/windows/Users/Josh/Music"
 #
 #mpd_connection_timeout = "5"
 #
-mpd_crossfade_time = "3"
-#
-#mpd_communication_mode = "notifications" (polling/notifications)
+#mpd_crossfade_time = "5"
 #
 ##### music visualizer #####
 ##
 ## Note: In order to make music visualizer work you'll
 ## need to use mpd fifo output, whose format parameter
-## has to be set to 44100:16:1. Example configuration:
-## (it has to be put into mpd.conf)
+## has to be set to 44100:16:1 for mono visualization
+## or 44100:16:2 for stereo visualization. Example
+## configuration (it has to be put into mpd.conf):
 ##
 ## audio_output {
 ##        type            "fifo"
 ##        name            "My FIFO"
 ##        path            "/tmp/mpd.fifo"
-##        format          "44100:16:1"
+##        format          "44100:16:2"
 ## }
 ##
 #
-visualizer_fifo_path = "/tmp/mpd.fifo"
+##
+## If you set format to 44100:16:2, make it 'yes'.
+##
+#
+#visualizer_in_stereo = "no"
+#
+#visualizer_fifo_path = ""
 #
 ##
 ## Note: Below parameter is needed for ncmpcpp
@@ -103,7 +127,7 @@ playlist_disable_highlight_delay = "5"
 ## %A - album artist
 ## %t - title
 ## %b - album
-## %y - year
+## %y - date
 ## %n - track number (01/12 -> 01)
 ## %N - full track info (01/12 -> 01/12)
 ## %g - genre
@@ -111,6 +135,7 @@ playlist_disable_highlight_delay = "5"
 ## %p - performer
 ## %d - disc
 ## %C - comment
+## %P - priority
 ## $R - begin right alignment
 ##
 ## you can also put them in { } and then it will be displayed
@@ -153,6 +178,17 @@ song_status_format = "{{$5%a$9{ $3\"%b\"$9{ ($4%y$9)}} - }{$6%t$9}}|{%f}"
 #tag_editor_album_format = "{(%y) }%b"
 #
 ##
+## Note: Below variables are used for sorting songs in browser.
+## The sort mode determines how songs are sorted, and can be used
+## in combination with a sort format to specify a custom sorting format.
+## Possible values for browser_sort_mode are "name", "mtime" and "format".
+##
+#
+#browser_sort_mode = "name"
+#
+#browser_sort_format = "{%a - }{%t}|{%f} {(%l)}"
+#
+##
 ## Note: Below variables are for alternative version of user's interface.
 ## Their syntax supports all tags and colors listed above plus some extra
 ## markers used for text attributes. They are followed by character '$'.
@@ -184,11 +220,13 @@ now_playing_prefix = ">"
 #now_playing_suffix = "$/b"
 now_playing_suffix = ""
 #
-#browser_playlist_prefix = "$2plist »$9 "
+#browser_playlist_prefix = "$2playlist$9 "
 #
 #selected_item_prefix = "$6"
 #
 #selected_item_suffix = "$9"
+#
+#modified_item_prefix = "$3> $9"
 #
 ## colors are not supported for below variable
 #
@@ -264,15 +302,19 @@ playlist_editor_display_mode = "columns"
 #
 #seek_time = "1"
 #
-autocenter_mode = "yes"
+#volume_change_step = "1"
 #
-centered_cursor = "yes"
+#autocenter_mode = "no"
+#
+#centered_cursor = "no"
 #
 ##
 ## Note: You can specify third character which will
 ## be used to build 'empty' part of progressbar.
 ##
-progressbar_look = "─╼·"
+#progressbar_look = "=>"
+#
+#progressbar_boldness = "yes"
 #
 default_place_to_search_in = "database" (database/playlist)
 #
@@ -284,9 +326,7 @@ user_interface = "alternative" (classic/alternative)
 #
 #default_space_mode = "add" (add/select)
 #
-#default_tag_editor_left_col = "albums" (albums/dirs)
-#
-default_tag_editor_pattern = "%n - %a - %t"
+#default_tag_editor_pattern = "%n - %t"
 #
 header_visibility = "yes"
 #
@@ -308,6 +348,8 @@ follow_now_playing_lyrics = "yes"
 #
 #store_lyrics_in_song_dir = "no"
 #
+#generate_win32_compatible_filenames = "yes"
+#
 ##
 ## Note: If you set this variable, ncmpcpp will try to
 ## get info from last.fm in language you set and if it
@@ -322,7 +364,7 @@ follow_now_playing_lyrics = "yes"
 #
 #show_hidden_files_in_local_browser = "no"
 #
-display_screens_numbers_on_start = "no"
+#display_screens_numbers_on_start = "yes"
 #
 ##
 ## How shall key_screen_switcher work?
@@ -349,6 +391,15 @@ display_screens_numbers_on_start = "no"
 #screen_switcher_mode = "sequence: 2 -> 3"
 #
 ##
+## Default width of locked screen (in %).
+## Acceptable values are from 20 to 80.
+##
+#
+#locked_screen_width_part = "50"
+#
+#ask_for_locked_screen_width_part = "yes"
+#
+##
 ## Note: You can define startup screen for ncmpcpp
 ## by choosing screen number from the list above.
 ##
@@ -362,34 +413,32 @@ ask_before_clearing_main_playlist = "no"
 #
 display_volume_level = "yes"
 #
-display_bitrate = "yes"
+#display_bitrate = "no"
 #
 display_remaining_time = "no"
 #
-#regular_expressions = "basic" (basic/extended)
+#regular_expressions = "none" (none/basic/extended)
 #
 ##
 ## Note: If below is enabled, ncmpcpp will ignore leading
 ## "The" word while sorting items in browser, tags in
 ## media library, etc.
 ##
-ignore_leading_the = "yes"
+#ignore_leading_the = "no"
 #
 #block_search_constraints_change_if_items_found = "yes"
 #
-mouse_support = "no"
+#mouse_support = "yes"
 #
 #mouse_list_scroll_whole_page = "yes"
 #
 #empty_tag_marker = "<empty>"
 #
+#tags_separator = " | "
+#
 #tag_editor_extended_numeration = "no"
 #
-#media_library_display_date = "yes"
-#
-#media_library_display_empty_tag = "yes"
-#
-#media_library_disable_two_column_mode = "no"
+#media_library_sort_by_mtime = "no"
 #
 #enable_window_title = "yes"
 #
@@ -407,19 +456,9 @@ mouse_support = "no"
 #
 search_engine_default_search_mode = "2"
 #
-##
-## Note: Below variables can allow you to physically
-## remove files and directories from your hdd using
-## ncmpcpp's browser screen.
-##
+#external_editor = ""
 #
-allow_physical_files_deletion = "no"
-#
-allow_physical_directories_deletion = "no"
-#
-external_editor = "vim"
-#
-use_console_editor = "yes"
+#use_console_editor = "no" (set to yes, if your editor is console app)
 #
 ##### colors definitions #####
 #

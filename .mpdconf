@@ -10,7 +10,7 @@
 # be disabled and audio files will only be accepted over ipc socket (using
 # file:// protocol) or streaming files over an accepted protocol.
 #
-music_directory		"/home/josh//Music"
+music_directory		"/mnt/windows/Users/Josh/Music"
 #
 # This setting sets the MPD internal playlist directory. The purpose of this
 # directory is storage for playlists created by MPD. The server will use 
@@ -47,7 +47,12 @@ pid_file			"~/.mpd/mpd.pid"
 # it was brought down. This setting is disabled by default and the server 
 # state will be reset on server start up.
 #
-state_file			"~/.mpd/mpd.state"
+state_file			"~/.mpd/state"
+#
+# The location of the sticker database.  This is a database which
+# manages dynamic information attached to songs.
+#
+sticker_file			"~/.mpd/sticker.sql"
 #
 ###############################################################################
 
@@ -59,17 +64,24 @@ state_file			"~/.mpd/mpd.state"
 # initialization. This setting is disabled by default and MPD is run as the
 # current user.
 #
-#user				"mpd"
+#user				"nobody"
+#
+# This setting specifies the group that MPD will run as. If not specified
+# primary group of user specified with "user" setting will be used (if set).
+# This is useful if MPD needs to be a member of group such as "audio" to
+# have permission to use sound card.
+#
+#group				"nogroup"
 #
 # This setting sets the address for the daemon to listen on. Careful attention
 # should be paid if this is assigned to anything other then the default, any.
 # This setting can deny access to control of the daemon.
 #
 # For network
-bind_to_address		"localhost"
+bind_to_address		"127.0.0.1"
 #
 # And for Unix Socket
-#bind_to_address		"/var/run/mpd/socket"
+#bind_to_address		"~/.mpd/socket"
 #
 # This setting is the TCP port that is desired for the daemon to get assigned
 # to.
@@ -91,16 +103,30 @@ log_level			"default"
 #
 #gapless_mp3_playback			"yes"
 #
+# Setting "restore_paused" to "yes" puts MPD into pause mode instead
+# of starting playback after startup.
+#
+restore_paused "yes"
+#
 # This setting enables MPD to create playlists in a format usable by other
 # music players.
 #
 #save_absolute_paths_in_playlists	"no"
 #
-# This setting defines a list of tag types that will be extracted during the 
-# audio file discovery process. Optionally, 'comment' can be added to this
-# list.
-#
+# This setting defines a list of tag types that will be extracted during the
+# audio file discovery process. The complete list of possible values can be
+# found in the mpd.conf man page.
 #metadata_to_use	"artist,album,title,track,name,genre,date,composer,performer,disc"
+#
+# This setting enables automatic update of MPD's database when files in 
+# music_directory are changed.
+#
+#auto_update	"yes"
+#
+# Limit the depth of the directories being watched, 0 means only watch
+# the music directory itself.  There is no limit by default.
+#
+#auto_update_depth "3"
 #
 ###############################################################################
 
@@ -149,6 +175,15 @@ zeroconf_name			"Music Player"
 ###############################################################################
 
 
+# Database #######################################################################
+#
+
+#database {
+#       plugin "proxy"
+#       host "other.mpd.host"
+#       port "6600"
+#}
+
 # Input #######################################################################
 #
 
@@ -169,26 +204,16 @@ input {
 # blocks. Setting this block is optional, though the server will only attempt
 # autodetection for one sound card.
 #
-# See <http://mpd.wikia.com/wiki/Configuration#Audio_Outputs> for examples of 
-# other audio outputs.
-#
-#audio_output {
-#	type		"alsa"
-#	name		"My ALSA Device"
-#}
-
 # An example of an ALSA output:
 #
 #audio_output {
 #	type		"alsa"
-#	name		"MPD ALSA"
-# options "dev=dmixer"
-#	device		"hw:2,0"	# optional
-#	format		"44100:16:2"	# optional
-#  mixer_type  "software"
-#  mixer_device	"default"	# optional
-#  mixer_control	"PCM"
-#	mixer_index	"0"		# optional
+#	name		"My ALSA Device"
+##	device		"hw:0,0"	# optional
+##	mixer_type      "hardware"	# optional
+##	mixer_device	"default"	# optional
+##	mixer_control	"PCM"		# optional
+##	mixer_index	"0"		# optional
 #}
 #
 # An example of an OSS output:
@@ -215,12 +240,26 @@ input {
 #	quality		"5.0"
 #	bitrate		"128"
 #	format		"44100:16:1"
-#	protocol	"icecast2"		# optional
-#	user		"source"		# optional
-#	description	"My Stream Description"	# optional
-#	genre		"jazz"			# optional
-#	public		"no"			# optional
-#	timeout		"2"			# optional
+##	protocol	"icecast2"		# optional
+##	user		"source"		# optional
+##	description	"My Stream Description"	# optional
+##	url		"http://example.com"	# optional
+##	genre		"jazz"			# optional
+##	public		"no"			# optional
+##	timeout		"2"			# optional
+##	mixer_type      "software"		# optional
+#}
+#
+# An example of a recorder output:
+#
+#audio_output {
+#	type		"recorder"
+#	name		"My recorder"
+#	encoder		"vorbis"		# optional, vorbis or lame
+#	path		"/var/lib/mpd/recorder/mpd.ogg"
+##	quality		"5.0"			# do not define if bitrate is defined
+#	bitrate		"128"			# do not define if quality is defined
+#	format		"44100:16:1"
 #}
 #
 # An example of a httpd output (built-in HTTP streaming server):
@@ -230,19 +269,40 @@ input {
 #	name		"My HTTP Stream"
 #	encoder		"vorbis"		# optional, vorbis or lame
 #	port		"8000"
-#	quality		"5.0"			# do not define if bitrate is defined
+#	bind_to_address	"0.0.0.0"		# optional, IPv4 or IPv6
+##	quality		"5.0"			# do not define if bitrate is defined
 #	bitrate		"128"			# do not define if quality is defined
 #	format		"44100:16:1"
+#	max_clients	"0"			# optional 0=no limit
 #}
 #
 # An example of a pulseaudio output (streaming to a remote pulseaudio server)
 #
 audio_output {
 	type		"pulse"
-	name		"MPD PulseAudio"
-#	server		"remote_server"		# optional
-#	sink		"remote_server_sink"	# optional
+	name		"My Pulse Output"
+##	server		"remote_server"		# optional
+##	sink		"remote_server_sink"	# optional
 }
+#
+# An example of a winmm output (Windows multimedia API).
+#
+#audio_output {
+#	type		"winmm"
+#	name		"My WinMM output"
+##	device		"Digital Audio (S/PDIF) (High Definition Audio Device)" # optional
+#		or
+##	device		"0"		# optional
+##	mixer_type	"hardware"	# optional
+#}
+#
+# An example of an openal output.
+#
+#audio_output {
+#	type		"openal"
+#	name		"My OpenAL output"
+##	device		"Digital Audio (S/PDIF) (High Definition Audio Device)" # optional
+#}
 #
 ## Example "pipe" output:
 #
@@ -262,6 +322,7 @@ audio_output {
 #audio_output {
 #	type		"null"
 #	name		"My Null Output"
+#	mixer_type      "none"			# optional
 #}
 #
 audio_output {
@@ -286,38 +347,14 @@ audio_output {
 ###############################################################################
 
 
-# Volume control mixer ########################################################
-#
-# These are the global volume control settings. By default, this setting will
-# be detected to the available audio output device, with preference going to 
-# hardware mixing. Hardware and software mixers for individual audio_output
-# sections cannot yet be mixed.
-#
-# An example for controlling an ALSA, OSS or Pulseaudio mixer; If this
-# setting is used other sound applications will be affected by the volume
-# being controlled by MPD.
-#
-#mixer_type			"hardware"
-#
-# An example for controlling all mixers through software. This will control
-# all controls, even if the mixer is not supported by the device and will not
-# affect any other sound producing applications.
-#
-mixer_type			"software"
-#
-# This example will not allow MPD to touch the mixer at all and will disable
-# all volume controls.
-#
-#mixer_type			"disabled"
-#
-###############################################################################
-
-
 # Normalization automatic volume adjustments ##################################
 #
 # This setting specifies the type of ReplayGain to use. This setting can have
-# the argument "album" or "track". See <http://www.replaygain.org> for more
-# details. This setting is disabled by default.
+# the argument "off", "album", "track" or "auto". "auto" is a special mode that
+# chooses between "track" and "album" depending on the current state of
+# random playback. If random playback is enabled then "track" mode is used.
+# See <http://www.replaygain.org> for more details about ReplayGain.
+# This setting is off by default.
 #
 #replaygain			"album"
 #
@@ -325,6 +362,20 @@ mixer_type			"software"
 # default this setting is disabled.
 #
 #replaygain_preamp		"0"
+#
+# This setting sets the pre-amp used for files that do NOT have ReplayGain tags.
+# By default this setting is disabled.
+#
+#replaygain_missing_preamp	"0"
+#
+# This setting enables or disables ReplayGain limiting.
+# MPD calculates actual amplification based on the ReplayGain tags
+# and replaygain_preamp / replaygain_missing_preamp setting.
+# If replaygain_limit is enabled MPD will never amplify audio signal
+# above its original level. If replaygain_limit is disabled such amplification
+# might occur. By default this setting is enabled.
+#
+#replaygain_limit		"yes"
 #
 # This setting enables on-the-fly normalization volume adjustment. This will
 # result in the volume of all playing audio to be adjusted so the output has 
@@ -366,12 +417,10 @@ mixer_type			"software"
 #
 ###############################################################################
 
-
 # Character Encoding ##########################################################
 #
 # If file or directory names do not display correctly for your locale then you 
-# may need to modify this setting. After modification of this setting mpd 
-# --create-db must be run to change the database.
+# may need to modify this setting.
 #
 filesystem_charset		"UTF-8"
 #
@@ -380,3 +429,29 @@ filesystem_charset		"UTF-8"
 id3v1_encoding			"UTF-8"
 #
 ###############################################################################
+
+
+# SIDPlay decoder #############################################################
+#
+# songlength_database:
+#  Location of your songlengths file, as distributed with the HVSC.
+#  The sidplay plugin checks this for matching MD5 fingerprints.
+#  See http://www.c64.org/HVSC/DOCUMENTS/Songlengths.faq
+#
+# default_songlength:
+#  This is the default playing time in seconds for songs not in the
+#  songlength database, or in case you're not using a database.
+#  A value of 0 means play indefinitely.
+#
+# filter:
+#  Turns the SID filter emulation on or off.
+#
+#decoder {
+#	plugin			"sidplay"
+#	songlength_database	"/media/C64Music/DOCUMENTS/Songlengths.txt"
+#	default_songlength	"120"
+#	filter "true"
+#}
+#
+###############################################################################
+

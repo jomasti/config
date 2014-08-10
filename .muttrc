@@ -17,9 +17,9 @@ set signature           = ~/.mutt/sig                           # my signature f
 set tmpdir              = ~/.mutt/temp                          # where to keep temp files
 
 # mailboxes
-mailboxes +INBOX +"Arch Dev" +"Arch General" +"AUR General" +"AUR Dev" +"AUR Notify" +"Arch Haskell" \
-		  +XMonad +Awesome +Luakit +ZSH +E17 \
-		  +Last.fm +Tumblr +Facebook \
+mailboxes +INBOX +"Arch Linux.Arch Dev" +"Arch Linux.Arch General" +"Arch Linux.AUR General" +"Arch Linux.AUR Dev" +"Arch Linux.AUR Notify" +"Arch Linux.Arch Haskell" \
+		  +Linux.XMonad +Linux.Awesome +Linux.Luakit +Linux.ZSH +Linux.E17 \
+		  +Lastfm +Tumblr +Facebook \
 		  +ASU \
 		  +Archive +Sent +Drafts +Trash
 

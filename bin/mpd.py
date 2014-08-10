@@ -43,7 +43,7 @@ if connected == True:
     status = mpd.status()
     state = status.state
     if state == "stop":
-		print shellfm()
+		print pianobar()
 #		print "[nothing playing]"
     else:
     	song_info = mpd.currentsong()

@@ -16,7 +16,6 @@ local vicious = require("vicious")
 local revelation = require("revelation")
 -- Run shell scripts
 local bashets = require("bashets")
-bashets.set_script_path("/home/josh/.config/awesome/bashets/")
 -- Window switching
 local aweswt = require("aweswt")
 
@@ -119,7 +118,7 @@ mymainmenu = awful.menu({
                   { "awesome", myawesomemenu, beautiful.awesome_icon },
 									{ "-------------", nil },
    							  { "&chromium", "chromium", "/usr/share/icons/hicolor/16x16/apps/chromium.png" },
-   								{ "&nautilus", "nautilus", "/usr/share/icons/gnome/16x16/apps/file-manager.png" },
+   								{ "&thunar", "thunar", "/usr/share/icons/hicolor/16x16/apps/Thunar.png" },
 									{ "-------------", nil },
                   { "open terminal", terminal },
 									{ "power", mypowermenu }
@@ -265,7 +264,7 @@ for s = 1, screen.count() do
 	gmlicon:set_image(awful.util.getdir("config") .. "/icons/mail.png")
 	gmlicon.resize = false
 	-- Register widgets
-	vicious.register(cpuwidget, vicious.widgets.cpu, "$2% $3%")
+	vicious.register(cpuwidget, vicious.widgets.cpu, "$1% $2% $3% $4%")
 	vicious.register(memwidget, vicious.widgets.mem, "$1% ($2MB/$3MB)", 13)
 	vicious.register(mpdwidget, vicious.widgets.mpd,
     function (widget, args)
@@ -428,7 +427,14 @@ globalkeys = awful.util.table.join(
 			end),
 	awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/ 2>/dev/null'") end),
 	awful.key({ modkey,           }, "slash", function () coverart_show() end),
-	awful.key({ modkey }, "a", aweswt.switch)
+	awful.key({ modkey }, "a", aweswt.switch),
+  awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("ncmpcpp toggle") end),
+  awful.key({ }, "XF86AudioNext", function () awful.util.spawn("ncmpcpp next") end),
+  awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("ncmpcpp prev") end),
+  awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn_with_shell("~/bin/pa_vol up") end),
+  awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn_with_shell("~/bin/pa_vol down") end),
+  awful.key({ }, "XF86AudioMute", function () awful.util.spawn_with_shell("~/bin/pa_vol mute") end),
+  awful.key({ modkey , "Control", "Shift" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end)
 )
 
 clientkeys = awful.util.table.join(

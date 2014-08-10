@@ -1,20 +1,22 @@
 #!/bin/sh
 
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+export QT_STYLE_OVERRIDE=gtk
 
 # Check whether the external monitor is connected
-#xrandr | grep VGA | grep " connected "
+xrandr | grep VGA | grep " connected "
 
 # 0 is returned on success
 if [ $? -eq 0 ]; then
-	xrandr --output LVDS1 --primary --mode 1280x800 --pos 0x0 --output VGA1 --mode 1024x768 --pos 1280x0
+	xrandr --output LVDS --primary --mode 1600x900 --pos 0x0 --output VGA-0 --mode 1680x1050 --pos 1600x0
 fi
 
 xsetroot -cursor_name left_ptr
 
 setxkbmap -option compose:ralt
 
-synclient TouchpadOff=1
+#synclient TouchpadOff=1
+~/bin/touchpad.sh
 
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/* ; do
@@ -33,8 +35,11 @@ sh ~/.fehbg
 volnoti &
 start-pulseaudio-x11 &
 mpd &
-(sleep 2 && mpdas) &
+(sleep 2 && scrobby) &
 dunst &
+nm-applet &
+cbatticon &
+xss-lock -- xscreensaver-command -lock &
 
 if [[ $1 == "gnome" ]]
 then
@@ -91,4 +96,7 @@ else
   echo "Choose a window manager"
 fi
 
-exec xfce4-session
+
+#(sleep 3; /usr/bin/trayer --edge top --align center --SetDockType true --SetPartialStrut true  --expand true --widthtype request --transparent true --tint 0x181818 --alpha 0 --height 20 & ) &
+#exec /usr/bin/awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr
+exec i3 -V >> ~/.config/i3/i3log-$(date +'%F-%k-%M-%S') 2>&1

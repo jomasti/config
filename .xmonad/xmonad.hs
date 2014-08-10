@@ -35,7 +35,6 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.StackTile
 
 import XMonad.Prompt
-import XMonad.Prompt.Eval
 import XMonad.Prompt.Input
 import XMonad.Prompt.Man
 import XMonad.Prompt.RunOrRaise
@@ -58,8 +57,9 @@ stripIM s = if ("IM " `isPrefixOf` s) then drop (length "IM ") s else s
 main = do
   --xmproc <- spawnPipe "/usr/bin/xmobar /home/josh/.xmonad/xmobarrc"
   dzen <- spawnPipe myStatusBar
+  trayproc <- spawnPipe trayer
   other <- spawnPipe left
-  --other <- spawnPipe right
+  other <- spawnPipe right
   xmonad $ withUrgencyHook NoUrgencyHook defaultConfig
     { manageHook          = manageHooks
     , layoutHook          = layouts
@@ -78,9 +78,10 @@ myStatusBar = "dzen2 -x '0' -y '0' -h '20' -w '640' -ta 'l' -bg '" ++ myDBGColor
 left = ".dzen/left.zsh | dzen2 -xs 1 -x '640' -y '0' -h '20' -ta 'r' -bg '" ++ myDBGColor ++ "' -fg '" ++ myDFGColor ++ "' -fn '" ++ myFont ++ "'"
 right = ".dzen/right.zsh | dzen2 -xs 2 -y '0' -h '20' -ta 'r' -bg '" ++ myDBGColor ++ "' -fg '" ++ myDFGColor ++ "' -fn '" ++ myFont ++ "'"
 myFont = "xft:Anka/Coder:pixelsize=10"
+trayer = "/usr/bin/trayer --edge top --align right --expand true --SetDockType true --SetPartialStrut true  --widthtype pixel --width 50 --transparent true --tint 0x181818 --alpha 0 --height 20"
 
 myRestart :: String
-myRestart = "for pid in `pgrep dzen2`; do kill -9 $pid; done && xmonad --recompile && xmonad --restart"
+myRestart = "for pid in `pgrep dzen2`; do kill -9 $pid; done && killall trayer && xmonad --recompile && xmonad --restart"
 
 keys =
     [ "M-<Tab>"   ~> namedScratchpadAction pads "scratch"
@@ -100,9 +101,9 @@ keys =
     , "M-d"       ~> raiseMaybe (spawn "dwb -r") (className =? "Dwb")
 
     -- Media
-    , "<XF86AudioRaiseVolume>"  ~> spawn "~/bin/sound-alsa.sh up"
-    , "<XF86AudioLowerVolume>"  ~> spawn "~/bin/sound-alsa.sh down"
-    , "<XF86AudioMute>" ~> spawn "~/bin/sound-alsa.sh mute"
+    , "<XF86AudioRaiseVolume>"  ~> spawn "~/bin/pa_vol up"
+    , "<XF86AudioLowerVolume>"  ~> spawn "~/bin/pa_vol down"
+    , "<XF86AudioMute>" ~> spawn "~/bin/pa_vol mute"
     , "<XF86AudioPlay>" ~> spawn "ncmpcpp toggle"
     
     -- Power
@@ -128,7 +129,7 @@ layouts = smartBorders $ avoidStruts $ onWorkspace (workspaceNames !! 4) imLayou
                 ratio = 0.5
 
 workspaceNames :: [String]
-workspaceNames = clickable . (map dzenEscape) $ ["web","term","media","file","im","games","netflix","misc"]
+workspaceNames = clickable . (map dzenEscape) $ ["web","term","media","file","im","sublime","netflix","misc"]
       where clickable l = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
                           (i, ws) <- zip [1..] l,
                           let n = i ]
@@ -149,20 +150,25 @@ additionalManageHooks = composeOne $
       ++
       [ className =? c                            -?> doShift (workspaceNames !! 2) | c <- mediaApps ]
       ++
+      [ className =? c                            -?> doShift (workspaceNames !! 3) | c <- fileApps ]
+      ++
+      [ className =? c                            -?> doShift (workspaceNames !! 4) | c <- imApps ]
+      ++
       [ className =? "URxvt" -?> doShift (workspaceNames !! 1)
-      , className =? "Thunar" -?> doShift (workspaceNames !! 3)
       , className =? "feh"      -?> doF W.shiftMaster <+> doFloat
-      , className =? "Pidgin" -?> doShift (workspaceNames !! 4)
       , className =? "Wine" -?> doFloat
+      , className =? "Subl3" -?> doShift (workspaceNames !! 5)
       ]
       where
         name = stringProperty "WM_NAME"
         floatFF = [ "DTA", "Manager", "Download", "Dialog", "Browser", "Toplevel" ]
         ignoreC = [ "trayer" ]
         centerFloatC = [ "File-roller", "Xmessage", "Ktsuss" ]
-        centerFloatCN = [ "File Operation Progress", "Install user style", "MusicBrainz lookup" ]
+        centerFloatCN = [ "File Operation Progress", "Install user style", "MusicBrainz lookup", "Commit", "Update" ]
         webApps = [ "Firefox", "luakit", "jumanji", "dwb", "Chromium" ]
         mediaApps = [ "SMPlayer", "Puddletag", "Lmms" ]
+        imApps = [ "Pidgin", "Skype" ]
+        fileApps = [ "Thunar", "Pcmanfm", "Spacefm", "Nautilus" ]
 
 manageHooks = manageDocks
               <+> additionalManageHooks

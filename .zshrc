@@ -17,6 +17,7 @@ export INTEL_BATCH=1
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export ARCH_HASKELL="Joshua Stiefer <facedelajunk@gmail.com>"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+export VDPAU_DRIVER=r600
 
 autoload -U compinit promptinit colors zcalc zsh-mime-setup zsh/terminfo
 compinit
@@ -77,6 +78,8 @@ alias ll='ls -lh --color=auto'
 alias lal='ls -lha --color=auto'
 alias asu-up='sshfs jstiefer@general.asu.edu:. ~/ASU'
 alias asu-down='fusermount -u ~/ASU'
+alias cosmo-up='sshfs jstiefer@cosmo:. ~/cosmo'
+alias cosmo-down='fusermount -u ~/cosmo'
 alias ..='cd ..'
 alias dh='dirs -v'
 alias uzbl='uzbl-tabbed'
@@ -155,6 +158,10 @@ extract() {
 
 rename_mp3() {
     find . -type f -exec sh -c 'test $(file --brief --mime-type "$0") == "audio/mpeg"' {} \; -print | xargs -t -i mv {} {}.mp3
+}
+
+connect_monitor() {
+	  xrandr --output LVDS --primary --mode 1600x900 --pos 0x0 --output VGA-0 --mode 1680x1050 --pos 1600x0  
 }
 
 

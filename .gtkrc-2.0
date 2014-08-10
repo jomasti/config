@@ -1,9 +1,9 @@
 # DO NOT EDIT! This file will be overwritten by LXAppearance.
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
-gtk-theme-name="Siva Flat Darkest"
+gtk-theme-name="iris-dark"
 gtk-icon-theme-name="MeliaeSVG"
-gtk-font-name="Aller 8"
+gtk-font-name="Open Sans 8"
 gtk-cursor-theme-name="Adwaita"
 gtk-cursor-theme-size=24
 gtk-toolbar-style=GTK_TOOLBAR_ICONS
@@ -14,6 +14,6 @@ gtk-enable-event-sounds=1
 gtk-enable-input-feedback-sounds=0
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle="hintslight"
+gtk-xft-hintstyle="hintfull"
 gtk-xft-rgba="rgb"
 include "/home/josh/.gtkrc-2.0.mine"

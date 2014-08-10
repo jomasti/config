@@ -30,10 +30,10 @@ fmemp() {
     awk '/^MemTotal/ {t=sprintf("%0.f", $2)} /^MemFree/ {f=sprintf("%0.f", $2)} /^Cached/ {c=sprintf("%0.f", $2)} /^Buffers/ {b=sprintf("%0.f", $2)} END { perc = ((t-(f+c+b))/t)*100; printf("%0.f", perc);}' /proc/meminfo
 }
 
-if [[ `hostname` == "arrowhead" ]]; then
+if [[ `hostname` == "hp-arch" ]]; then
     fdiskusage1() { df -h / | sed -ne 's/^.* \([0-9]*\)% .*/\1/p' | gdbar -h 8 -w 40 -fg $BARFG -bg $BARBG -ss 1 -sw 3 -nonl    };
-    fdiskusagep1() { df -h / | awk '/sda1/ {print $5;}' };
-    fdiskusagef1() { df -h / | awk '/sda1/ {print $3"/"$2;}' };
+    fdiskusagep1() { df -h / | awk '/sda3/ {print $5;}' };
+    fdiskusagef1() { df -h / | awk '/sda3/ {print $3"/"$2;}' };
 else
     fdiskusage1() { echo "" };
     fdiskusagep1() { echo "" };
