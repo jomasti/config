@@ -1,0 +1,16 @@
+[Plugins]
+Output=i3bar
+Input=mpd;pulseaudio;upower;time;
+
+[Time]
+Zones=America/Phoenix;
+
+[MPD]
+Host=localost
+Port=6600
+
+[MPD host]
+Format="${song}"
+
+[PulseAudio]
+Actions=mouse:1 mute toggle; mouse:4 raise; mouse:5 lower;
