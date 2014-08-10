@@ -5,7 +5,7 @@
 local theme = {}
 
 -- Default settings
-theme.font = "Droid Sans Mono normal 8"
+theme.font = "Open Sans Mono normal 8"
 theme.fg   = "#fff"
 theme.bg   = "#000"
 
