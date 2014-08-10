@@ -1,0 +1,28 @@
+background no
+use_xft no
+# xftfont 123:size=8
+out_to_console yes
+out_to_x no
+update_interval 2
+total_run_times 0
+# own_window yes
+# own_window_type dock
+# own_window_transparent yes
+double_buffer no
+border_inner_margin 0
+border_outer_margin 0
+use_spacer left
+if_up_strictness address
+pad_percents 2
+short_units yes
+
+TEXT
+[{"full_text": "${execpi 5 mpd.py}", "color": "\#e3fc3f"},
+{"full_text": "CPU", "color": "\#636363", "separator": false, "separator_block_width": 3},
+{"full_text": "${cpu cpu0}%", "color": "\#78e700", "separator": false, "separator_block_width": 5},
+{"full_text": "MEM", "color": "\#636363", "separator": false, "separator_block_width": 3},
+{"full_text": "${mem}", "color": "\#78e700", "separator": false, "separator_block_width": 5},
+{"full_text": "UPD", "color": "\#636363", "separator": false, "separator_block_width": 3},
+{"full_text": "${execpi 3600 perl /home/josh/bin/pacman-updates.pl}", "color": "\#78e700"},
+{"full_text": "${time %B %d}"},
+{"full_text": "${time %l:%M}"}],

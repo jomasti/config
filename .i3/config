@@ -10,114 +10,132 @@
 #
 
 # Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below. ISO 10646 = Unicode
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:Open Sans Mono 8
+# Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, if you need a lot of unicode glyphs or
-# right-to-left text rendering, you should instead use pango for rendering and
-# chose a FreeType font, such as:
-font pango:Droid Sans Mono 10
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up l
+set $down k
+set $left j
+set $right semicolon
+set $mod Mod4
 
 # use Mouse+Mod4 to drag floating windows to their wanted position
 floating_modifier Mod4
 
 # start a terminal
-bindsym Mod4+Return exec i3-sensible-terminal
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym Mod4+Shift+q kill
+bindsym Mod1+F4 kill
 
 # start dmenu (a program launcher)
-bindsym Mod4+p exec dmenu_run -nb '#000000' -nf '#cd5c5c' -sb '#cd5c5c' -sf '#000000'
+#bindsym $mod+p exec dmenu_run -nb '#000000' -nf '#cd5c5c' -sb '#cd5c5c' -sf '#000000'
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym Mod4+d exec --no-startup-id i3-dmenu-desktop
+bindsym Menu exec --no-startup-id j4-dmenu-desktop --dmenu="dmenu -i -nb '#000000' -nf '#cd5c5c' -sb '#cd5c5c' -sf '#000000' -l 15"
 
 # change focus
-bindsym Mod4+j focus left
-bindsym Mod4+k focus down
-bindsym Mod4+l focus up
-bindsym Mod4+semicolon focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
 # alternatively, you can use the cursor keys:
-bindsym Mod4+Left focus left
-bindsym Mod4+Down focus down
-bindsym Mod4+Up focus up
-bindsym Mod4+Right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
 
 # move focused window
-bindsym Mod4+Shift+j move left
-bindsym Mod4+Shift+k move down
-bindsym Mod4+Shift+l move up
-bindsym Mod4+Shift+semicolon move right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
 # alternatively, you can use the cursor keys:
-bindsym Mod4+Shift+Left move left
-bindsym Mod4+Shift+Down move down
-bindsym Mod4+Shift+Up move up
-bindsym Mod4+Shift+Right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym Mod4+h split h
+bindsym $mod+h split h
 
 # split in vertical orientation
-bindsym Mod4+v split v
+bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym Mod4+f fullscreen
+bindsym $mod+f fullscreen
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym Mod4+s layout stacking
-bindsym Mod4+w layout tabbed
-bindsym Mod4+e layout toggle split
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym Mod4+Shift+space floating toggle
+bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym Mod4+space focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym Mod4+a focus parent
+bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym Mod4+d focus child
+bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
 
 # switch to workspace
-bindsym Mod4+1 workspace www
-bindsym Mod4+2 workspace term
-bindsym Mod4+3 workspace media
-bindsym Mod4+4 workspace file
-bindsym Mod4+5 workspace misc
-bindsym Mod4+6 workspace 6
-bindsym Mod4+7 workspace 7
-bindsym Mod4+8 workspace 8
-bindsym Mod4+9 workspace 9
-bindsym Mod4+0 workspace 10
+bindsym $mod+1 workspace www
+bindsym $mod+2 workspace term
+bindsym $mod+3 workspace media
+bindsym $mod+4 workspace file
+bindsym $mod+5 workspace misc
+bindsym $mod+6 workspace remmina
+bindsym $mod+7 workspace sublime
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym Mod4+Shift+1 move container to workspace www
-bindsym Mod4+Shift+2 move container to workspace term
-bindsym Mod4+Shift+3 move container to workspace media
-bindsym Mod4+Shift+4 move container to workspace file
-bindsym Mod4+Shift+5 move container to workspace misc
-bindsym Mod4+Shift+6 move container to workspace 6
-bindsym Mod4+Shift+7 move container to workspace 7
-bindsym Mod4+Shift+8 move container to workspace 8
-bindsym Mod4+Shift+9 move container to workspace 9
-bindsym Mod4+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace www
+bindsym $mod+Shift+2 move container to workspace term
+bindsym $mod+Shift+3 move container to workspace media
+bindsym $mod+Shift+4 move container to workspace file
+bindsym $mod+Shift+5 move container to workspace misc
+bindsym $mod+Shift+6 move container to workspace remmina
+bindsym $mod+Shift+7 move container to workspace sublime
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+
 
 # change between nearby workspaces
-bindsym Mod4+Control+Left prev
-bindsym Mod4+Control+Right next
+bindsym $mod+Control+Left workspace prev
+bindsym $mod+Control+Right workspace next
 
 # reload the configuration file
-bindsym Mod4+Shift+c reload
+bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym Mod4+Shift+r restart
+bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -127,10 +145,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j           resize shrink width 10 px or 10 ppt
-        bindsym k           resize grow height 10 px or 10 ppt
-        bindsym l           resize shrink height 10 px or 10 ppt
-        bindsym semicolon   resize grow width 10 px or 10 ppt
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left        resize shrink width 10 px or 10 ppt
@@ -143,52 +161,78 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-bindsym Mod4+r mode "resize"
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Pause mode "$mode_system"
+
+bindsym $mod+t border normal
+bindsym $mod+y border 1pixel
+bindsym $mod+u border none
+bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    status_command i3status
-    tray_output primary
-    font pango:Droid Sans Mono 8
+    status_command $HOME/bin/conky-i3bar
+    tray_output LVDS
+    font pango:Open Sans Mono 8
     colors {
-        focused_workspace         #cd5c4d   #cd5c5c   #ffffff
-        inactive_workspace        #cd5c5c   #000000   #ffffff
+        focused_workspace         #000000   #df253f   #ffffff
+        inactive_workspace        #000000   #181818   #ffffff
         urgent_workspace          #900000   #000000   #ffffff
     }
 }
 
 #colors
-client.focused        #cd5c4d   #cd5c5c   #ffffff
-client.focused_inactive   #cd5c5c   #000000   #ffffff
-client.unfocused      #cd5c5c   #000000   #ffffff
+client.focused        #df252d   #df253f   #ffffff
+client.focused_inactive   #df253f   #000000   #ffffff
+client.unfocused      #df253f   #000000   #ffffff
 client.urgent       #900000   #000000   #ffffff
 
 workspace_layout tabbed
 hide_edge_borders vertical
 workspace_auto_back_and_forth yes
+mouse_warping none
+popup_during_fullscreen smart
+force_display_urgency_hint 500 ms
+new_window none
+new_float normal
 
 # volume keys
 bindsym XF86AudioRaiseVolume exec /home/josh/bin/sound-pa.sh up
 bindsym XF86AudioLowerVolume exec /home/josh/bin/sound-pa.sh down
-bindsym XF86Mute exec /home/josh/bin/sound-pa.sh mute
+bindsym XF86AudioMute exec /home/josh/bin/sound-pa.sh mute
 
-bindsym XF86Play exec ncmpcpp toggle
-bindsym XF86Stop exec ncmpcpp stop
-bindsym XF86Prev exec ncmpcpp prev
-bindsym XF86Next exec ncmpcpp next
+bindsym XF86AudioPlay exec ncmpcpp toggle
+bindsym XF86AudioPrev exec ncmpcpp prev
+bindsym XF86AudioNext exec ncmpcpp next
 bindsym XF86ScreenSaver exec slock
-bindsym XF86WWW exec chromium
-bindsym XF86Calculator exec gcalctool
+bindsym XF86HomePage exec dwb
+
+bindsym $mod+Mod1+Left move workspace to output left
+bindsym $mod+Mod1+Right move workspace to output right
+
+bindsym $mod+p exec hotplug_monitor.sh
 
 # eye candy
-#exec xcompmgr -cf -r 0 -D 6
+exec xcompmgr -cf -r 0 -D 6
 
 # background
 exec sh ~/.fehbg &
 
 # tmux
-exec --no-startup-id urxvtc -e tmux &
+exec --no-startup-id urxvtc -e sh -c "tmux attach || tmux new" &
 
 # workspace assignments
 assign [instance="urxvtc"] → term
@@ -203,7 +247,13 @@ assign [instance="spacefm"] → file
 assign [instance="nautilus"] → file
 assign [instance="quodlibet"] → media
 assign [instance="smplayer"] → media
+assign [instance="gimp"] → media
 assign [instance="vlc"] → media
 assign [instance="transmission"] → www
+assign [instance="remmina"] → remmina
+assign [instance="subl3"] → sublime
 
 for_window [instance="gcalctool"] floating enable
+for_window [instance="pavucontrol"] floating enable
+
+# vim:filetype=i3
