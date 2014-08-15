@@ -125,6 +125,7 @@ alias -s zip=unzip
 alias -s java=$EDITOR
 alias -s txt=$EDITOR
 alias -s PKGBUILD=$EDITOR
+alias -s pdf=zathura
 
 # Functions
 define() { curl -s dict://dict.org/d:$1 | grep -v '^[0-9]' }

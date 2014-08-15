@@ -17,12 +17,16 @@ pad_percents 2
 short_units yes
 
 TEXT
-[{"full_text": "${execpi 5 mpd.py}", "color": "\#e3fc3f"},
+,[{"full_text": "${execpi 5 mpd.py}", "color": "\#e3fc3f"},
 {"full_text": "CPU", "color": "\#636363", "separator": false, "separator_block_width": 3},
 {"full_text": "${cpu cpu0}%", "color": "\#78e700", "separator": false, "separator_block_width": 5},
 {"full_text": "MEM", "color": "\#636363", "separator": false, "separator_block_width": 3},
 {"full_text": "${mem}", "color": "\#78e700", "separator": false, "separator_block_width": 5},
 {"full_text": "UPD", "color": "\#636363", "separator": false, "separator_block_width": 3},
-{"full_text": "${execpi 3600 perl /home/josh/bin/pacman-updates.pl}", "color": "\#78e700"},
-{"full_text": "${time %B %d}"},
-{"full_text": "${time %l:%M}"}],
+{"full_text": "${execpi 3600 perl /home/josh/bin/pacman-updates.pl}", "color": "\#78e700", "separator": false, "seperator_block_width": 5},
+{"full_text": "MAIL", "color": "\#636363", "separator": false, "separator_block_width": 3},
+{"full_text": "${new_mails $HOME/Mail/GMail/INBOX}", "color": "\#78e700", "separator": false, "seperator_block_width": 5},
+{"full_text": "SVN", "color": "\#636363", "separator": false, "separator_block_width": 3},
+{"full_text": "${execpi 300 /home/josh/bin/svn-updates.sh /home/josh/Documents/crisistracker}", "color": "\#78e700"},
+{"full_text": "${time %B %d}", "name": "date"},
+{"full_text": "${time %l:%M}"}]

@@ -39,7 +39,8 @@ mpd &
 dunst &
 nm-applet &
 cbatticon &
-xss-lock -- xscreensaver-command -lock &
+xss-lock -- i3lock -lock &
+pasystray &
 
 if [[ $1 == "gnome" ]]
 then

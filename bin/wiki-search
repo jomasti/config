@@ -1,19 +1,19 @@
 #! /bin/bash
 
 if [ ! -d /usr/share/doc/arch-wiki/html ]; then
-	    echo "pacman -S arch-wiki-docs"
-		    exit 1
-			fi
+   echo "pacman -S arch-wiki-docs"
+   exit 1
+fi
 
-			cd /usr/share/doc/arch-wiki/html
+cd /usr/share/doc/arch-wiki/html
 
-			tmp="/tmp/wiki-search.tmp"
+tmp="/tmp/wiki-search.tmp"
 
-			html_text() {  # path -> raw text
-			    # this takes around 1 second per page, way too slow for bulk preprocess
-				    # better than other html->text apps as it is aware of wiki weirdness and has no deps
-					    # 1) get the content
-						    html=$(sed -n '/<body class/,/NewPP limit report/p' "$1")
+html_text() {  # path -> raw text
+   # this takes around 1 second per page, way too slow for bulk preprocess
+   # better than other html->text apps as it is aware of wiki weirdness and has no deps
+   # 1) get the content
+   html=$(sed -n '/<body class/,/NewPP limit report/p' "$1")
 							    html=$(head -n-2 <<< "$html")
 								    html=$(sed '/<div class="toc noprint" style="text-align: center; margin-bottom: 1em">/,/<\/div>/d' <<< "$html")
 									    html=$(sed '/if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); }/d' <<< "$html")

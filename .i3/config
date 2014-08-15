@@ -189,7 +189,7 @@ bar {
     font pango:Open Sans Mono 8
     colors {
         focused_workspace         #000000   #df253f   #ffffff
-        inactive_workspace        #000000   #181818   #ffffff
+        inactive_workspace        #000000   #636363   #ffffff
         urgent_workspace          #900000   #000000   #ffffff
     }
 }
@@ -208,6 +208,7 @@ popup_during_fullscreen smart
 force_display_urgency_hint 500 ms
 new_window none
 new_float normal
+floating_maximum_size 700 x 550
 
 # volume keys
 bindsym XF86AudioRaiseVolume exec /home/josh/bin/sound-pa.sh up
@@ -240,7 +241,7 @@ assign [instance="urxvt"] → term
 assign [instance="luakit"] → www
 assign [instance="dwb"] → www
 assign [instance="jumanji"] → www
-assign [instance="chromium"] → www
+assign [instance="Chromium"] → www
 assign [instance="thunar"] → file
 assign [instance="pcmanfm"] → file
 assign [instance="spacefm"] → file

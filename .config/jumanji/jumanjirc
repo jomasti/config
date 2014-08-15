@@ -7,29 +7,23 @@ searchengine awiki http://wiki.archlinux.org/index.php?search=%s
 
 # browser settings
 set homepage http://home.archlinux.ca
-set auto_save 60
 
 # downloads
-set download_dir ~/Downloads
-set download_command urxvtc -e sh -c "wget --load-cookies /home/josh/.config/jumanji/cookies '%s' -O %s";
+set download-dir ~/Downloads
+set download-command 'urxvtc -e sh -c "wget --load-cookies /home/josh/.config/jumanji/cookies '%s' -O %s"'
 
 # look
-set font droid sans regular 9
-set height 750
-set width 1000
-set inbutbar_fgcolor #7fff00
-set statusbar_ssl_bgcolor #b0c4de
-set tabbar_focus_fgcolor #7fff00
+set font "droid sans regular 9"
 
 # key bindings
 map <C-q> quit
-map J nav_tabs next
-map K nav_tabs previous
-map H nav_history previous
-map L nav_history next
+map J tab_navigate next
+map K tab_navigate  previous
+map H navigate_history previous
+map L navigate_history next
 
 # scripts
-script /home/josh/.config/jumanji/scripts/hinting.js
+#script /home/josh/.config/jumanji/scripts/hinting.js
 
 # adblocking css
-set stylesheet /home/josh/.config/jumanji/fanboy-adblocklist-elements-v4.css
+#set stylesheet /home/josh/.config/jumanji/fanboy-adblocklist-elements-v4.css
