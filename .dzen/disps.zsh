@@ -114,6 +114,6 @@ fmpdbar() {
     
 
 #icon() {
-#    echo "^fg($ICONCOL)^i(~/.dzen/dzenIcons/$1.xbm)^fg($FONTCOL)"
+#    echo "^fg($ICONCOL)^i(~/.icons/$1.xbm)^fg($FONTCOL)"
 #}
 

@@ -17,7 +17,6 @@ export INTEL_BATCH=1
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export ARCH_HASKELL="Joshua Stiefer <facedelajunk@gmail.com>"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-export VDPAU_DRIVER=r600
 
 autoload -U compinit promptinit colors zcalc zsh-mime-setup zsh/terminfo
 compinit

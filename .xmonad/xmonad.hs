@@ -73,7 +73,7 @@ main = do
     , handleEventHook     = fullscreenEventHook <+> docksEventHook
     } `additionalKeysP` keys
 
-myIconDir = "/home/josh/.dzen/dzenIcons/"
+myIconDir = "/home/josh/.icons/"
 myStatusBar = "dzen2 -x '0' -y '0' -h '20' -w '640' -ta 'l' -bg '" ++ myDBGColor ++ "' -fn '" ++ myFont ++ "'"
 left = ".dzen/left.zsh | dzen2 -xs 1 -x '640' -y '0' -h '20' -ta 'r' -bg '" ++ myDBGColor ++ "' -fg '" ++ myDFGColor ++ "' -fn '" ++ myFont ++ "'"
 right = ".dzen/right.zsh | dzen2 -xs 2 -y '0' -h '20' -ta 'r' -bg '" ++ myDBGColor ++ "' -fg '" ++ myDFGColor ++ "' -fn '" ++ myFont ++ "'"
