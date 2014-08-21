@@ -1,5 +1,5 @@
 #!/bin/zsh
-ICONDIR=~/.dzen/dzenIcons
+ICONDIR=~/.icons
 ICONCOL1="#ff3b77"
 ICONCOL2="#fdfdfd"
 BARFG="#cdff00"

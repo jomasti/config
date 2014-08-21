@@ -826,32 +826,32 @@ end
 
 view "web" do
   match "browser|internet"
-  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/world.xbm")
+  icon Subtlext::Icon.new("/home/josh/.icons/g/world.xbm")
   icon_only true
 end
 view "term" do
   match "terms"
-  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/terminal.xbm")
+  icon Subtlext::Icon.new("/home/josh/.icons/g/terminal.xbm")
   icon_only true
 end
 view "media" do
   match "audio|video|gimp_.|id3"
-  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/movie.xbm")
+  icon Subtlext::Icon.new("/home/josh/.icons/g/movie.xbm")
   icon_only true
 end
 view "files" do
   match "file|text"
-  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/file1.xbm")
+  icon Subtlext::Icon.new("/home/josh/.icons/g/file1.xbm")
   icon_only true
 end
 view "im" do
   match "im"
-  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/balloon.xbm")
+  icon Subtlext::Icon.new("/home/josh/.icons/g/balloon.xbm")
   icon_only true
 end
 view "misc" do
   match "default"
-  icon Subtlext::Icon.new("/home/josh/.config/subtle/icons/shuffle.xbm")
+  icon Subtlext::Icon.new("/home/josh/.icons/g/shuffle.xbm")
   icon_only true
 end
 

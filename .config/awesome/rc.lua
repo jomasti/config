@@ -243,25 +243,25 @@ for s = 1, screen.count() do
 	gmlwidget = wibox.widget.textbox()
 	-- Widget icons
 	cpuicon = wibox.widget.imagebox()
-	cpuicon:set_image(awful.util.getdir("config") .. "/icons/cpu.png")
+	cpuicon:set_image(awful.util.getdir("config") .. "$HOME/.icons/cpu.png")
 	cpuicon.resize = false
 	memicon = wibox.widget.imagebox()
-	memicon:set_image(awful.util.getdir("config") .. "/icons/memory.png")
+	memicon:set_image(awful.util.getdir("config") .. "$HOME/.icons/memory.png")
 	memicon.resize = false
 	mpdicon = wibox.widget.imagebox()
-	mpdicon:set_image(awful.util.getdir("config") .. "/icons/note1.png")
+	mpdicon:set_image(awful.util.getdir("config") .. "$HOME/.icons/note1.png")
 	mpdicon.resize = false
 	weaicon = wibox.widget.imagebox()
-	weaicon:set_image(awful.util.getdir("config") .. "/icons/temp.png")
+	weaicon:set_image(awful.util.getdir("config") .. "$HOME/.icons/temp.png")
 	weaicon.resize = false
 	hddicon = wibox.widget.imagebox()
-	hddicon:set_image(awful.util.getdir("config") .. "/icons/shelf.png")
+	hddicon:set_image(awful.util.getdir("config") .. "$HOME/.icons/shelf.png")
 	hddicon.resize = false
 	pkgicon = wibox.widget.imagebox()
-	pkgicon:set_image(awful.util.getdir("config") .. "/icons/pacman.png")
+	pkgicon:set_image(awful.util.getdir("config") .. "$HOME/.icons/pacman.png")
 	pkgicon.resize = false
 	gmlicon = wibox.widget.imagebox()
-	gmlicon:set_image(awful.util.getdir("config") .. "/icons/mail.png")
+	gmlicon:set_image(awful.util.getdir("config") .. "$HOME/.icons/mail.png")
 	gmlicon.resize = false
 	-- Register widgets
 	vicious.register(cpuwidget, vicious.widgets.cpu, "$1% $2% $3% $4%")
