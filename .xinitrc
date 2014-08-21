@@ -4,6 +4,9 @@
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export QT_STYLE_OVERRIDE=gtk
 
+# I know I will have the monitor connected
+xrandr --output DVI-I-1 --mode 1920x1080 --primary --output DVI-D-0 --mode 1440x900 --left-of DVI-I-1
+
 xsetroot -cursor_name left_ptr
 
 setxkbmap -option compose:ralt
