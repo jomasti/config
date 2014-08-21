@@ -43,7 +43,7 @@ bindsym Mod1+F4 kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym Menu exec --no-startup-id j4-dmenu-desktop --dmenu="dmenu -i -nb '#000000' -nf '#cd5c5c' -sb '#cd5c5c' -sf '#000000' -l 15"
+bindsym Menu exec --no-startup-id j4-dmenu-desktop --dmenu="rofi -rnow -font 'open sans 10' -bg '#000000' -fg '#cd5c5c' -hlbg '#cd5c5c' -hlfg '#000000' -lines 15"
 
 # change focus
 bindsym $mod+$left focus left
@@ -110,8 +110,8 @@ bindsym $mod+4 workspace file
 bindsym $mod+5 workspace misc
 bindsym $mod+6 workspace remmina
 bindsym $mod+7 workspace sublime
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
+bindsym $mod+8 workspace steam
+bindsym $mod+9 workspace im
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
@@ -122,8 +122,8 @@ bindsym $mod+Shift+4 move container to workspace file
 bindsym $mod+Shift+5 move container to workspace misc
 bindsym $mod+Shift+6 move container to workspace remmina
 bindsym $mod+Shift+7 move container to workspace sublime
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+8 move container to workspace steam
+bindsym $mod+Shift+9 move container to workspace im
 
 
 # change between nearby workspaces
@@ -185,7 +185,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     status_command $HOME/bin/conky-i3bar
-    tray_output LVDS
+    tray_output primary
     font pango:Open Sans Mono 8
     colors {
         focused_workspace         #000000   #df253f   #ffffff
@@ -253,6 +253,9 @@ assign [instance="vlc"] → media
 assign [instance="transmission"] → www
 assign [instance="remmina"] → remmina
 assign [instance="subl3"] → sublime
+assign [instance="Steam"] → steam
+assign [instance="skype"] → im
+assign [instance="pidgin"] → im
 
 for_window [instance="gcalctool"] floating enable
 for_window [instance="pavucontrol"] floating enable
