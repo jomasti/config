@@ -1,6 +1,0 @@
-Terminal = eval urxvtc
-TermExec = ${Terminal} -e
-URL_http = chromium
-URL_https = chromium
-
-URL_top = ${TermExec} '%s'
