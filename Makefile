@@ -29,7 +29,7 @@ mail:
 			mkdir -p ${HOME}/.mutt
 			ln -fs ${DOTFILES}/.mutt/colors.muttrc ${HOME}/.mutt/colors.muttrc
 			ln -fs ${DOTFILES}/.mutt/gpg.rc ${HOME}/.mutt/gpg.rc
-			ln -fs ${DOTFILES}/.mutt/mailcap ${HOME}/mailcap
+			ln -fs ${DOTFILES}/.mutt/mailcap ${HOME}/.mailcap
 			ln -fs ${DOTFILES}/.mutt/sidebar.muttrc ${HOME}/.mutt/sidebar.muttrc
 			ln -fs ${DOTFILES}/.urlview ${HOME}/.urlview
 			gpg -d ${DOTFILES}/.offlineimaprc.gpg > ${HOME}/.offlineimaprc
