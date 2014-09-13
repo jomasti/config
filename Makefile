@@ -6,7 +6,7 @@ shell:
 			ln -fs ${DOTFILES}/.zshenv ${HOME}/.zshenv
 			ln -fs ${DOTFILES}/.zpath ${HOME}/.zpath
 			ln -fs ${DOTFILES}/.zprofile ${HOME}/.zprofile
-			ln -fns ${DOTFILES}/bin ${HOME}/bin
+			ln -fs ${DOTFILES}/bin ${HOME}/bin
 tmux:
 			ln -fs ${DOTFILES}/.tmux.conf ${HOME}/.tmux.conf
 X:

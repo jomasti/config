@@ -47,6 +47,7 @@ URxvt.urlLauncher:      /usr/bin/chromium
 URxvt.keysym.M-u:       perl:url-select:select_next
 URxvt.underlineURLs: 	true
 URxvt.matcher.button:   1
+URxvt.clipboard.copycmd:  xcmenu -ci
 
 ! xscreensaver
 
