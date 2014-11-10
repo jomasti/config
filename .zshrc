@@ -1,6 +1,3 @@
-# zsh syntax highlighting (obviously)
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 HISTFILE=~/.histfile
 HISTSIZE=50000
 SAVEHIST=50000
@@ -17,6 +14,7 @@ export INTEL_BATCH=1
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export ARCH_HASKELL="Joshua Stiefer <facedelajunk@gmail.com>"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+export SDL_VIDEO_FULLSCREEN_DISPLAY=1
 
 autoload -U compinit promptinit colors zcalc zsh-mime-setup zsh/terminfo
 compinit
@@ -86,6 +84,7 @@ alias grep='egrep --color=always'
 alias tmux='tmux -u -2'
 alias mmaker='mmaker --no-legacy --no-debian -t Gterm OpenBox -f'
 alias packer='TMPDIR=/home/josh/build packer'
+alias xbmc="SDL_VIDEO_FULLSCREEN_HEAD=1 xbmc -fs"
 
 # Pacman aliases
 alias pacupg='sudo pacman -Su'         # Upgrade packages
@@ -185,3 +184,5 @@ if [ "$TERM" = "linux" ]; then
     echo -en "\e]PFdedede" #white
     clear #for background artifacting
 fi
+
+source /home/josh/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

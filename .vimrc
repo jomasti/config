@@ -7,11 +7,9 @@
 
 let $PYTHONPATH="/usr/lib/python3.4/site-packages"
 
-execute pathogen#infect()
-
 " Color related
 set t_Co=16
-colorscheme kolor
+colorscheme digerati
 
 set nocompatible
 set ruler

@@ -5,7 +5,7 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export QT_STYLE_OVERRIDE=gtk
 
 # I know I will have the monitor connected
-xrandr --output HDMI-0 --mode 1920x1080 --primary --output DVI-I-1 --mode 1920x1080 --right-of HDMI-0 --output DVI-D-0 --mode 1440x900 --left-of HDMI-0
+xrandr --output HDMI-1 --mode 1920x1080 --primary --output DVI-I-1 --mode 1920x1080 --right-of HDMI-1 --output DVI-D-1 --mode 1440x900 --left-of HDMI-1
 
 xsetroot -cursor_name left_ptr
 
@@ -18,6 +18,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
+urvtd -q -o -f
 xrdb -merge ~/.Xresources
 volnoti &
 dunst &
