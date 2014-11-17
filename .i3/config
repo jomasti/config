@@ -226,11 +226,8 @@ bindsym $mod+Mod1+Right move workspace to output right
 
 bindsym $mod+p exec hotplug_monitor.sh
 
-# eye candy
-exec xcompmgr -cf -r 0 -D 6
-
 # background
-exec sh ~/.fehbg &
+exec sh ~/bin/autostart.sh &
 
 # tmux
 exec --no-startup-id urxvtc -e sh -c "tmux attach || tmux new" &

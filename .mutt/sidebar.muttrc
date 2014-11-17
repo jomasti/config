@@ -6,6 +6,7 @@
   set sidebar_delim       = ' || '
   set sidebar_visible     = yes
   set sidebar_width       = 30
+  set sidebar_shortpath   = yes
 
 # colors
 color sidebar_new brightmagenta default

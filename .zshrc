@@ -1,6 +1,3 @@
-# zsh syntax highlighting (obviously)
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 HISTFILE=~/.histfile
 HISTSIZE=50000
 SAVEHIST=50000
@@ -11,6 +8,8 @@ export BROWSER='luakit'
 export PAGER='most'
 if [[ "${COLORTERM}" == "gnome-terminal" && "${TERM}" != "xterm"  ]]; then
 	export TERM="gnome-256color"
+elif [[ "${COLORTERM}" == "xfce4-terminal" ]]; then
+  export TERM="xterm-256color"
 fi
 export UZBL_UTIL_DIR=$XDG_DATA_HOME/uzbl/util/
 export INTEL_BATCH=1
@@ -86,6 +85,8 @@ alias grep='egrep --color=always'
 alias tmux='tmux -u -2'
 alias mmaker='mmaker --no-legacy --no-debian -t Gterm OpenBox -f'
 alias packer='TMPDIR=/home/josh/build packer'
+alias i3log='most `find ~/.config/i3 | sort -n | tail -n 1`'
+alias xlog='most ~/.local/share/xorg/Xorg.0.log'
 
 # Pacman aliases
 alias pacupg='sudo pacman -Su'         # Upgrade packages
@@ -106,6 +107,7 @@ alias pacmir='sudo pacman -Syy'                # Force refresh of all package li
 alias pacexpl='sudo pacman -D --asexplicit'
 alias pacowns='pacman -Qo'
 alias pacaur='pacman -Qm'
+alias pacclean='sudo pacman -Sc'
 
 # Set up auto extension stuff
 alias -s html=$BROWSER
@@ -185,3 +187,8 @@ if [ "$TERM" = "linux" ]; then
     echo -en "\e]PFdedede" #white
     clear #for background artifacting
 fi
+
+# zsh syntax highlighting (obviously)
+source /home/josh/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
