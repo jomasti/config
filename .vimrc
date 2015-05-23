@@ -1,92 +1,100 @@
-" ----------------------------------------------------------------------------
-" file:     ~/.vimrc
-" author:   Joshua Stiefer
-" modified: December 2011
-" vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=vimrc:
-" ----------------------------------------------------------------------------
-
-let $PYTHONPATH="/usr/lib/python3.4/site-packages"
-
-" Color related
-set t_Co=16
-colorscheme digerati
-
 set nocompatible
-set ruler
-set showcmd
+syntax on
+colorscheme jellybeans
+
+" Vundle
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
+Plugin 'bling/vim-airline'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'marijnh/tern_for_vim'
+Plugin 'moll/vim-node'
+Plugin 'godlygeek/tabular'
+Plugin 'tpope/vim-surround'
+Plugin 'Raimondi/DelimitMate'
+
+" SnipMate and its dependencies:
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+
+" Other sets of snippets:
+Plugin 'honza/vim-snippets'
+
+" React snippets:
+Plugin 'justinj/vim-react-snippets'
+
+Plugin 'nanotech/jellybeans.vim'
+
+call vundle#end()
+filetype plugin indent on
+
+" general
+set autoread
 set number
 set autoindent
 set nocindent
-set ts=2
-set sw=2
-set bs=2
-set ch=1
-set expandtab
+set cmdheight=1
 set ignorecase
 set smartcase
 set incsearch
 set showmode
-set lazyredraw
+set ruler
 set pastetoggle=<F3>
+set backspace=indent,eol,start
+set mouse=a
 
-" Helpful directories
-set backupdir=~/.vim/backup
-set directory=~/.vim/tmp
+" tab options
+set expandtab
+set shiftwidth=2
+set softtabstop=2
 
-syntax on
+"" SPLITS
+" split traversal
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-" Filetype
-if has("autocmd")
-  filetype plugin on
-  filetype indent off
-endif
+" split defaults
+set splitbelow
+set splitright
 
-" disable autocomment
+" disable auto comment
 au FileType * setl fo-=cro
 
-" When vimrc is edited, reload it
-autocmd! bufwritepost vimrc source ~/.vimrc
+" NERDTree
+" auto open nerdtree if vim is opened with no files
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" close vim if nerdtree is the only buffer open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" open nerdtree with ctrl+n
+map <C-n> :NERDTreeToggle<CR>
 
-if has('gui_running')
-  " Make shift-insert work like in Xterm
-  map <S-Insert> <MiddleMouse>
-  map! <S-Insert> <MiddleMouse>
-  colorscheme digerati
-endif
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-"augroup vimrc
-"	au BufReadPre * setlocal foldmethod=indent
-"	au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-"augroup END
+" syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
-" JavaBrowser
-let JavaBrowser_Ctags_Cmd = "/usr/bin/ctags"
-if !has('gui_running')
-	let JavaBrowser_Inc_Winwidth = 0
-endif
-nmap <F11> :JavaBrowser<CR>
-imap <F11> <ESC><F11>
-
-" use ghc functionality for haskell files
-"au Bufenter *.hs compiler ghc
-
-" configure browser for haskell_doc.vim
-let g:haddock_browser = "/usr/bin/firefox"
-
-" Project
-let VCSCommandVCSTypeOverride=[["^/home/josh/cse360-treadmill", "HG"]]
-
-" Maps
-map <F2> <Esc>:browse confirm e<CR>
-map <F3> <Esc>:NERDTreeToggle<CR>
-
-" sudo write
-ca w!! w !sudo tee >/dev/null "%"
-
-" Nopaste
-nnoremap <F12> :set invpaste paste?<CR>
-imap <F12> <C-O><F12>
-set pastetoggle=<F12>
-
-au! BufRead,BufNewFile *.json set filetype=json foldmethod=syntax
-
+" ctrlp
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\.git$\|node_modules/',
+  \ }
