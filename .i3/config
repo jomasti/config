@@ -224,10 +224,8 @@ bindsym XF86HomePage exec dwb
 bindsym $mod+Mod1+Left move workspace to output left
 bindsym $mod+Mod1+Right move workspace to output right
 
-bindsym $mod+p exec hotplug_monitor.sh
-
 # background
-exec sh ~/bin/autostart.sh &
+exec sh ~/.fehbg &
 
 # tmux
 exec --no-startup-id urxvtc -e sh -c "tmux attach || tmux new" &
