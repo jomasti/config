@@ -23,13 +23,14 @@ Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-surround'
 Plugin 'Raimondi/DelimitMate'
 
-" SnipMate and its dependencies:
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
+" Ultisnips engine
+Plugin 'SirVer/ultisnips'
 
-" Other sets of snippets:
+" Snippets
 Plugin 'honza/vim-snippets'
+
+" Supertab
+Plugin 'ervandew/supertab'
 
 " React snippets:
 Plugin 'justinj/vim-react-snippets'
@@ -103,3 +104,15 @@ let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 let g:ctrlp_custom_ignore = {
   \ 'dir': '\.git$\|node_modules/',
   \ }
+let g:ctrlp_show_hidden = 1
+
+" YouCompleteMe and Ultisnips compatibility
+let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+
+let g:SuperTabDefaultCompletionType    = '<C-n>'
+let g:SuperTabCrMapping                = 0
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
