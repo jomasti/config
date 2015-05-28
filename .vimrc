@@ -37,6 +37,15 @@ Plugin 'justinj/vim-react-snippets'
 
 Plugin 'nanotech/jellybeans.vim'
 
+" Tmux highlighting plus some extras
+Plugin 'tmux-plugins/vim-tmux'
+
+" Auto format files
+Plugin 'Chiel92/vim-autoformat'
+
+" Hex color highlighting
+Plugin 'gorodinskiy/vim-coloresque'
+
 call vundle#end()
 filetype plugin indent on
 
