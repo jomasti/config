@@ -53,6 +53,8 @@ set ruler
 set pastetoggle=<F3>
 set backspace=indent,eol,start
 set mouse=a
+set cursorline
+set laststatus=2
 
 " tab options
 set expandtab
