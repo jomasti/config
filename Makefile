@@ -8,7 +8,9 @@ shell:
 			ln -fs ${DOTFILES}/.zprofile ${HOME}/.zprofile
 			ln -fs ${DOTFILES}/bin ${HOME}/bin
 tmux:
+			ln -fs ${DOTFILES}/.tmux ${HOME}/.tmux
 			ln -fs ${DOTFILES}/.tmux.conf ${HOME}/.tmux.conf
+			ln -fs ${DOTFILES}/.tmux-osx.conf ${HOME}/.tmux-osx.conf
 X:
 			ln -fs ${DOTFILES}/.Xresources ${HOME}/.Xresources
 			ln -fs ${DOTFILES}/.xscreensaver ${HOME}/.xscreensaver
