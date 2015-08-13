@@ -46,6 +46,27 @@ Plugin 'Chiel92/vim-autoformat'
 " Hex color highlighting
 Plugin 'gorodinskiy/vim-coloresque'
 
+" silver searcher
+Plugin 'rking/ag.vim'
+
+" easymotion
+Plugin 'easymotion/vim-easymotion'
+
+" CSS3
+Plugin 'hail2u/vim-css3-syntax'
+
+" HAML/SASS/SCSS
+Plugin 'tpope/vim-haml'
+
+" LaTeX
+Plugin 'lervag/vimtex'
+
+" Editorconfig
+Plugin 'editorconfig/editorconfig'
+
+" Ruby
+Plugin 'vim-ruby/vim-ruby'
+
 call vundle#end()
 filetype plugin indent on
 
