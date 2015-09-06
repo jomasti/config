@@ -8,6 +8,14 @@ xsetroot -cursor_name left_ptr
 
 setxkbmap -option compose:ralt
 
+# Check how many monitors are connected 
+monitors=$(xrandr -d :0 -q | grep ' connected' | wc -l)
+
+# If 3 monitors are connected, it's my desktop setup
+if [ $monitors -eq 3 ]; then
+  ~/.screenlayout/Desktop.sh
+fi
+
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/* ; do
 		[ -x "$f" ] && . "$f"
@@ -15,8 +23,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
-#urxvtd -q -o -f &
-#xrdb -merge ~/.Xresources
+urxvtd -q -o -f &
+xrdb -merge ~/.Xresources
 #volnoti &
 #dunst &
 #xss-lock -- i3lock -lock &
