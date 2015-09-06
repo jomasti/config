@@ -1,7 +1,7 @@
 ! ----------------------------------------------------------------------------
 ! file:     ~/.Xresources
 ! author:   Joshua Stiefer
-! modified: December 2011
+! modified: September 2015
 ! vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
 ! ----------------------------------------------------------------------------
 
@@ -31,23 +31,22 @@ URxvt.borderless: true
 !URxvt.depth:      32
 
 ! fonts
-URxvt.font: xft:Anka/Coder:pixelsize=12:antialias=true:hinting=true
-!URxvt.font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt.boldFont: xft:Anka/Coder:pixelsize=12:antialias=true:bold:hinting=true
-!URxvt.font: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
-URxvt.italicFont: xft:Anka/Coder:pixelsize=12:antialias=true:italic:autohint=true:hinting=true
-URxvt.bolditalicFont: xft:Anka/Coder:pixelsize=12:antialias=true:bold:italic:autohint=true:hinting=true
+URxvt.font: xft:Inconsolata for Powerline:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:pixelsize=13:antialias=true:hinting=true
+URxvt.boldFont: xft:Inconsolata for Powerline:bold:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:bold:pixelsize=13:antialias=true:hinting=true
+URxvt.italicFont: xft:Inconsolata for Powerline:italic:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:italic:pixelsize=13:antialias=true:hinting=true
+URxvt.boldItalicFont: xft:Inconsolata for Powerline:bold:italic:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:bold:italic:pixelsize=13:antialias=true:hinting=true
 
 ! scrollbar
 URxvt.scrollBar: false
 
 ! extensions
-URxvt.perl-ext-common:  default,matcher,url-select
+URxvt.perl-ext-common:  clipboard,default,matcher,url-select
 URxvt.urlLauncher:      /usr/bin/chromium
 URxvt.keysym.M-u:       perl:url-select:select_next
 URxvt.underlineURLs: 	true
 URxvt.matcher.button:   1
-URxvt.clipboard.copycmd:  xcmenu -ci
+URxvt.clipboard.copycmd:  xsel --input --clipboard
+URxvt.clipboard.pastecmd: xsel --output --clipboard
 
 ! xscreensaver
 
@@ -81,101 +80,9 @@ xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
 
 
 
-! color schemes
-
-!URxvt.background: grey0
-!URxvt.foreground: ivory2
-!URxvt.color0:     grey0
-!URxvt.color1:     maroon1
-!URxvt.color2:     chartreuse1
-!URxvt.color3:     yellow1
-!URxvt.color4:     DodgerBlue3
-!URxvt.color5:     purple3
-!URxvt.color6:     Turquoise3
-!URxvt.color7:     ivory2
-!URxvt.color8:     rgb:4d/4d/4d
-!URxvt.color9:     HotPink1
-!URxvt.color10:    GreenYellow
-!URxvt.color11:    LightGoldenRod1
-!URxvt.color12:    rgb:1e/90/ff
-!URxvt.color13:    SlateBlue
-!URxvt.color14:    SteelBlue1
-!URxvt.color15:    ivory1
-
-!URxvt.foreground: #DDEEDD
-!URxvt.background: #202020
-!*background: #1C1C1C
-!black
-!URxvt.color0: #1C1C1C
-!URxvt.color8: #4d4d4d
-!red
-!URxvt.color1: #D81860
-!URxvt.color9: #F00060
-!green
-!URxvt.color2: #B7CE42
-!URxvt.color10: #BDE077
-!yellow
-!URxvt.color3: #FEA63C
-!URxvt.color11: #ffa32c
-!blue
-!URxvt.color4: #66AABB
-!URxvt.color12: #509ec6
-!magenta
-!URxvt.color5: #B7416E
-!URxvt.color13: #BB4466
-!cyan
-!URxvt.color6: #5E7175
-!URxvt.color14: #526164
-!white
-!URxvt.color7: #DDEEDD
-!URxvt.color15: #EFEFEF
-
+! color scheme
 *foreground: #BBBBBB
 *background: #181818
-! Black
-!*color0:      #181818
-!*color8:      #989b96
-! Red
-!*color1:      #ff6565
-!*color9:      #ff8d8d
-! Green
-!*color2:      #93d44f
-!*color10:     #c8e7a8
-! Yellow
-!*color3:      #eab93d
-!*color11:     #ffc123
-! Blue
-!*color4:      #0066ff
-!*color12:     #3465a4
-! Magenta
-!*color5:      #ce5c00
-!*color13:     #f57900
-! Cyan
-!*color6:      #89b6e2
-!*color14:     #0198E1
-! White
-!*color7:      #cccccc
-!*color15:     #ffffff
-
-! Digerati
-!*color0:  #303030
-!*color1:  #c03000
-!*color2:  #b1d631
-!*color3:  #cdff00
-!*color3:  #fecf35
-!*color4:  #426870
-!*color13:  #6D506D
-!*color6:  #4bb5c1
-!*color7:  #e2e2e5
-!*color8:  #5F5F5F
-!*color9:  #FF3A78
-!*color10: #A6CD07
-!*color11: #B5C865
-!*color12: #4A7781
-!*color5: #FF3B77
-!*color14: #4bb5c1
-!*color15: #e2e2e5
-
 ! Black
 *color0: #303030
 *color8: #5f5f5f
