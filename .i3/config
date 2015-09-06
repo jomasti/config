@@ -39,7 +39,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym Mod1+F4 kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+p exec dmenu_run -nb '#000000' -nf '#cd5c5c' -sb '#cd5c5c' -sf '#000000'
+bindsym $mod+p exec dmenu_run -nb '#000000' -nf '#cd5c5c' -sb '#cd5c5c' -sf '#000000'
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
