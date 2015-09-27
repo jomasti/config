@@ -1,14 +1,17 @@
 #ls
 case "$(uname)" in
     Linux)
-        alias ls='ls --color=auto' ;;
+        alias ls='ls --color=auto'
+        alias rmi='rm -I'
+        ;;
     Darwin)
-        alias ls='ls -G' ;;
+        alias ls='ls -G'
+        alias rmi='rm -i'
+        ;;
 esac
 alias l='ls -lFh'
 alias la='ls -laFh'
 
-alias rm='rm -I'
 alias asu-up='sshfs jstiefer@general.asu.edu:. ~/ASU'
 alias asu-down='fusermount -u ~/ASU'
 alias cosmo-up='sshfs jstiefer@cosmo:. ~/cosmo'
