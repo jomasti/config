@@ -23,6 +23,9 @@ Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-surround'
 Plugin 'Raimondi/DelimitMate'
 
+" Mulitple language support
+Plugin 'sheerun/vim-polyglot'
+
 " Ultisnips engine
 Plugin 'SirVer/ultisnips'
 
@@ -37,9 +40,6 @@ Plugin 'justinj/vim-react-snippets'
 
 Plugin 'nanotech/jellybeans.vim'
 
-" Tmux highlighting plus some extras
-Plugin 'tmux-plugins/vim-tmux'
-
 " Auto format files
 Plugin 'Chiel92/vim-autoformat'
 
@@ -52,20 +52,12 @@ Plugin 'rking/ag.vim'
 " easymotion
 Plugin 'easymotion/vim-easymotion'
 
-" CSS3
-Plugin 'hail2u/vim-css3-syntax'
-
 " HAML/SASS/SCSS
-Plugin 'tpope/vim-haml'
-
-" LaTeX
-Plugin 'lervag/vimtex'
+Plugin 'cakebaker/scss-syntax.vim'
 
 " Editorconfig
 Plugin 'editorconfig/editorconfig'
 
-" Ruby
-Plugin 'vim-ruby/vim-ruby'
 
 call vundle#end()
 filetype plugin indent on
