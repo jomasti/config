@@ -23,6 +23,7 @@ alias packer='TMPDIR=/home/josh/build packer'
 alias i3log='most `find ~/.config/i3 | sort -n | tail -n 1`'
 alias xlog='most ~/.local/share/xorg/Xorg.0.log'
 alias xbmc="SDL_VIDEO_FULLSCREEN_HEAD=1 xbmc -fs"
+alias vundle="vim +PluginInstall +qall"
 
 # Pacman aliases
 alias pacupg='sudo pacman -Su'         # Upgrade packages
