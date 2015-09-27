@@ -1,4 +1,5 @@
 # modified from https://github.com/sorin-ionescu/prezto/blob/master/modules/prompt/functions/prompt_steeef_setup
+setopt promptsubst
 
 function prompt_precmd {
   # Check for untracked files or updated submodules since vcs_info does not.
