@@ -2,6 +2,7 @@ DOTFILES=$(shell pwd)
 
 all: shell tmux vim X i3 vim mpd mail
 shell: 
+			ln -fs ${DOTFILES}/.zsh ${HOME}/.zsh
 			ln -fs ${DOTFILES}/.zshrc ${HOME}/.zshrc
 			ln -fs ${DOTFILES}/.zshenv ${HOME}/.zshenv
 			ln -fs ${DOTFILES}/.zpath ${HOME}/.zpath
