@@ -58,6 +58,18 @@ Plugin 'cakebaker/scss-syntax.vim'
 " Editorconfig
 Plugin 'editorconfig/editorconfig'
 
+" System clipboard
+Plugin 'christoomey/vim-system-copy'
+
+" Commenting
+Plugin 'tpope/vim-commentary'
+
+" Sorting via motions
+Plugin 'christoomey/vim-sort-motion'
+
+" Text objects
+Plugin 'kana/vim-textobj-user'
+Plugin 'kana/vim-textobj-indent'
 
 call vundle#end()
 filetype plugin indent on
