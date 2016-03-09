@@ -1,32 +1,50 @@
-#ls
+# OS Specific aliases
 case "$(uname)" in
     Linux)
         alias ls='ls --color=auto'
         alias rmi='rm -I'
+        alias ports='sudo netstat -tulpan'
         ;;
     Darwin)
         alias ls='ls -G'
         alias rmi='rm -i'
+        alias ports='sudo lsof -i -n -P'
         ;;
 esac
-alias l='ls -lFh'
-alias la='ls -laFh'
 
-alias asu-up='sshfs jstiefer@general.asu.edu:. ~/ASU'
-alias asu-down='fusermount -u ~/ASU'
-alias cosmo-up='sshfs jstiefer@cosmo:. ~/cosmo'
-alias cosmo-down='fusermount -u ~/cosmo'
+# General commands
 alias ..='cd ..'
+alias ag='ag --path-to-agignore=$HOME/.agignore'
+alias cp='cp -r'
+alias df='df -h'
 alias dh='dirs -v'
+alias diff='colordiff'
+alias egrep='grep --color=auto'
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+alias fgrep='grep --color=auto'
+alias grep='grep --color=auto'
+alias h='history'
+alias l='ls -lh'
+alias la='ls -lFA'
+alias lal='ls -alFh'
+alias ld='ls -ld */'
+alias ll='ls -lFh'
+alias mkdir='mkdir -pv'
+alias reload='. ~/.zshrc'
+alias up='uptime'
+alias vundle="vim +PluginInstall +qall"
+alias vundleu="vim +PluginUpdate +qall"
+
+# Arch Linux stuff
+alias path='echo $PATH | tr : "\n"'
 alias uzbl='uzbl-tabbed'
-alias grep='egrep --color=always'
 alias tmux='tmux -u -2'
 alias mmaker='mmaker --no-legacy --no-debian -t Gterm OpenBox -f'
 alias packer='TMPDIR=/home/josh/build packer'
-alias i3log='most `find ~/.config/i3 | sort -n | tail -n 1`'
-alias xlog='most ~/.local/share/xorg/Xorg.0.log'
+alias i3log='less `find ~/.config/i3 | sort -n | tail -n 1`'
+alias xlog='less ~/.local/share/xorg/Xorg.0.log'
 alias xbmc="SDL_VIDEO_FULLSCREEN_HEAD=1 xbmc -fs"
-alias vundle="vim +PluginInstall +qall"
 
 # Pacman aliases
 alias pacupg='sudo pacman -Su'         # Upgrade packages
@@ -68,3 +86,33 @@ alias -s txt=$EDITOR
 alias -s PKGBUILD=$EDITOR
 alias -s pdf=zathura
 
+# Git
+alias ga='git add'
+alias gaa='git add .'
+alias gb='git branch'
+alias gc='git checkout'
+alias gcb='git checkout -b'
+alias gcl='git clone'
+alias gcm='git commit -m'
+alias gd='git branch -d'
+alias gdiff='git diff'
+alias gl='git log --all --graph --decorate'
+alias gp='git push'
+alias gpu='git pull'
+alias gr='git rebase'
+alias gs='git status'
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset \
+  %an: %s - %Creset %C(yellow)%d%Creset \
+  %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+
+#tmux
+alias tn="tmux new -s"
+alias ta="tmux attach -t"
+alias ts="tmux switch -t"
+alias tsess="tmux list-sessions"
+alias td="tmux detach"
+alias tks="tmux kill-server"
+alias x="exit"
+alias nw='tmux new-window -c "$PWD"'
+
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
