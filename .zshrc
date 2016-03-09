@@ -17,8 +17,10 @@ if [ -e  ~/.rbenv ]; then
 fi
 
 [ -e ~/.fzf.zsh ] && . ~/.fzf.zsh
+[ -e ~/.k/k.sh ] && . ~/.k/k.sh
 
 [ -e ~/git/zsh-syntax-highlighting ] && . ~/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -e ~/git/alias-tips ] && . ~/git/alias-tips/alias-tips.plugin.zsh
 
 if command -v fasd &> /dev/null; then
   eval "$(fasd --init auto)"
