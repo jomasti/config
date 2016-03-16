@@ -45,6 +45,7 @@ function prompt_setup {
   zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${action_format}"
   zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
   zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
+  zstyle ':vcs_info:*' disable-patterns "$HOME/analytics_project/vagrant_analytics(|/*)"
 
   PROMPT="${_prompt_colors[3]}%n%f at ${_prompt_colors[6]}%m%f in ${_prompt_colors[5]}%~%f "'${vcs_info_msg_0_}'""$'\n'"$ "
   RPROMPT=''
