@@ -1,78 +1,78 @@
-set nocompatible
-syntax on
-colorscheme jellybeans
+" vim-plug
+call plug#begin('~/.vim/bundle')
 
-" Vundle
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --with-clang-completer' }
+"Plug 'scrooloose/syntastic'
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+"Plug 'scrooloose/nerdtree'
+"Plug 'jistr/vim-nerdtree-tabs'
+Plug 'jeetsukumaran/vim-filebeagle'
+Plug 'edkolev/tmuxline.vim'
+Plug 'marijnh/tern_for_vim', { 'for': 'javascript' }
+Plug 'moll/vim-node'
+Plug 'godlygeek/tabular'
+Plug 'tpope/vim-surround'
+Plug 'Raimondi/DelimitMate'
 
-Plugin 'gmarik/Vundle.vim'
-
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
-Plugin 'bling/vim-airline'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'marijnh/tern_for_vim'
-Plugin 'moll/vim-node'
-Plugin 'godlygeek/tabular'
-Plugin 'tpope/vim-surround'
-Plugin 'Raimondi/DelimitMate'
+Plug 'benekastah/neomake'
 
 " Mulitple language support
-Plugin 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 
-" Ultisnips engine
-Plugin 'SirVer/ultisnips'
-
-" Snippets
-Plugin 'honza/vim-snippets'
+" Ultisnips/snippets
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Supertab
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 
 " React snippets:
-Plugin 'justinj/vim-react-snippets'
+Plug 'justinj/vim-react-snippets', { 'for': 'javascript' }
 
-Plugin 'nanotech/jellybeans.vim'
+" Colorschemes
+Plug 'flazz/vim-colorschemes'
+Plug 'morhetz/gruvbox'
 
 " Auto format files
-Plugin 'Chiel92/vim-autoformat'
+Plug 'Chiel92/vim-autoformat'
 
 " Hex color highlighting
-Plugin 'gorodinskiy/vim-coloresque'
+Plug 'gorodinskiy/vim-coloresque'
 
 " silver searcher
-Plugin 'rking/ag.vim'
+Plug 'rking/ag.vim'
 
 " easymotion
-Plugin 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 
 " HAML/SASS/SCSS
-Plugin 'cakebaker/scss-syntax.vim'
+Plug 'cakebaker/scss-syntax.vim', { 'for': ['haml', 'scss']}
 
 " Editorconfig
-Plugin 'editorconfig/editorconfig'
+Plug 'editorconfig/editorconfig'
 
 " System clipboard
-Plugin 'christoomey/vim-system-copy'
+Plug 'christoomey/vim-system-copy'
 
 " Commenting
-Plugin 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 
 " Sorting via motions
-Plugin 'christoomey/vim-sort-motion'
+Plug 'christoomey/vim-sort-motion'
 
 " Text objects
-Plugin 'kana/vim-textobj-user'
-Plugin 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
 
-call vundle#end()
-filetype plugin indent on
+call plug#end()
+
+set nocompatible
+set t_Co=256
+set background=dark
+let g:gruvbox_italic=1
+colorscheme gruvbox
+let g:airline_theme='gruvbox'
 
 " general
 set autoread
@@ -90,6 +90,12 @@ set backspace=indent,eol,start
 set mouse=a
 set cursorline
 set laststatus=2
+set backupcopy=yes
+let mapleader = " "
+
+" directories
+set backupdir=$HOME/.vim/backup//
+set directory=$HOME/.vim/tmp//
 
 " tab options
 set expandtab
@@ -112,12 +118,12 @@ au FileType * setl fo-=cro
 
 " NERDTree
 " auto open nerdtree if vim is opened with no files
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " close vim if nerdtree is the only buffer open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " open nerdtree with ctrl+n
-map <C-n> :NERDTreeToggle<CR>
+"map <C-n> :NERDTreeToggle<CR>
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
