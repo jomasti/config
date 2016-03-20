@@ -1,8 +1,10 @@
-autoload -Uz compinit
+autoload -U compinit
 compinit
+zmodload -i zsh/complist
 
-setopt noalwayslastprompt
 setopt noauto_remove_slash
 setopt list_types
 setopt complete_in_word
-unlimit
+setopt completealiases
+
+zstyle ':completion:*' menu select
