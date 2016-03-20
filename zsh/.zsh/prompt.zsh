@@ -48,7 +48,22 @@ function prompt_setup {
   zstyle ':vcs_info:*' disable-patterns "$HOME/analytics_project/vagrant_analytics(|/*)"
 
   PROMPT="${_prompt_colors[3]}%n%f at ${_prompt_colors[6]}%m%f in ${_prompt_colors[5]}%~%f "'${vcs_info_msg_0_}'""$'\n'"$ "
-  RPROMPT=''
+  RPROMPT='${vim_mode}'
 }
 
 prompt_setup "$@"
+
+vim_ins_mode="${_prompt_colors[2]}[INS]%{$reset_color%}"
+vim_cmd_mode="${_prompt_colors[1]}[CMD]%{$reset_color%}"
+vim_mode=$vim_ins_mode
+
+function zle-keymap-select {
+  vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+
+function zle-line-finish {
+  vim_mode=$vim_ins_mode
+}
+zle -N zle-line-finish
