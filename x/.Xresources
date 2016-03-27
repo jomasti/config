@@ -16,6 +16,10 @@ Xft.lcdfilter:  lcddefault
 ! cursor theme
 Xcursor.theme:	Vanilla-DMZ
 
+! --------------------------------------------------------------------
+!                                urxvt
+! --------------------------------------------------------------------
+
 ! general
 URxvt.urgentOnBell: true
 URxvt.saveLines: 65535
@@ -23,18 +27,11 @@ URxvt.internalBorder: 0
 URxvt.externalBorder: 0
 URxvt.borderless: true
 
-! colors and transparency
-!URxvt.inheritPixmap: true
-!URxvt.transparent: true
-!URxvt.tintColor: #000
-!URxvt.shading: 50
-!URxvt.depth:      32
-
 ! fonts
-URxvt.font: xft:Inconsolata for Powerline:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:pixelsize=13:antialias=true:hinting=true
-URxvt.boldFont: xft:Inconsolata for Powerline:bold:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:bold:pixelsize=13:antialias=true:hinting=true
-URxvt.italicFont: xft:Inconsolata for Powerline:italic:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:italic:pixelsize=13:antialias=true:hinting=true
-URxvt.boldItalicFont: xft:Inconsolata for Powerline:bold:italic:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:bold:italic:pixelsize=13:antialias=true:hinting=true
+URxvt.font: xft:Fira Code:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:pixelsize=13:antialias=true:hinting=true
+URxvt.boldFont: xft:Fira Code:bold:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:bold:pixelsize=13:antialias=true:hinting=true
+URxvt.italicFont: xft:Fira Code:italic:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:italic:pixelsize=13:antialias=true:hinting=true
+URxvt.boldItalicFont: xft:Fira Code:bold:italic:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:bold:italic:pixelsize=13:antialias=true:hinting=true
 
 ! scrollbar
 URxvt.scrollBar: false
@@ -48,7 +45,63 @@ URxvt.matcher.button:   1
 URxvt.clipboard.copycmd:  xsel --input --clipboard
 URxvt.clipboard.pastecmd: xsel --output --clipboard
 
-! xscreensaver
+! ---------------------------------------------------------------------
+!                                xterm
+! ---------------------------------------------------------------------
+
+xterm*borderWidth: 0
+xterm*internalBorder: 10
+xterm*termName: xterm-256color
+xterm*utf8: true
+xterm*faceName: Hack:size=10:antialias=true
+xterm*scaleHeight: 1.0
+xterm*dynamicColors: true
+xterm*locale: true
+xterm*scrollTtyOutput: true
+xterm*scrollBar: false
+xterm*rightScrollBar: false
+xterm*jumpScroll: false
+xterm*multiScroll: true
+xterm*toolBar: false
+xterm*saveLines: 5000
+xterm*autoWrap: false
+
+! ---------------------------------------------------------------------
+!                               colors
+! ---------------------------------------------------------------------
+
+! hard contrast: *background: #1d2021
+#define bg #282828
+! soft contrast: *background: #32302f
+#define fg #ebdbb2
+! Black + DarkGrey
+#define blk #282828
+#define bblk #928374
+! DarkRed + Red
+#define dred #cc241d
+#define red #fb4934
+! DarkGreen + Green
+#define dgrn #98971a
+#define grn #b8bb26
+! DarkYellow + Yellow
+#define dylw #d79921
+#define ylw #fabd2f
+! DarkBlue + Blue
+#define dblu #458588
+#define blu #83a598
+! DarkMagenta + Magenta
+#define dmag #b16286
+#define mag #d3869b
+! DarkCyan + Cyan
+#define dcyn #689d6a
+#define cyn #8ec07c
+! LightGrey + White
+#define dwht #a89984
+#define wht #ebdbb2
+
+! ---------------------------------------------------------------------
+!                                xscreensaver
+! ---------------------------------------------------------------------
 
 !font settings
 xscreensaver.Dialog.headingFont:        -*-dina-bold-r-*-*-12-*-*-*-*-*-*-*
@@ -78,32 +131,54 @@ xscreensaver.passwd.thermometer.width:       8
 !datestamp format--see the strftime(3) manual page for details
 xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
 
+! ---------------------------------------------------------------------
+!                                rofi
+! ---------------------------------------------------------------------
 
+rofi.font:            Fira Code Medium 11
+rofi.terminal:        urxvt
+rofi.lines:           3
+rofi.columns:         1
+rofi.eh:              2
+rofi.location:        0
+rofi.width:           10
+rofi.padding:         25
+rofi.fullscreen:      false
+rofi.opacity:         97
+rofi.bw:              2
+rofi.sidebar-mode:    false
+rofi.separator-style: none
+rofi.hide-scrollbar:  true
+rofi.fuzzy:           true
+rofi.color-enabled:   true
 
-! color scheme
-*foreground: #BBBBBB
-*background: #181818
-! Black
-*color0: #303030
-*color8: #5f5f5f
-! Red
-*color1: #eb1a14
-*color9: #bc2f36
-! Green
-*color2: #78e700
-*color10: #4e9600
-! Yellow
-*color3: #e3fc3f
-*color11: #d8f800
-! Blue
-*color4: #4188d2
-*color12: #0d58a6
-! Magenta
-*color5: #ef3c7e
-*color13: #de0052
-! Cyan
-*color6: #36da82
-*color14: #00b454
-! White
-*color7: #e2e2e5
-*color15: #e2e2e5
+rofi.color-normal: bg, fg, bg, bg, ylw
+rofi.color-urgent: bg, fg, bg, bg, ylw
+rofi.color-active: bg, fg, bg, bg, ylw
+rofi.color-window: bg, bblk, bblk
+
+! ---------------------------------------------------------------------
+!                               colors
+! ---------------------------------------------------------------------
+
+! Colors
+*background:  bg
+*foreground:  fg
+*cursorColor: bblk
+
+*color0:      blk
+*color8:      bblk
+*color1:      dred
+*color9:      red
+*color2:      dgrn
+*color10:     grn
+*color3:      dylw
+*color11:     ylw
+*color4:      dblu
+*color12:     blu
+*color5:      dmag
+*color13:     mag
+*color6:      dcyn
+*color14:     cyn
+*color7:      dwht
+*color15:     wht
