@@ -1,3 +1,9 @@
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
 " vim-plug
 call plug#begin('~/.config/nvim/plugged')
 
@@ -5,6 +11,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'sheerun/vim-polyglot'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
+Plug 'PotatoesMaster/i3-vim-syntax'
 
 " Movement/Text manipulation
 Plug 'justinmk/vim-sneak'
@@ -70,7 +77,7 @@ set cmdheight=1
 set ignorecase
 set smartcase
 set incsearch
-set showmode
+set noshowmode
 set ruler
 set pastetoggle=<F3>
 set backspace=indent,eol,start
