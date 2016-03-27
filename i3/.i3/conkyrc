@@ -1,6 +1,6 @@
 background no
-use_xft no
-# xftfont 123:size=8
+use_xft yes
+xftfont Fira Code:size=8
 out_to_console yes
 out_to_x no
 update_interval 2
