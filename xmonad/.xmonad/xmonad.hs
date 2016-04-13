@@ -6,14 +6,10 @@ import System.IO
 
 import Data.List (isPrefixOf, nub)
 
-import Graphics.X11.ExtraTypes.XF86
-
 import XMonad hiding (keys)
 
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
-import XMonad.Actions.OnScreen
-import XMonad.Actions.SpawnOn
 import XMonad.Actions.SwapWorkspaces
 import XMonad.Actions.WindowGo
 
@@ -25,18 +21,12 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 
-import XMonad.Layout
-import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Gaps
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.StackTile
 
 import XMonad.Prompt
-import XMonad.Prompt.Input
-import XMonad.Prompt.Man
 import XMonad.Prompt.RunOrRaise
 import XMonad.Prompt.Shell
 
@@ -45,7 +35,6 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.WorkspaceCompare
 
 -- Infix (,) to clean up key and mouse bindings
 infixr 0 ~>
@@ -60,11 +49,11 @@ main = do
   trayproc <- spawnPipe trayer
   other <- spawnPipe left
   other <- spawnPipe right
-  xmonad $ withUrgencyHook NoUrgencyHook defaultConfig
+  xmonad $ withUrgencyHook NoUrgencyHook def
     { manageHook          = manageHooks
     , layoutHook          = layouts
     , logHook             = myLogHook >> (dynamicLogWithPP $ myDzenPP dzen)
-    , terminal            = "urxvtc"
+    , terminal            = "xterm"
     , modMask             = mod4Mask
     , borderWidth         = 1
     , focusFollowsMouse   = True
@@ -105,7 +94,7 @@ keys =
     , "<XF86AudioLowerVolume>"  ~> spawn "~/bin/pa_vol down"
     , "<XF86AudioMute>" ~> spawn "~/bin/pa_vol mute"
     , "<XF86AudioPlay>" ~> spawn "ncmpcpp toggle"
-    
+
     -- Power
     , "M-C-x" ~> spawn "ktsuss systemctl suspend"
     , "M-C-s" ~> spawn "ktsuss systemctl poweroff"
@@ -113,7 +102,7 @@ keys =
     ]
 
 pads =
-    [ NS "scratch" "urxvtc -name scratch" (resource =? "scratch") scratchHook
+    [ NS "scratch" "xterm -name scratch" (resource =? "scratch") scratchHook
     ]
     where
       scratchHook   = doRectFloat $ rr 0.51 0.52 0.46 0.44
@@ -174,10 +163,10 @@ manageHooks = manageDocks
               <+> additionalManageHooks
               <+> composeAll [(isFullscreen --> doFullFloat)]
               <+> namedScratchpadManageHook pads
-              <+> manageHook defaultConfig
+              <+> manageHook def
               <+> (fmap not isDialog --> doF avoidMaster)
 
-promptConfig = defaultXPConfig
+promptConfig = def
     { font = myFont
     , bgColor  = "#000000"
     , fgColor  = "#FFFFFF"
@@ -189,7 +178,7 @@ promptConfig = defaultXPConfig
     , showCompletionOnTab = True
     }
 
-myGSConfig = defaultGSConfig { gs_font = myFont }
+myGSConfig = def { gs_font = myFont }
 
 myLogHook = fadeInactiveLogHook fadeAmount
     where fadeAmount = 0.90
@@ -208,7 +197,7 @@ mySColor   = myDFGColor -- Separator
 myBorder   = "#4c5e52"
 myFocusedBorder = "#4c5e52"
 
-myDzenPP h = defaultPP
+myDzenPP h = def
     { ppCurrent         = dzenColor myFFGColor myFBGColor . wrap ("^fg(" ++ myIFGColor ++ ")^i(" ++ myIconDir ++ "/eye_l.xbm)" ++ "^fg(" ++ myFFGColor ++ ")") ""
     , ppVisible         = dzenColor myVFGColor myVBGColor . wrap "" ("^fg(" ++ myIFGColor ++ ")^i(" ++ myIconDir ++ "/eye_r.xbm)")
     , ppHidden          = dzenColor myDFGColor myDBGColor . wrap ("^i(" ++ myIconDir ++ "/dzen_bitmaps/has_win.xbm)") "" . hideNSP
