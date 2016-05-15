@@ -8,7 +8,7 @@ endif
 call plug#begin('~/.config/nvim/plugged')
 
 " Syntax
-Plug 'sheerun/vim-polyglot'
+Plug 'othree/yajs.vim' | Plug 'othree/es.next.syntax.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
 Plug 'PotatoesMaster/i3-vim-syntax'
@@ -39,13 +39,18 @@ Plug 'justinj/vim-react-snippets', { 'for': 'javascript' }
 
 " File finding/navigation
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'tpope/vim-vinegar'
 Plug 'mhinz/vim-grepper'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " External integration
 Plug 'tpope/vim-fugitive' | Plug 'junegunn/gv.vim'
 Plug 'christoomey/vim-system-copy'
 Plug 'airblade/vim-gitgutter'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Status information
 Plug 'itchyny/lightline.vim'
@@ -61,11 +66,13 @@ Plug 'morhetz/gruvbox'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 
-
 call plug#end()
 
 set background=dark
+
+" gruvbox
 let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='soft'
 colorscheme gruvbox
 
 " general
@@ -84,7 +91,7 @@ set backspace=indent,eol,start
 set mouse=a
 set cursorline
 set laststatus=2
-let mapleader = " "
+let mapleader = "\<Space>"
 set backupcopy=yes
 
 " backup
@@ -112,6 +119,14 @@ nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
 
+" system clipboard
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
 " disable auto comment
 au FileType * setl fo-=cro
 
@@ -119,6 +134,13 @@ au FileType * setl fo-=cro
 autocmd BufWritePre * StripWhitespace
 
 " ctrlp
+nnoremap <leader>e :CtrlP<cr>
+nnoremap <leader>E :CtrlPCurFile<cr>
+nnoremap <leader>t :CtrlPBufTag<cr>
+nnoremap <leader>T :CtrlPTag<cr>
+nnoremap <leader>a :CtrlPBuffer<cr>
+nnoremap <leader>A :CtrlPMRUFiles<cr>
+
 let g:ctrlp_custom_ignore = {
       \ 'dir': '\.git$\|node_modules/',
       \ }
@@ -131,6 +153,7 @@ let g:ctrlp_prompt_mappings = {
       \ 'PrtClearCache()': ['<F5>', '<c-i>'],
       \ }
 let g:ctrlp_reuse_window = 'startify'
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " YouCompleteMe and Ultisnips compatibility
 let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
@@ -146,6 +169,8 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_open_list = 2
+let g:neomake_error_sign = {'text': '⨉'}
+let g:neomake_warning_sign = {'text': '◉⚠'}
 
 " Grepper
 nnoremap <leader>git :Grepper -tool git -noswitch<cr>
@@ -237,5 +262,44 @@ function! LightLineMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-nnoremap <C-p> :FZF<cr>
+" fzf
+let g:fzf_nvim_statusline=0
+
+nnoremap <silent> <leader><space> :Files<CR>
+nnoremap <silent> <leader>a :Buffers<CR>
+nnoremap <silent> <leader>A :Windows<CR>
+nnoremap <silent> <leader>; :BLines<CR>
+nnoremap <silent> <leader>. :Lines<CR>
+nnoremap <silent> <leader>o :BTags<CR>
+nnoremap <silent> <leader>O :Tags<CR>
+nnoremap <silent> <leader>? :History<CR>
+nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> K :call SearchWordWithAg()<CR>
+vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
+nnoremap <silent> <leader>gl :Commits<CR>
+nnoremap <silent> <leader>ga :BCommits<CR>
+
+imap <C-x><C-f> <plug>(fzf-complete-file-ag)
+imap <C-x><C-l> <plug>(fzf-complete-line)
+
+function! SearchWordWithAg()
+  execute 'Ag' expand('<cword>')
+endfunction
+
+function! SearchVisualSelectionWithAg() range
+  let old_reg = getreg('"')
+  let old_regtype = getregtype('"')
+  let old_clipboard = &clipboard
+  set clipboard&
+  normal! ""gvy
+  let selection = getreg('"')
+  call setreg('"', old_reg, old_regtype)
+  let &clipboard = old_clipboard
+  execute 'Ag' selection
+endfunction
+
+"let g:jsx_ext_required = 0
+
+let g:AutoPairsMultilineClose = 0
+let g:AutoPairsFlyMode = 0
 
