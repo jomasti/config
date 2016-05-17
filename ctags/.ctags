@@ -1,0 +1,9 @@
+-e
+--recurse=yes
+--tag-relative=yes
+--exclude=.git
+--exclude=node_modules
+--exclude=build
+--exclude=dist
+--exclude=env
+--exclude=target/*
