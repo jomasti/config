@@ -26,8 +26,10 @@ values."
      ansible
      auto-completion
      ;; better-defaults
+     dash
      emacs-lisp
      git
+     gtags
      html
      java
      javascript
@@ -35,6 +37,7 @@ values."
      ;; org
      osx
      python
+     ranger
      react
      restclient
      (shell :variables
@@ -49,7 +52,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(csv-mode gruvbox-theme editorconfig)
+   dotspacemacs-additional-packages '(csv-mode gruvbox-theme editorconfig rainbow-mode)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -289,6 +292,17 @@ you should place you code here."
               (add-hook 'js2-mode-hook 'sanityinc/disable-js2-checks-if-flycheck-active)
 
               (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2"))))
+  ;web-mode
+  (setq-default
+    css-indent-offset 2
+    web-mode-markup-indent-offset 2
+    web-mode-css-indent-offset 2
+    web-mode-code-indent-offset 2
+    web-mode-attr-indent-offset 2)
+  (with-eval-after-load 'web-mode
+    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
