@@ -304,3 +304,18 @@ endfunction
 
 let g:AutoPairsMultilineClose = 0
 let g:AutoPairsFlyMode = 0
+
+" fugitive
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gw :Gwrite<CR>
+
+" vim-gitgutter
+let g:gitgutter_enabled = 1
+let g:gitgutter_signs = 0
+let g:gitgutter_map_keys = 0
+let g:gitgutter_eager = 0
+let g:gitgutter_realtime = 0
+nmap <leader>gg :GitGutterSignsToggle<CR>
