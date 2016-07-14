@@ -26,4 +26,8 @@ if command -v fasd &> /dev/null; then
   eval "$(fasd --init auto)"
 fi
 
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
 true
