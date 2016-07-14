@@ -22,7 +22,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 
 " Autocomplete/Syntax Checking
-Plug 'benekastah/neomake'
+Plug 'neomake/neomake'
 Plug 'ervandew/supertab'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
 Plug 'marijnh/tern_for_vim', {'do': 'npm install'}
@@ -171,6 +171,8 @@ autocmd! BufWritePost * Neomake
 let g:neomake_open_list = 2
 let g:neomake_error_sign = {'text': '⨉'}
 let g:neomake_warning_sign = {'text': '◉⚠'}
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_python_enabled_makers = ['pep8', 'pylint']
 
 " Grepper
 nnoremap <leader>git :Grepper -tool git -noswitch<cr>
@@ -302,4 +304,3 @@ endfunction
 
 let g:AutoPairsMultilineClose = 0
 let g:AutoPairsFlyMode = 0
-
