@@ -227,7 +227,7 @@ nmap <leader>gg :GitGutterSignsToggle<CR>
 " }}}
 
 " Status line {{{
-" Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 " Lightline
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',
