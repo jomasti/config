@@ -7,6 +7,79 @@ endif
 " vim-plug
 call plug#begin('~/.config/nvim/plugged')
 
+
+" General settings {{{
+set autoread
+set number
+set autoindent
+set nocindent
+set cmdheight=1
+set ignorecase
+set smartcase
+set incsearch
+set noshowmode
+set ruler
+set pastetoggle=<F3>
+set backspace=indent,eol,start
+set mouse=a
+set cursorline
+set laststatus=2
+let mapleader = "\<Space>"
+set backupcopy=yes
+" }}}
+
+" Backup settings {{{
+set backup
+set undofile
+set noswapfile
+set undodir=$HOME/.config/nvim/tmp/undo
+set backupdir=$HOME/.config/nvim/tmp/backup
+set backupskip=/tmp/*,/private/tmp/*
+set writebackup
+" }}}
+
+" Tab settings {{{
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+" }}}
+
+" Split settings {{{
+" split traversal
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" split defaults
+set splitbelow
+set splitright
+" }}}
+
+" Clipboard settings {{{
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+" }}}
+
+" Formatting settings {{{
+" disable auto comment
+au FileType * setl fo-=cro
+
+" auto remove whitespace
+autocmd BufWritePre * StripWhitespace
+" }}}
+
+" Colorscheme {{{
+Plug 'morhetz/gruvbox'
+set background=dark
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='soft'
+" }}}
+
 " Syntax {{{
 Plug 'othree/yajs.vim' | Plug 'othree/es.next.syntax.vim'
 Plug 'hail2u/vim-css3-syntax'
@@ -154,7 +227,7 @@ nmap <leader>gg :GitGutterSignsToggle<CR>
 " }}}
 
 " Status line {{{
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 " Lightline
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',
@@ -248,14 +321,6 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'mhinz/vim-startify'
 " }}}
 
-" Colorscheme {{{
-Plug 'morhetz/gruvbox'
-set background=dark
-let g:gruvbox_italic=1
-let g:gruvbox_contrast_dark='soft'
-colorscheme gruvbox
-" }}}
-
 " Text objects {{{
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
@@ -263,69 +328,6 @@ Plug 'kana/vim-textobj-indent'
 
 call plug#end()
 
-" General settings {{{
-set autoread
-set number
-set autoindent
-set nocindent
-set cmdheight=1
-set ignorecase
-set smartcase
-set incsearch
-set noshowmode
-set ruler
-set pastetoggle=<F3>
-set backspace=indent,eol,start
-set mouse=a
-set cursorline
-set laststatus=2
-let mapleader = "\<Space>"
-set backupcopy=yes
-" }}}
-
-" Backup settings {{{
-set backup
-set undofile
-set noswapfile
-set undodir=$HOME/.config/nvim/tmp/undo
-set backupdir=$HOME/.config/nvim/tmp/backup
-set backupskip=/tmp/*,/private/tmp/*
-set writebackup
-" }}}
-
-" Tab settings {{{
-set expandtab
-set shiftwidth=2
-set softtabstop=2
-" }}}
-
-" Split settings {{{
-" split traversal
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" split defaults
-set splitbelow
-set splitright
-" }}}
-
-" Clipboard settings {{{
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-" }}}
-
-" Formatting settings {{{
-" disable auto comment
-au FileType * setl fo-=cro
-
-" auto remove whitespace
-autocmd BufWritePre * StripWhitespace
-" }}}
+colorscheme gruvbox
 
 " vim:fdm=marker
