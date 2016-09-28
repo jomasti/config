@@ -26,8 +26,8 @@ setopt autolist
 setopt auto_resume
 setopt short_loops
 
-export EDITOR='vim'
-export BROWSER='luakit'
+export EDITOR='nvim'
+export BROWSER='chrome'
 export PAGER='less'
 if [[ "${COLORTERM}" == "gnome-terminal" && "${TERM}" != "xterm"  ]]; then
 	export TERM="gnome-256color"
