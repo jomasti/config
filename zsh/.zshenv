@@ -1,1 +1,5 @@
-source ~/.zpath
+#!/bin/zsh
+
+. ~/.environment
+. ~/.zpath
+

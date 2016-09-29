@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #bmpanel2 &
 #xcompmgr -c -t-5 -l-5 -r4.2 -o.55 -f -C &
 #obmixer &

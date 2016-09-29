@@ -10,3 +10,9 @@
 .mpdscribble/mpdscribble.conf
 .dwm/log
 bin/__pycache__
+mpd/.config/mpd
+!mpd/.config/mpd/mpd.conf
+!mpd/.config/mpd/playlists
+xmonad/.xmonad
+!xmonad/.xmonad/xmonad.hs
+!xmonad/.xmonad/xmobarrc

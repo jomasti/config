@@ -8,7 +8,7 @@ echo '{"version": 1, "click_events": true}'
 echo '[[]'
 
 # Now send blocks with information forever:
-conky -c $HOME/.i3/conkyrc -d
+conky -c $HOME/.config/i3/conkyrc -d
 
 # parse click events
 IFS="}"

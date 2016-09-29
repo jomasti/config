@@ -33,8 +33,8 @@ values."
      html
      java
      javascript
-     ;; markdown
-     ;; org
+     markdown
+     org
      osx
      python
      ranger
@@ -44,6 +44,7 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
      ;; spell-checking
+     shell-scripts
      syntax-checking
      vagrant
      version-control

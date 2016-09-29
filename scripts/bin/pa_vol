@@ -5,7 +5,7 @@ VALUE=5
 
 case "$1" in
   "up")
-    [[ "$VOLUME" -eq 100 ]] && VALUE=0
+    [ "$VOLUME" -eq 100 ] && VALUE=0
     pamixer --increase $VALUE
     ;;
   "down")
@@ -20,8 +20,8 @@ esac
 VOLUME=$(pamixer --get-volume)
 MUTE=$(pamixer --get-mute)
 
-if [ "$MUTE" == "false" ]; then
-  volnoti-show $VOLUME
+if [ "$MUTE" = "false" ]; then
+  volnoti-show "$VOLUME"
 else
-  volnoti-show -m $VOLUME
+  volnoti-show -m "$VOLUME"
 fi

@@ -49,22 +49,22 @@ URxvt.clipboard.pastecmd: xsel --output --clipboard
 !                                xterm
 ! ---------------------------------------------------------------------
 
-xterm*borderWidth: 0
-xterm*internalBorder: 10
-xterm*termName: xterm-256color
-xterm*utf8: true
-xterm*faceName: Hack:size=10:antialias=true
-xterm*scaleHeight: 1.0
-xterm*dynamicColors: true
-xterm*locale: true
-xterm*scrollTtyOutput: true
-xterm*scrollBar: false
-xterm*rightScrollBar: false
-xterm*jumpScroll: false
-xterm*multiScroll: true
-xterm*toolBar: false
-xterm*saveLines: 5000
-xterm*autoWrap: false
+XTerm*borderWidth: 0
+XTerm*internalBorder: 10
+XTerm*termName: xterm-256color
+XTerm*utf8: true
+XTerm*faceName: Hack:size=10:antialias=true
+XTerm*scaleHeight: 1.0
+XTerm*dynamicColors: true
+XTerm*locale: true
+XTerm*scrollTtyOutput: true
+XTerm*scrollBar: false
+XTerm*rightScrollBar: false
+XTerm*jumpScroll: false
+XTerm*multiScroll: true
+XTerm*toolBar: false
+XTerm*saveLines: 5000
+XTerm*autoWrap: false
 
 ! ---------------------------------------------------------------------
 !                               colors
@@ -141,7 +141,7 @@ rofi.lines:           3
 rofi.columns:         1
 rofi.eh:              2
 rofi.location:        0
-rofi.width:           10
+rofi.width:           25
 rofi.padding:         25
 rofi.fullscreen:      false
 rofi.opacity:         97

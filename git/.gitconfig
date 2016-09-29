@@ -1,3 +1,11 @@
 [user]
 	email = facedelajunk@gmail.com
 	name = Joshua Stiefer
+[alias]
+        d = difftool
+[color]
+        ui = auto
+[diff]
+	tool = meld
+[difftool]
+        prompt = false

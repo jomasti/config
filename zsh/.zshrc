@@ -1,9 +1,11 @@
 [ -z "$PS1" ] && return
 
+. ~/.shell_aliases
+. ~/.shell_functions
+
 . ~/.zsh/config.zsh
 . ~/.zsh/bindings.zsh
 . ~/.zsh/completion.zsh
-. ~/.zsh/functions.zsh
 . ~/.zsh/aliases.zsh
 . ~/.zsh/prompt.zsh
 
@@ -31,3 +33,14 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 true
+
+export NVM_DIR="/home/josh/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+if command -v pyenv &> /dev/null; then
+  eval "$(pyenv init -)"
+fi
+
+if [ -e ~/.pyenv/plugins/pyenv-virtualenv ]; then
+  eval "$(pyenv virtualenv-init -)"
+fi
