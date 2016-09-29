@@ -80,10 +80,31 @@ let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark='soft'
 " }}}
 
-" Syntax {{{
-Plug 'othree/yajs.vim' | Plug 'othree/es.next.syntax.vim'
-Plug 'hail2u/vim-css3-syntax'
+" Language: Javascript {{{
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+" Plug 'othree/yajs.vim' | Plug 'othree/es.next.syntax.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+let g:used_javascript_libs = 'underscore,react,chai'
+Plug 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
+Plug 'heavenshell/vim-jsdoc'
+Plug 'moll/vim-node'
+Plug 'othree/jspc.vim'
+"}}}
+
+" Language: CSS/SCSS {{{
+Plug 'JulesWang/css.vim'
+  \| Plug 'hail2u/vim-css3-syntax'
+  \| Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
+
+" Hex highlighting
 Plug 'ap/vim-css-color'
+
+" Completion
+Plug 'othree/csscomplete.vim'
+" }}}
+"
+" Language: Misc {{{
 Plug 'PotatoesMaster/i3-vim-syntax'
 " }}}
 
