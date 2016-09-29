@@ -1,0 +1,58 @@
+#! /bin/sh
+
+set -a
+
+if [ $(pgrep -cx bspwm_panel) -gt 1 ] ; then
+    printf "%s\n" "The panel is already running." >&2
+    while [ $(pgrep -c "lemonbar") != 0 ]
+    do
+        pkill -n -9 "lemonbar"
+    done
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+# Store pid to kill this process later(toggle gaps/panel)
+echo $$ > /tmp/panel-pid
+
+num_mon=$(bspc query -M) # determine number of monitors
+PANEL_HEIGHT=16
+PANEL_FONT_MAIN="-gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1"
+PANEL_FONT_ICON="-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1"
+
+CUR_X_OFFSET=0
+
+bspc config top_padding $PANEL_HEIGHT
+
+. bspwm_panel_colors
+
+for i in $num_mon; do
+    # remove any open panel fifo and create a new one
+    [ -e "$PANEL_FIFO$i" ] && rm "$PANEL_FIFO$i"
+    mkfifo "$PANEL_FIFO$i"
+
+    CUR_MON_NAME=$(bspc query -T -m $i | jq -r ".name")
+    bspc subscribe report |\
+        grep -oE "[Mm]$CUR_MON_NAME[^TM]*[TML]" --line-buffered |\
+        while read line; do echo W$line; done  > "$PANEL_FIFO$i" &
+
+    xtitle -sf 'T%s' > "$PANEL_FIFO$i" &
+
+    ~/.config/bspwm/info.sh > "$PANEL_FIFO$i" &
+
+    # clock -sf "S%a %d %b %H:%M" > "$PANEL_FIFO$i" &
+
+    CUR_MON_WIDTH=$(bspc query -T -m $i | jq ".rectangle.width")
+
+    cat "$PANEL_FIFO$i" |\
+        bspwm_panel_bar |\
+        lemonbar -g "$CUR_MON_WIDTH"x"$PANEL_HEIGHT"+"$CUR_X_OFFSET" -f "$PANEL_FONT_MAIN" -f "$PANEL_FONT_ICON" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -a 20 |\
+        sh &
+
+    CUR_X_OFFSET=$(expr $CUR_X_OFFSET + $CUR_MON_WIDTH)
+
+done
+
+wait
+
+# vim: ai ts=4 sw=4 et sts=4 ft=sh

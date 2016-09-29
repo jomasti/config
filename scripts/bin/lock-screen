@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Requires:
+# scrot
+# i3lock
+# imagemagick
+
+scrot 'tmp.png' -e 'convert -blur 0x8 $f ./lockbg.png'
+# offset needed since not all screens are the same resolution
+convert -gravity center -geometry -240+0 -composite lockbg.png ~/Downloads/lock.png lockfinal.png
+i3lock -u -i lockfinal.png
+rm lockfinal.png lockbg.png tmp.png
