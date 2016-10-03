@@ -63,6 +63,18 @@ function! s:LoadPlugins()
   let g:gruvbox_contrast_dark='soft'
   " }}}
 
+  " Autocomplete {{{
+  if has('lua')
+    Plug 'Shougo/neocomplete.vim'
+  elseif has('nvim') && has('python3')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  endif
+
+  let g:jms_has_completion =
+        \ exists("g:plugs['neocomplete.vim']")
+        \ || exists("g:plugs['deoplete.nvim']")
+  " }}}
+
   " Language: Javascript {{{
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
   " Plug 'othree/yajs.vim' | Plug 'othree/es.next.syntax.vim'
@@ -73,6 +85,20 @@ function! s:LoadPlugins()
   Plug 'heavenshell/vim-jsdoc'
   Plug 'moll/vim-node'
   Plug 'othree/jspc.vim'
+
+  " Completion
+  if g:jms_has_completion
+    if executable('npm')
+      if has('nvim')
+        Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install --global tern' }
+      else
+        Plug 'marijnh/tern_for_vim', {'do': 'npm install'}
+      endif
+    else
+      " Syntax completion
+      Plug '1995eaton/vim-better-javascript-completion'
+    endif
+  endif
   "}}}
 
   " Language: CSS/SCSS {{{
@@ -108,20 +134,6 @@ function! s:LoadPlugins()
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-unimpaired'
-  " }}}
-
-  " Autocomplete {{{
-  if has('lua')
-    Plug 'Shougo/neocomplete.vim'
-  elseif has('nvim') && has('python3')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  endif
-
-  let g:jms_has_completion =
-        \ exists("g:plugs['neocomplete.vim']")
-        \ || exists("g:plugs['deoplete.nvim']")
-
-  Plug 'marijnh/tern_for_vim', {'do': 'npm install'}
   " }}}
 
   " Alignment/formatting {{{
