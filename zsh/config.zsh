@@ -2,6 +2,20 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=2000
 
+# Changing Directories
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_silent
+setopt pushd_to_home
+
+# Completion
+setopt autolist
+setopt no_complete_aliases
+setopt list_packed
+
+# Expansion and Globbing
+setopt extendedglob
+
 # History
 setopt hist_ignore_dups
 setopt hist_ignore_all_dups
@@ -17,11 +31,19 @@ setopt hist_expire_dups_first
 setopt hist_find_no_dups
 setopt hist_no_store
 
-setopt noclobber
-setopt interactivecomments
-setopt printexitvalue
-setopt extendedglob
+# Input/Output
+setopt aliases
 setopt correct
-setopt autolist
-setopt auto_resume
+setopt interactivecomments
+setopt noclobber
 setopt short_loops
+
+# Job Control
+setopt auto_resume
+
+# Prompt
+setopt prompt_subst
+
+# Zle
+setopt no_beep
+setopt vi
