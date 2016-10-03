@@ -28,6 +28,8 @@ zplug "zsh-users/zsh-completions"
 # Remind me about my own aliases
 zplug "djui/alias-tips"
 
+zplug "supercrabtree/k"
+
 zplug "lukechilds/zsh-better-npm-completion", nice:10
 
 # Inspire confidence that I am using an actual command/file

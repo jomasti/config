@@ -68,7 +68,6 @@ jms::has "zplug" && {
 }
 
 jms::source ~/.fzf.zsh
-jms::source ~/.k/k.sh
 
 jms::has fasd &&  eval "$(fasd --init auto)"
 
