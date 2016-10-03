@@ -8,7 +8,6 @@
 .herrie/config
 .netrc
 .mpdscribble/mpdscribble.conf
-.dwm/log
 bin/__pycache__
 mpd/.config/mpd
 !mpd/.config/mpd/mpd.conf
@@ -16,3 +15,9 @@ mpd/.config/mpd
 xmonad/.xmonad
 !xmonad/.xmonad/xmonad.hs
 !xmonad/.xmonad/xmobarrc
+
+.bash_history
+.lesshst
+.zcache
+.zcompdump*
+*.log
