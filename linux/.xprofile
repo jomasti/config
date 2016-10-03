@@ -1,0 +1,14 @@
+# linux/.xprofile
+#
+# Environment variables for X Desktop
+
+source "${HOME}/.dotfiles/shell/xdg"
+
+export BROWSER=chromium
+export GTK2_RC_FILES="${XDG_CONFIG_HOME}/.gtkrc-2.0/.gtkrc-2.0"
+export QT_STYLE_OVERRIDE=gtk
+export STEAMAPPS="${HOME}/.steam/steam/steamapps"
+export WINEPREFIX="${XDG_CONFIG_HOME}/wine"
+export WINEARCH=win32
+
+# vim: ft=sh :
