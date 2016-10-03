@@ -45,8 +45,8 @@ __symlink() {
 
 
   # symlink shells ---------------------------------------------------------------
-  # jms::symlink bash/dot.bashrc                      .bashrc
-  # jms::symlink bash/dot.bash_profile                .bash_profile
+  jms::symlink bash/dot.bashrc                      .bashrc
+  jms::symlink bash/dot.bash_profile                .bash_profile
   jms::symlink zsh/dot.zshenv                       .zshenv
 
   jms::status "Done! [symlink.sh]"
