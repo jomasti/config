@@ -1,0 +1,16 @@
+XTerm*borderWidth: 0
+XTerm*internalBorder: 10
+XTerm*termName: xterm-256color
+XTerm*utf8: true
+XTerm*faceName: Hack:size=10:antialias=true
+XTerm*scaleHeight: 1.0
+XTerm*dynamicColors: true
+XTerm*locale: true
+XTerm*scrollTtyOutput: true
+XTerm*scrollBar: false
+XTerm*rightScrollBar: false
+XTerm*jumpScroll: false
+XTerm*multiScroll: true
+XTerm*toolBar: false
+XTerm*saveLines: 5000
+XTerm*autoWrap: false

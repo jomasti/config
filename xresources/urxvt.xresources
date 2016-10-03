@@ -1,0 +1,24 @@
+! general
+URxvt.urgentOnBell: true
+URxvt.saveLines: 65535
+URxvt.internalBorder: 10
+URxvt.externalBorder: 0
+URxvt.borderless: true
+
+! fonts
+URxvt.font: xft:Hack:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:pixelsize=13:antialias=true:hinting=true
+URxvt.boldFont: xft:Hack:bold:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:bold:pixelsize=13:antialias=true:hinting=true
+URxvt.italicFont: xft:Hack:italic:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:italic:pixelsize=13:antialias=true:hinting=true
+URxvt.boldItalicFont: xft:Hack:bold:italic:pixelsize=13:antialias=true:hinting=true,xft:DejaVu Sans Mono:bold:italic:pixelsize=13:antialias=true:hinting=true
+
+! scrollbar
+URxvt.scrollBar: false
+
+! extensions
+URxvt.perl-ext-common:  clipboard,default,matcher,url-select
+URxvt.urlLauncher:      /usr/bin/firefox
+URxvt.keysym.M-u:       perl:url-select:select_next
+URxvt.underlineURLs: 	true
+URxvt.matcher.button:   1
+URxvt.clipboard.copycmd:  xsel --input --clipboard
+URxvt.clipboard.pastecmd: xsel --output --clipboard

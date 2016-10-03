@@ -1,0 +1,49 @@
+! hard contrast: *background: #1d2021
+#define bg #282828
+! soft contrast: *background: #32302f
+#define fg #ebdbb2
+! Black + DarkGrey
+#define blk #282828
+#define bblk #928374
+! DarkRed + Red
+#define dred #cc241d
+#define red #fb4934
+! DarkGreen + Green
+#define dgrn #98971a
+#define grn #b8bb26
+! DarkYellow + Yellow
+#define dylw #d79921
+#define ylw #fabd2f
+! DarkBlue + Blue
+#define dblu #458588
+#define blu #83a598
+! DarkMagenta + Magenta
+#define dmag #b16286
+#define mag #d3869b
+! DarkCyan + Cyan
+#define dcyn #689d6a
+#define cyn #8ec07c
+! LightGrey + White
+#define dwht #a89984
+#define wht #ebdbb2
+
+*background:  bg
+*foreground:  fg
+*cursorColor: bblk
+
+*color0:      blk
+*color8:      bblk
+*color1:      dred
+*color9:      red
+*color2:      dgrn
+*color10:     grn
+*color3:      dylw
+*color11:     ylw
+*color4:      dblu
+*color12:     blu
+*color5:      dmag
+*color13:     mag
+*color6:      dcyn
+*color14:     cyn
+*color7:      dwht
+*color15:     wht

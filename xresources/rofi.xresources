@@ -1,0 +1,21 @@
+rofi.font:            Hack 11
+rofi.terminal:        urxvt
+rofi.lines:           3
+rofi.columns:         1
+rofi.eh:              2
+rofi.location:        0
+rofi.width:           25
+rofi.padding:         25
+rofi.fullscreen:      false
+rofi.opacity:         97
+rofi.bw:              2
+rofi.sidebar-mode:    false
+rofi.separator-style: none
+rofi.hide-scrollbar:  true
+rofi.fuzzy:           true
+rofi.color-enabled:   true
+
+rofi.color-normal: bg, fg, bg, bg, ylw
+rofi.color-urgent: bg, fg, bg, bg, ylw
+rofi.color-active: bg, fg, bg, bg, ylw
+rofi.color-window: bg, bblk, bblk

@@ -1,46 +1,27 @@
 [ -z "$PS1" ] && return
 
-. ~/.shell_aliases
-. ~/.shell_functions
+source "${DOTFILES}/shell/before.sh"
 
-. ~/.zsh/config.zsh
-. ~/.zsh/bindings.zsh
-. ~/.zsh/completion.zsh
-. ~/.zsh/aliases.zsh
-. ~/.zsh/prompt.zsh
+. "${ZDOTDIR}/config.zsh"
+. "${ZDOTDIR}/bindings.zsh"
+. "${ZDOTDIR}/completion.zsh"
+. "${ZDOTDIR}/aliases.zsh"
+. "${ZDOTDIR}/prompt.zsh"
 
 if [ "$(hostname)" = joshuastieferMBP ]; then
-  . ~/.zsh/work.zsh
+  . "${ZDOTDIR}/work.zsh"
 fi
 
 if [ -e  ~/.rbenv ]; then
-  export PATH="$HOME/.rbenv/bin:$PATH"
+  export PATH="${HOME}/.rbenv/bin:${PATH}"
   eval "$(rbenv init -)"
 fi
 
-[ -e ~/.fzf.zsh ] && . ~/.fzf.zsh
-[ -e ~/.k/k.sh ] && . ~/.k/k.sh
+jms::source ~/.fzf.zsh
+jms::source . ~/.k/k.sh
+jms::source . ~/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+jms::source . ~/git/alias-tips/alias-tips.plugin.zsh
 
-[ -e ~/git/zsh-syntax-highlighting ] && . ~/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[ -e ~/git/alias-tips ] && . ~/git/alias-tips/alias-tips.plugin.zsh
+jms::has fasd &&  eval "$(fasd --init auto)"
 
-if command -v fasd &> /dev/null; then
-  eval "$(fasd --init auto)"
-fi
-
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-
-true
-
-export NVM_DIR="/home/josh/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-if command -v pyenv &> /dev/null; then
-  eval "$(pyenv init -)"
-fi
-
-if [ -e ~/.pyenv/plugins/pyenv-virtualenv ]; then
-  eval "$(pyenv virtualenv-init -)"
-fi
+source "${DOTFILES}/shell/after.sh"

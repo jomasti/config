@@ -1,1 +1,1 @@
-source ~/.zpath
+# sourced in login shells only
