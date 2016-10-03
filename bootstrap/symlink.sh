@@ -29,8 +29,8 @@ __symlink() {
   # jms::symlink shell/dot.inputrc                    .config/readline/inputrc
 
   # (n)vim
-  # jms::symlink vim                                  .vim
-  # jms::symlink vim                                  .config/nvim
+  jms::symlink vim                                  .vim
+  jms::symlink vim                                  .config/nvim
 
   # default tern-project
   # jms::symlink ternjs/dot.tern-project              .tern-project
