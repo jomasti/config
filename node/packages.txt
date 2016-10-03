@@ -7,6 +7,7 @@ js-beautify
 jsctags
 jsinspect
 jsonlint
+npmrc
 package-json-validator
 sass-lint
 tern
