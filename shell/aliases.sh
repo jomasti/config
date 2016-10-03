@@ -39,13 +39,12 @@ alias vundle="vim +PluginInstall +qall"
 alias vundleu="vim +PluginUpdate +qall"
 
 # Edit dotfiles
-alias ev="$EDITOR ~/.config/nvim/init.vim"
-alias ez="$EDITOR ~/.zshrc -c ':args ~/.zsh/* | argdo tabe | tabdo syntax on'"
+alias ev="\${EDITOR} ~/.config/nvim/init.vim"
+alias ez="\${EDITOR} ~/.zshrc -c ':args ~/.zsh/* | argdo tabe | tabdo syntax on'"
 
 # Arch Linux stuff
 alias path='echo $PATH | tr : "\n"'
 alias uzbl='uzbl-tabbed'
-alias tmux='tmux -u -2'
 alias mmaker='mmaker --no-legacy --no-debian -t Gterm OpenBox -f'
 alias packer='TMPDIR=/home/josh/build packer'
 alias i3log='less `find ~/.config/i3 | sort -n | tail -n 1`'
@@ -92,6 +91,7 @@ alias glog="git log --graph --pretty=format:'%Cred%h%Creset \
   %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 
 #tmux
+alias tmux="tmux -f \"\${DOTFILES}/tmux/tmux.conf\""
 alias tn="tmux new -s"
 alias ta="tmux attach -t"
 alias ts="tmux switch -t"
