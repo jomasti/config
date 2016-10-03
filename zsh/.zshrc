@@ -18,9 +18,9 @@ if [ -e  ~/.rbenv ]; then
 fi
 
 jms::source ~/.fzf.zsh
-jms::source . ~/.k/k.sh
-jms::source . ~/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-jms::source . ~/git/alias-tips/alias-tips.plugin.zsh
+jms::source ~/.k/k.sh
+jms::source ~/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+jms::source ~/git/alias-tips/alias-tips.plugin.zsh
 
 jms::has fasd &&  eval "$(fasd --init auto)"
 
