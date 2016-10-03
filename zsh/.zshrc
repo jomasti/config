@@ -12,11 +12,6 @@ if [ "$(hostname)" = joshuastieferMBP ]; then
   . "${ZDOTDIR}/work.zsh"
 fi
 
-if [ -e  ~/.rbenv ]; then
-  export PATH="${HOME}/.rbenv/bin:${PATH}"
-  eval "$(rbenv init -)"
-fi
-
 jms::source ~/.fzf.zsh
 jms::source ~/.k/k.sh
 jms::source ~/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
