@@ -1,6 +1,7 @@
 [user]
 	email = facedelajunk@gmail.com
 	name = Joshua Stiefer
+	signingkey = 76B48485BE5E1960
 [alias]
         d = difftool
 [color]

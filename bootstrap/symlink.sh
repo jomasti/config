@@ -24,8 +24,8 @@ __symlink() {
   # jms::symlink ctags/dot.ctags                      .ctags
 
   # XDG-compatible
-  # jms::symlink git/dot.gitconfig                    .config/git/config
-  # jms::symlink git/dot.gitignore                    .config/git/ignore
+  jms::symlink git/dot.gitconfig                    .config/git/config
+  jms::symlink git/dot.gitignore                    .config/git/ignore
   # jms::symlink shell/dot.inputrc                    .config/readline/inputrc
 
   # (n)vim
