@@ -1,5 +1,28 @@
 let g:jms#vim_dir = fnamemodify(resolve(expand('$MYVIMRC')), ':p:h')
 
+" Output &runtimepath, one per line, to current buffer
+function! jms#Runtimepath() abort
+  put! =split(&runtimepath, ',', 0)
+endfunction
+
+" Declare and define var as new dict if the variable has not been used before
+"
+" @param string var
+" @return the declared var
+function! jms#InitDict(var) abort
+  let {a:var} = exists(a:var) ? {a:var} : {}
+  return {a:var}
+endfunction
+
+" Declare and define var as new list if the variable has not been used before
+"
+" @param string var
+" @return the declared var
+function! jms#InitList(var) abort
+  let {a:var} = exists(a:var) ? {a:var} : []
+  return {a:var}
+endfunction
+
 " ============================================================================
 " vim-plug helpers
 " ============================================================================

@@ -24,8 +24,12 @@ set undofile
 set noswapfile
 set backupskip=/tmp/*,/private/tmp/*
 set writebackup
-execute 'set backupdir=' . g:jms#vim_dir . '/.tmp/backup//'
-execute 'set undodir=' . g:jms#vim_dir . '/.tmp/undo//'
+if !has('nvim')
+  execute 'set backupdir=' . g:jms#vim_dir . '/.tmp/backup//'
+endif
+if !has('nvim')
+  execute 'set undodir=' . g:jms#vim_dir . '/.tmp/undo//'
+endif
 " }}}
 
 " Tab settings {{{
@@ -58,9 +62,6 @@ vmap <Leader>P "+P
 function! s:LoadPlugins()
   " Colorscheme {{{
   Plug 'morhetz/gruvbox'
-  set background=dark
-  let g:gruvbox_italic=1
-  let g:gruvbox_contrast_dark='soft'
   " }}}
 
   " Autocomplete {{{
@@ -73,6 +74,26 @@ function! s:LoadPlugins()
   let g:jms_has_completion =
         \ exists("g:plugs['neocomplete.vim']")
         \ || exists("g:plugs['deoplete.nvim']")
+
+  if g:jms_has_completion
+    "Full syntax completion - super slow, like syntaxcomplete
+    "Plug 'Shougo/neco-syntax', { 'for': ['scss'] }
+
+    " Mixed-filetype completion for Shougo complete, e.g. highlight JS within
+    " Markdown fenced code blocks.
+    Plug 'Shougo/context_filetype.vim'
+
+    " Include completion
+    Plug 'Shougo/neoinclude.vim'
+
+    Plug 'Shougo/neosnippet'
+          \| Plug 'honza/vim-snippets'
+          \| Plug 'Shougo/neosnippet-snippets'
+
+    if has('python3')
+      Plug 'zchee/deoplete-jedi'
+    endif
+  endif
   " }}}
 
   " Language: Javascript {{{
@@ -89,10 +110,10 @@ function! s:LoadPlugins()
   " Completion
   if g:jms_has_completion
     if executable('npm')
+      Plug 'marijnh/tern_for_vim', {'do': 'npm install --global tern'}
+
       if has('nvim')
         Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install --global tern' }
-      else
-        Plug 'marijnh/tern_for_vim', {'do': 'npm install'}
       endif
     else
       " Syntax completion
@@ -119,12 +140,6 @@ function! s:LoadPlugins()
 
   " Syntax checking {{{
   Plug 'neomake/neomake'
-  autocmd! BufWritePost * Neomake
-  let g:neomake_open_list = 2
-  let g:neomake_error_sign = {'text': '⨉'}
-  let g:neomake_warning_sign = {'text': '◉⚠'}
-  let g:neomake_javascript_enabled_makers = ['eslint']
-  let g:neomake_python_enabled_makers = ['pep8', 'pylint']
   " }}}
 
   " Movement/Text manipulation {{{
@@ -230,102 +245,10 @@ function! s:LoadPlugins()
   nnoremap <leader>gw :Gwrite<CR>
 
   Plug 'airblade/vim-gitgutter'
-  let g:gitgutter_enabled = 1
-  let g:gitgutter_signs = 0
-  let g:gitgutter_map_keys = 0
-  let g:gitgutter_eager = 0
-  let g:gitgutter_realtime = 0
-  nmap <leader>gg :GitGutterSignsToggle<CR>
   " }}}
 
   " Status line {{{
   Plug 'itchyny/lightline.vim'
-  " Lightline
-  let g:lightline = {
-        \ 'colorscheme': 'gruvbox',
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'fugitive', 'filename' ] ]
-        \ },
-        \ 'component_function': {
-        \   'fugitive': 'LightLineFugitive',
-        \   'readonly': 'LightLineReadonly',
-        \   'modified': 'LightLineModified',
-        \   'filename': 'LightLineFilename',
-        \   'fileformat': 'LightLineFileformat',
-        \   'filetype': 'LightLineFiletype',
-        \   'fileencoding': 'LightLineFileencoding',
-        \   'mode': 'LightLineMode',
-        \ },
-        \ 'separator': { 'left': '', 'right': '' },
-        \ 'subseparator': { 'left': '', 'right': '' }
-        \ }
-
-  function! LightLineModified()
-    if &filetype == "help"
-      return ""
-    elseif &modified
-      return "+"
-    elseif &modifiable
-      return ""
-    else
-      return ""
-    endif
-  endfunction
-
-  function! LightLineReadonly()
-    if &filetype == "help"
-      return ""
-    elseif &readonly
-      return ""
-    else
-      return ""
-    endif
-  endfunction
-
-  function! LightLineFugitive() abort
-    if &filetype ==# 'help'
-      return ''
-    endif
-    if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
-      return b:lightline_fugitive
-    endif
-    try
-      if exists('*fugitive#head')
-        let head = fugitive#head()
-      else
-        return ''
-      endif
-      let b:lightline_fugitive = strlen(head) ? ' '.head : ''
-      let b:lightline_fugitive_ = reltime()
-      return b:lightline_fugitive
-    catch
-    endtry
-    return ''
-  endfunction
-
-  function! LightLineFilename()
-    return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-         \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-  endfunction
-
-  function! LightLineFileformat()
-    return winwidth(0) > 70 ? &fileformat : ''
-  endfunction
-
-  function! LightLineFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-  endfunction
-
-  function! LightLineFileencoding()
-    return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-  endfunction
-
-  function! LightLineMode()
-    return winwidth(0) > 60 ? lightline#mode() : ''
-  endfunction
-
   Plug 'edkolev/tmuxline.vim'
   " }}}
 
