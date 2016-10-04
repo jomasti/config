@@ -14,5 +14,5 @@ alias mount_analytics="sshfs vagrant_analytics:/home/analytics ~/analytics_proje
 alias analytics="mount_analytics || umount ~/vagrant_analytics && mount_analytics"
 alias eclimd="/opt/homebrew-cask/Caskroom/eclipse-ide/4.5.1/Eclipse.app/Contents/Eclipse/eclimd"
 
-source '/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
