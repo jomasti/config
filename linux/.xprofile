@@ -2,7 +2,7 @@
 #
 # Environment variables for X Desktop
 
-source "${HOME}/.dotfiles/shell/xdg"
+source "${HOME}/.dotfiles/shell/xdg.sh"
 
 export BROWSER=chromium
 export GTK2_RC_FILES="${XDG_CONFIG_HOME}/.gtkrc-2.0/.gtkrc-2.0"

@@ -27,9 +27,9 @@ fi
 [ -f ~/.fehbg ] && ~/.fehbg &
 
 [ -f "${HOME}/.xprofile" ] && source "${HOME}/.xprofile"
+source "${DOTFILES}/shell/x11.sh"
 
 urxvtd -q -o -f &
-xrdb -merge ~/.Xresources
 pulseaudio --start
 volnoti &
 dunst &
