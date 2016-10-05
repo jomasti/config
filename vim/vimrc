@@ -140,7 +140,19 @@ function! s:LoadPlugins()
   " ========================================================================
   " Plug: File system
   " ========================================================================
-  
+
+  " ========================================================================
+  " Language: Git
+  " ========================================================================
+
+  " creates gitconfig, gitcommit, rebase
+  " provides :DiffGitCached in gitcommit file type
+  " vim 7.4-77 ships with 2013 version, this is newer
+  Plug 'tpope/vim-git'
+
+  " show diff in own split when editing a COMMIT_EDITMSG
+  Plug 'rhysd/committia.vim'
+
   " ========================================================================
   " Language: JavaScript and derivatives, JSON
   " ========================================================================
