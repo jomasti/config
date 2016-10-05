@@ -59,12 +59,21 @@ vmap <Leader>p "+p
 vmap <Leader>P "+P
 " }}}
 
-function! s:LoadPlugins()
-  " Colorscheme {{{
-  Plug 'morhetz/gruvbox'
-  " }}}
+" ============================================================================
+" Plugins
+" ============================================================================
 
-  " Autocomplete {{{
+function! s:LoadPlugins()
+  " ============================================================================
+  " Plug: Colorscheme
+  " ============================================================================
+
+  Plug 'morhetz/gruvbox'
+
+  " ============================================================================
+  " Plug: Completion
+  " ============================================================================
+
   if has('lua')
     Plug 'Shougo/neocomplete.vim'
   elseif has('nvim') && has('python3')
@@ -94,9 +103,28 @@ function! s:LoadPlugins()
       Plug 'zchee/deoplete-jedi'
     endif
   endif
-  " }}}
 
-  " Language: Javascript {{{
+  " ========================================================================
+  " Plug: Input, syntax, spacing
+  " ========================================================================
+
+  Plug 'neomake/neomake'
+  Plug 'Chiel92/vim-autoformat'
+  Plug 'ntpeters/vim-better-whitespace'
+  Plug 'editorconfig/editorconfig-vim'
+
+  " ========================================================================
+  " Plug: Editing keys
+  " ========================================================================
+
+  " ========================================================================
+  " Plug: File system
+  " ========================================================================
+  
+  " ========================================================================
+  " Language: JavaScript and derivatives, JSON
+  " ========================================================================
+
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
   " Plug 'othree/yajs.vim' | Plug 'othree/es.next.syntax.vim'
   Plug 'othree/javascript-libraries-syntax.vim'
@@ -122,7 +150,10 @@ function! s:LoadPlugins()
   endif
   "}}}
 
-  " Language: CSS/SCSS {{{
+  " ========================================================================
+  " Language: Stylesheets
+  " ========================================================================
+
   Plug 'JulesWang/css.vim'
     \| Plug 'hail2u/vim-css3-syntax'
     \| Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
@@ -139,7 +170,6 @@ function! s:LoadPlugins()
   " }}}
 
   " Syntax checking {{{
-  Plug 'neomake/neomake'
   " }}}
 
   " Movement/Text manipulation {{{
@@ -152,9 +182,6 @@ function! s:LoadPlugins()
   " }}}
 
   " Alignment/formatting {{{
-  Plug 'Chiel92/vim-autoformat'
-  Plug 'ntpeters/vim-better-whitespace'
-  Plug 'editorconfig/editorconfig'
   " }}}
 
   " Snippets {{{
