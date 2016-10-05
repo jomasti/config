@@ -79,6 +79,8 @@ set wildignore+=*.doc,*.pdf
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*.swp,.lock,.DS_Store,._*
 
+let g:jms_has_completion = 0
+
 " ============================================================================
 " Plugins
 " ============================================================================
@@ -229,13 +231,29 @@ function! s:LoadPlugins()
   " Completion
   Plug 'othree/csscomplete.vim'
   " }}}
-  "
-  " Language: Misc {{{
-  Plug 'PotatoesMaster/i3-vim-syntax'
-  " }}}
 
-  " Syntax checking {{{
-  " }}}
+  " ========================================================================
+  " Language: VimL
+  " ========================================================================
+
+  Plug 'machakann/vim-vimhelplint'
+
+  " gf to go to where autoloaded function is defined
+  Plug 'kana/vim-gf-user', { 'for': ['vim'] }
+        \| Plug 'sgur/vim-gf-autoload', { 'for': ['vim'] }
+
+  " Auto-prefix continuation lines with \
+  Plug 'lambdalisue/vim-backslash'
+
+  " Completion
+  if g:jms_has_completion | Plug 'Shougo/neco-vim', { 'for': ['vim'] }
+  endif
+
+  " ========================================================================
+  " Language: Misc
+  " ========================================================================
+
+  Plug 'PotatoesMaster/i3-vim-syntax'
 
   " Movement/Text manipulation {{{
   Plug 'justinmk/vim-sneak'
