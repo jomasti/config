@@ -5,7 +5,7 @@
 source "${HOME}/.dotfiles/shell/xdg.sh"
 
 export BROWSER=chromium
-export GTK2_RC_FILES="${XDG_CONFIG_HOME}/.gtkrc-2.0/.gtkrc-2.0"
+export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc-2.0"
 export QT_STYLE_OVERRIDE=gtk
 export STEAMAPPS="${HOME}/.steam/steam/steamapps"
 export WINEPREFIX="${XDG_CONFIG_HOME}/wine"
