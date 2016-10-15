@@ -79,6 +79,19 @@ set wildignore+=*.doc,*.pdf
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*.swp,.lock,.DS_Store,._*
 
+" ============================================================================
+" Multi-file projects
+" This has to run super early
+" ============================================================================
+
+augroup jmsproject
+  autocmd!
+
+  autocmd BufNewFile,BufRead,BufWritePost
+        \ *
+        \ call jmsproject#GetRoot()
+augroup END
+
 let g:jms_has_completion = 0
 
 " ============================================================================
@@ -216,6 +229,12 @@ function! s:LoadPlugins()
     endif
   endif
   "}}}
+  "
+  " ========================================================================
+  " Language: Python
+  " ========================================================================
+
+  Plug 'heavenshell/vim-pydocstring'
 
   " ========================================================================
   " Language: Stylesheets

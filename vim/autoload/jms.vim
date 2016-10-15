@@ -46,3 +46,26 @@ function! jms#IsPlugged(name) abort
 
   return l:is_plugged
 endfunction
+
+" ============================================================================
+" Neomake helpers
+" ============================================================================
+
+" @param string name of maker
+" @param string [a:1] ft of the maker, defaults to current buffers filetype
+" @return boolean true when the maker exe exists or was registered as a local
+"
+"         maker (so local exe exists)
+function! jms#IsMakerExecutable(name, ...) abort
+  if !exists('*neomake#GetMaker')
+    return 0
+  endif
+
+  let l:ft = get(a:, 1, &filetype)
+  if empty(l:ft)
+    return 0
+  endif
+
+  let l:maker = neomake#GetMaker(a:name, l:ft)
+  return !empty(l:maker) && executable(l:maker.exe)
+endfunction
