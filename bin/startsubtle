@@ -1,4 +1,0 @@
-subtle &> ~/.subtle.log &
-PID=$!
-#autosubtle & 
-wait $PID
