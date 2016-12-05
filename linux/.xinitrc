@@ -27,7 +27,7 @@ fi
 [ -f ~/.fehbg ] && ~/.fehbg &
 
 [ -f "${HOME}/.xprofile" ] && source "${HOME}/.xprofile"
-source "${DOTFILES}/shell/x11.sh"
+xrdb -merge -I"$DOTFILES" "${DOTFILES}/xresources/.Xresources"
 
 urxvtd -q -o -f &
 pulseaudio --start
@@ -35,7 +35,6 @@ volnoti &
 dunst &
 xss-lock -- lockscreen &
 pasystray &
-sxhkd &
 
 session=${1:-bspwm}
 
