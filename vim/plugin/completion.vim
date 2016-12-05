@@ -285,7 +285,7 @@ if jms#IsPlugged('deoplete.nvim')
   call jms#InitDict('g:deoplete#omni#functions')
   " Not extending, instead pluck first item from list since deoplete only
   " supports one omnifunc
-  call extend(g:deoplete#omni#functions, map(copy(s:omnifuncs), 'v:val[0]'))
+  call extend(g:deoplete#omni#functions, s:omnifuncs)
 
   " --------------------------------------------------------------------------
   " Input patterns

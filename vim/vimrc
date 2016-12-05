@@ -150,6 +150,7 @@ function! s:LoadPlugins()
     Plug 'Shougo/neosnippet'
           \| Plug 'honza/vim-snippets'
           \| Plug 'Shougo/neosnippet-snippets'
+          \| Plug 'bentayloruk/vim-react-es6-snippets'
 
     if has('python3')
       Plug 'zchee/deoplete-jedi'
