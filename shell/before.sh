@@ -14,11 +14,10 @@
 # export DKO_SOURCE="${DKO_SOURCE} -> shell/before.sh {"
 
 source "${DOTFILES}/shell/path.sh"       # rebuild path starting from system path
-source "${DOTFILES}/shell/os.sh"         # os env requires path to detect brew
 source "${DOTFILES}/shell/helpers.sh"    # useful functions
+source "${DOTFILES}/shell/os.sh"         # os env requires path to detect brew
 source "${DOTFILES}/shell/functions.sh"  # useful functions
 # source "${DOTFILES}/shell/dotfiles.sh"   # update dotfiles
-source "${DOTFILES}/shell/x11.sh"        # xrdb merge
 source "${DOTFILES}/shell/aliases.sh"    # aliases
 
 # ==============================================================================

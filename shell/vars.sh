@@ -11,7 +11,7 @@ export VIM_DOTFILES="${DOTFILES}/vim"
 
 export BROWSER="chromium"
 
-export TERMINAL="urxvtc"
+export TERMINAL="termite"
 
 export EDITOR="vim"
 export VISUAL="gvim"
@@ -42,5 +42,7 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export SDL_VIDEO_FULLSCREEN_DISPLAY=1
 
 export XINITRC="${DOTFILES}/x/.xinitrc"
+
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # vim: ft=sh
