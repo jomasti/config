@@ -33,7 +33,8 @@ alias lal='ls -alFh'
 alias ld='ls -ld */'
 alias ll='ls -lFh'
 alias mkdir='mkdir -pv'
-alias reload='. ~/.zshrc'
+alias reload='. $ZDOTDIR/.zshrc'
+alias ssh='TERM=xterm ssh'
 alias up='uptime'
 alias vundle="vim +PluginInstall +qall"
 alias vundleu="vim +PluginUpdate +qall"

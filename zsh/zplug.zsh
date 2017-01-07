@@ -20,6 +20,8 @@ zplug "${ZDOTDIR}", \
 # Vendor
 # ----------------------------------------------------------------------------
 
+zplug "zplug/zplug"
+
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 
 # Various program completions
@@ -30,7 +32,12 @@ zplug "djui/alias-tips"
 
 zplug "supercrabtree/k"
 
-zplug "lukechilds/zsh-better-npm-completion", nice:10
+# fork of rupa/z with better completion (so needs defer)
+zplug "knu/z",  \
+  use:"z.sh",   \
+  defer:2
+
+zplug "lukechilds/zsh-better-npm-completion", defer:2
 
 # Inspire confidence that I am using an actual command/file
-zplug "zsh-users/zsh-syntax-highlighting", nice:19
+zplug "zsh-users/zsh-syntax-highlighting", defer:3
