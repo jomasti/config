@@ -89,6 +89,52 @@ let s:local_eslint = {
 autocmd jmsneomake FileType javascript
       \ call s:AddLocalMaker(s:local_eslint)
 
+" ----------------------------------------------------------------------------
+" Sass: stylelint
+" ----------------------------------------------------------------------------
+
+function! s:SetStylelintRc() abort
+  let l:stylelint_args = get(
+        \ g:, 'neomake_scss_stylelint_args')
+
+  " Use local config if exists
+  let l:config = jmsproject#GetFile('.stylelintrc')
+
+  " Fall back to my global config
+  if empty(l:config)
+    let l:config = glob(expand('$DOTFILES/sasslint/.sass-lint.yml'))
+  endif
+
+  let b:neomake_scss_stylelint_args =
+        \ ['-c ' . l:config]
+endfunction
+
+let s:local_stylelint = {
+      \   'ft':     'scss',
+      \   'maker':  'stylelint',
+      \   'args':   ['-c', '.stylelintrc'],
+      \   'exe':    'node_modules/.bin/stylelint',
+      \ }
+
+function! s:PickScssMakers() abort
+  if empty(jmsproject#GetFile('.scss-lint.yml')) | return
+  endif
+
+  " Only if scss-lint is executable (globally or locally)
+  if !jms#IsMakerExecutable('scsslint') | return
+  endif
+
+  " Remove sasslint from enabled makers, use only scsslint
+  let b:neomake_scss_enabled_makers = filter(
+        \   copy(get(b:, 'neomake_scss_enabled_makers', [])),
+        \   "v:val !~? 'stylelint'"
+        \ )
+endfunction
+
+autocmd jmsneomake FileType scss
+      \ call s:SetStylelintRc()
+      \| call s:AddLocalMaker(s:local_stylelint)
+
 " ============================================================================
 " Should we :Neomake?
 " ============================================================================
