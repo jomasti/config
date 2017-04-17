@@ -1,5 +1,14 @@
 " plugin/colorscheme.vim
 
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+if &term =~# '^tmux'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
 if jms#IsPlugged('gruvbox')
   let g:gruvbox_contrast_dark      = 'hard'
   let g:gruvbox_contrast_light     = 'hard'

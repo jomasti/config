@@ -1,8 +1,6 @@
 " init.vim
 " For neovim
 
-set termguicolors
-
 let g:jms_nvim_dir = fnamemodify(resolve(expand('$MYVIMRC')), ':p:h')
 
 " ============================================================================
