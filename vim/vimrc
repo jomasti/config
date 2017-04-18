@@ -11,11 +11,12 @@ set noshowmode
 set ruler
 set pastetoggle=<F3>
 set backspace=indent,eol,start
-set mouse=a
+set mouse=
 set cursorline
 set laststatus=2
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 set backupcopy=yes
+
 " }}}
 
 " Backup settings {{{
@@ -24,12 +25,8 @@ set undofile
 set noswapfile
 set backupskip=/tmp/*,/private/tmp/*
 set writebackup
-if !has('nvim')
-  execute 'set backupdir=' . g:jms#vim_dir . '/.tmp/backup//'
-endif
-if !has('nvim')
-  execute 'set undodir=' . g:jms#vim_dir . '/.tmp/undo//'
-endif
+execute 'set backupdir=' . g:jms#vim_dir . '/.tmp/backup//'
+execute 'set undodir=' . g:jms#vim_dir . '/.tmp/undo//'
 " }}}
 
 " Tab settings {{{
@@ -120,7 +117,9 @@ function! s:LoadPlugins()
   " Plug: Colorscheme
   " ============================================================================
 
-  Plug 'morhetz/gruvbox'
+  "Plug 'morhetz/gruvbox'
+  Plug 'AlessandroYorba/Despacio'
+
 
   " ============================================================================
   " Plug: Completion
@@ -161,10 +160,11 @@ function! s:LoadPlugins()
   " Plug: Input, syntax, spacing
   " ========================================================================
 
-  Plug 'neomake/neomake'
+  " Plug 'neomake/neomake'
+  Plug 'w0rp/ale'
   Plug 'Chiel92/vim-autoformat'
   Plug 'ntpeters/vim-better-whitespace'
-  Plug 'editorconfig/editorconfig-vim'
+  Plug 'sgur/vim-editorconfig'
 
   " ========================================================================
   " Plug: Editing keys
@@ -173,9 +173,6 @@ function! s:LoadPlugins()
   " Sorted by what the textobj provides
   " Tip Use :omap ie to see what the operator-pending is mapped to
   " d/D for underscore section (e.g. `did` on foo_b|ar_baz -> foo__baz)
-  " r for right hand of assignment (`baz` in `foo = baz`)
-  " k/v for JSON style key/value
-  " e for entire file
   " i for indent level
   " l for current line
   " u for url
@@ -186,10 +183,6 @@ function! s:LoadPlugins()
   " f for function (c, java, js, php, vim only)
   Plug 'kana/vim-textobj-user'
         \| Plug 'machakann/vim-textobj-delimited'
-        \| Plug 'Julian/vim-textobj-assignment',
-        \   has('python') ? {} : { 'on': [] }
-        \| Plug 'vimtaku/vim-textobj-keyvalue'
-        \| Plug 'kana/vim-textobj-entire'
         \| Plug 'kana/vim-textobj-indent'
         \| Plug 'kana/vim-textobj-line'
         \| Plug 'mattn/vim-textobj-url'
@@ -224,6 +217,7 @@ function! s:LoadPlugins()
   " ========================================================================
 
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+  let g:javascript_plugin_flow = 1
   " Plug 'othree/yajs.vim' | Plug 'othree/es.next.syntax.vim'
   Plug 'othree/javascript-libraries-syntax.vim'
   let g:used_javascript_libs = 'underscore,react,chai'
@@ -366,15 +360,15 @@ function! s:LoadPlugins()
   endfunction
 
   function! SearchVisualSelectionWithAg() range
-    let old_reg = getreg('"')
-    let old_regtype = getregtype('"')
-    let old_clipboard = &clipboard
+    let l:old_reg = getreg('"')
+    let l:old_regtype = getregtype('"')
+    let l:old_clipboard = &clipboard
     set clipboard&
     normal! ""gvy
-    let selection = getreg('"')
-    call setreg('"', old_reg, old_regtype)
-    let &clipboard = old_clipboard
-    execute 'Ag' selection
+    let l:selection = getreg('"')
+    call setreg('"', l:old_reg, l:old_regtype)
+    let &clipboard = l:old_clipboard
+    execute 'Ag' l:selection
   endfunction
   " }}}
 
@@ -391,11 +385,11 @@ function! s:LoadPlugins()
   nnoremap <leader>gs :Gstatus<CR>
   nnoremap <leader>gw :Gwrite<CR>
 
-  Plug 'airblade/vim-gitgutter'
+  "Plug 'airblade/vim-gitgutter'
   " }}}
 
   " Status line {{{
-  Plug 'itchyny/lightline.vim'
+  "Plug 'itchyny/lightline.vim'
   Plug 'edkolev/tmuxline.vim'
   " }}}
 

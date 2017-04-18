@@ -21,6 +21,9 @@ if jms#IsPlugged('gruvbox')
   silent! colorscheme gruvbox
   set background=dark
 
+elseif jms#IsPlugged('Despacio')
+  colorscheme despacio
+
 else
   silent! colorscheme darkblue
 
