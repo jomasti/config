@@ -20,7 +20,7 @@ Xcursor.theme:	Vanilla-DMZ
 !                                colors
 ! ---------------------------------------------------------------------
 
-#include "xresources/gruvbox.xresources"
+#include "xresources/despacio.xresources"
 
 ! --------------------------------------------------------------------
 !                                urxvt
