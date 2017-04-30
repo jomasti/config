@@ -72,25 +72,6 @@ alias pacexpl='sudo pacman -D --asexplicit'
 alias pacowns='pacman -Qo'
 alias pacclean='sudo pacman -Sc'
 
-# Git
-alias ga='git add'
-alias gaa='git add .'
-alias gb='git branch'
-alias gc='git checkout'
-alias gcb='git checkout -b'
-alias gcl='git clone'
-alias gcm='git commit -m'
-alias gd='git branch -d'
-alias gdiff='git diff'
-alias gl='git log --all --graph --decorate'
-alias gp='git push'
-alias gpu='git pull'
-alias gr='git rebase'
-alias gs='git status'
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset \
-  %an: %s - %Creset %C(yellow)%d%Creset \
-  %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-
 #tmux
 alias tmux="tmux -f \"\${DOTFILES}/tmux/tmux.conf\""
 alias tn="tmux new -s"
