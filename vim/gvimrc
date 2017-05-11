@@ -5,7 +5,7 @@ set guioptions-=T                     " hide stupid button bar
 if has('gui_macvim')
 
 else
-  set guifont=Source\ Code\ Pro \Regular\ 10
+  set guifont="Hack 11"
 
   cnoremap <S-Insert> <MiddleMouse>
 

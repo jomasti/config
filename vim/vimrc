@@ -63,10 +63,12 @@ vmap <Leader>P "+P
 set browsedir=buffer                  " browse files in same dir as open file
 set wildmenu                          " Enhanced command line completion.
 set wildmode=list:longest,full        " Complete files using a menu AND list
-set wildignorecase
-" output, VCS
-set wildignore+=.git,.hg,.svn
-set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*,*.gem
+
+if v:version >= 704
+  set wildignorecase
+endif
+
+" Binary
 set wildignore+=*.aux,*.out,*.toc
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest,*.rbc,*.class
 set wildignore+=*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp
@@ -74,6 +76,11 @@ set wildignore+=*.avi,*.m4a,*.mp3,*.oga,*.ogg,*.wav,*.webm
 set wildignore+=*.eot,*.otf,*.ttf,*.woff
 set wildignore+=*.doc,*.pdf
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+" Cache
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*,*.gem
+" Compiled
+set wildignore+=*.min.*,*-min.*
+" Temp/system
 set wildignore+=*.swp,.lock,.DS_Store,._*
 
 " ----------------------------------------------------------------------------
@@ -112,6 +119,15 @@ let g:jms_has_completion = 0
 " Plugins
 " ============================================================================
 
+" ----------------------------------------------------------------------------
+" Plugins: netrw
+" ----------------------------------------------------------------------------
+
+" netrw in details format when no vimfiler
+let g:netrw_liststyle      = 3
+let g:netrw_home           = expand(g:jms#vim_dir . '/.tmp/cache')
+let g:netrw_browsex_viewer = has('mac') ? 'open' : 'xdg-open'
+
 function! s:LoadPlugins()
   " ============================================================================
   " Plug: Colorscheme
@@ -120,10 +136,50 @@ function! s:LoadPlugins()
   "Plug 'morhetz/gruvbox'
   Plug 'AlessandroYorba/Despacio'
 
+  " ==========================================================================
+  " Plug: File system, ctags
+  " ==========================================================================
+
+  Plug 'tpope/vim-vinegar'
+
+  Plug 'christoomey/vim-system-copy'
+
+  if executable('ctags')
+    Plug 'ludovicchabant/vim-gutentags'
+    Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+    nmap <F8> :TagbarToggle<CR>
+  endif
+
+  " ==========================================================================
+  " Plug: Commands
+  " ==========================================================================
+
+  let g:fzf_dir = isdirectory('/usr/local/opt/fzf')
+        \ ? '/usr/local/opt/fzf'
+        \ : isdirectory(expand('~/.fzf'))
+        \ ? '~/.fzf'
+        \ : ''
+  if !empty(g:fzf_dir)
+    Plug g:fzf_dir
+          \| Plug 'junegunn/fzf.vim'
+  endif
+
+  Plug 'tpope/vim-fugitive' | Plug 'junegunn/gv.vim'
+  nnoremap <leader>gb :Gblame<CR>
+  nnoremap <leader>gc :Gcommit<CR>
+  nnoremap <leader>gd :Gdiff<CR>
+  nnoremap <leader>gs :Gstatus<CR>
+  nnoremap <leader>gw :Gwrite<CR>
+
+  Plug 'edkolev/tmuxline.vim'
 
   " ============================================================================
   " Plug: Completion
   " ============================================================================
+
+  if has('nvim')
+    Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+  endif
 
   if has('lua')
     Plug 'Shougo/neocomplete.vim'
@@ -166,9 +222,29 @@ function! s:LoadPlugins()
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'sgur/vim-editorconfig'
 
+
+  " ========================================================================
+  " Plug: Documentation
+  " ========================================================================
+
+  if has('macunix')
+    Plug 'rizzatti/dash.vim'
+  else
+    Plug 'KabbAmine/zeavim.vim'
+  endif
+
   " ========================================================================
   " Plug: Editing keys
   " ========================================================================
+
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-unimpaired'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-surround'
+
+  Plug 'justinmk/vim-sneak'
+
+  Plug 'christoomey/vim-sort-motion'
 
   " Sorted by what the textobj provides
   " Tip Use :omap ie to see what the operator-pending is mapped to
@@ -226,6 +302,7 @@ function! s:LoadPlugins()
   Plug 'heavenshell/vim-jsdoc'
   Plug 'moll/vim-node'
   Plug 'othree/jspc.vim'
+  Plug 'justinj/vim-react-snippets', { 'for': 'javascript' }
 
   " Completion
   if g:jms_has_completion
@@ -240,13 +317,27 @@ function! s:LoadPlugins()
       Plug '1995eaton/vim-better-javascript-completion'
     endif
   endif
-  "}}}
-  "
+
+  " ==========================================================================
+  " Language: Markdown, Pandoc
+  " ==========================================================================
+
+  " Override vim included markdown ft* and syntax
+  " The git repo has a newer syntax file than the one that ships with vim
+  "Plug 'tpope/vim-markdown'
+
+  " Enable pandoc filetype options and vim operators/fns
+  Plug 'vim-pandoc/vim-pandoc'
+
+  " Use pandoc for markdown syntax
+  Plug 'vim-pandoc/vim-pandoc-syntax'
+
   " ========================================================================
   " Language: Python
   " ========================================================================
 
   Plug 'heavenshell/vim-pydocstring'
+  Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
   " ========================================================================
   " Language: Stylesheets
@@ -286,116 +377,6 @@ function! s:LoadPlugins()
 
   Plug 'PotatoesMaster/i3-vim-syntax'
 
-  " Movement/Text manipulation {{{
-  Plug 'justinmk/vim-sneak'
-  Plug 'christoomey/vim-sort-motion'
-  Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-repeat'
-  Plug 'tpope/vim-unimpaired'
-  " }}}
-
-  " Alignment/formatting {{{
-  " }}}
-
-  " Snippets {{{
-  Plug 'justinj/vim-react-snippets', { 'for': 'javascript' }
-  " }}}
-
-  " File finding/navigation {{{
-  Plug 'ctrlpvim/ctrlp.vim'
-  " ctrlp
-  nnoremap <leader>e :CtrlP<cr>
-  nnoremap <leader>E :CtrlPCurFile<cr>
-  nnoremap <leader>t :CtrlPBufTag<cr>
-  nnoremap <leader>T :CtrlPTag<cr>
-  nnoremap <leader>a :CtrlPBuffer<cr>
-  nnoremap <leader>A :CtrlPMRUFiles<cr>
-
-  let g:ctrlp_custom_ignore = {
-        \ 'dir': '\.git$\|node_modules/',
-        \ }
-  let g:ctrlp_use_caching = 1
-  let g:ctrlp_clear_cache_on_exit = 0
-  let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-  let g:ctrlp_show_hidden = 1
-  let g:ctlp_working_path_mode = 'ra'
-  let g:ctrlp_prompt_mappings = {
-        \ 'PrtClearCache()': ['<F5>', '<c-i>'],
-        \ }
-  let g:ctrlp_reuse_window = 'startify'
-
-  Plug 'FelikZ/ctrlp-py-matcher'
-  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
-  Plug 'tpope/vim-vinegar'
-  Plug 'mhinz/vim-grepper'
-  nnoremap <leader>git :Grepper -tool git -noswitch<cr>
-  nnoremap <leader>ag :Grepper -tool ag -grepprg ag --vimgrep<cr>
-
-  Plug 'jlanzarotta/bufexplorer'
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
-  let g:fzf_nvim_statusline=0
-
-  nnoremap <silent> <leader><space> :Files<CR>
-  nnoremap <silent> <leader>a :Buffers<CR>
-  nnoremap <silent> <leader>A :Windows<CR>
-  nnoremap <silent> <leader>; :BLines<CR>
-  nnoremap <silent> <leader>. :Lines<CR>
-  nnoremap <silent> <leader>o :BTags<CR>
-  nnoremap <silent> <leader>O :Tags<CR>
-  nnoremap <silent> <leader>? :History<CR>
-  nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
-  nnoremap <silent> K :call SearchWordWithAg()<CR>
-  vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
-  nnoremap <silent> <leader>gl :Commits<CR>
-  nnoremap <silent> <leader>ga :BCommits<CR>
-
-  imap <C-x><C-f> <plug>(fzf-complete-file-ag)
-  imap <C-x><C-l> <plug>(fzf-complete-line)
-
-  function! SearchWordWithAg()
-    execute 'Ag' expand('<cword>')
-  endfunction
-
-  function! SearchVisualSelectionWithAg() range
-    let l:old_reg = getreg('"')
-    let l:old_regtype = getregtype('"')
-    let l:old_clipboard = &clipboard
-    set clipboard&
-    normal! ""gvy
-    let l:selection = getreg('"')
-    call setreg('"', l:old_reg, l:old_regtype)
-    let &clipboard = l:old_clipboard
-    execute 'Ag' l:selection
-  endfunction
-  " }}}
-
-  " External integration {{{
-  Plug 'christoomey/vim-system-copy'
-  Plug 'ludovicchabant/vim-gutentags'
-  " }}}
-
-  " Git {{{
-  Plug 'tpope/vim-fugitive' | Plug 'junegunn/gv.vim'
-  nnoremap <leader>gb :Gblame<CR>
-  nnoremap <leader>gc :Gcommit<CR>
-  nnoremap <leader>gd :Gdiff<CR>
-  nnoremap <leader>gs :Gstatus<CR>
-  nnoremap <leader>gw :Gwrite<CR>
-
-  "Plug 'airblade/vim-gitgutter'
-  " }}}
-
-  " Status line {{{
-  "Plug 'itchyny/lightline.vim'
-  Plug 'edkolev/tmuxline.vim'
-  " }}}
-
-  " Session Management {{{
-  Plug 'mhinz/vim-startify'
-  " }}}
 endfunction
 
 " ----------------------------------------------------------------------------
