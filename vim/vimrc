@@ -15,18 +15,6 @@ set mouse=
 set cursorline
 set laststatus=2
 let g:mapleader = "\<Space>"
-set backupcopy=yes
-
-" }}}
-
-" Backup settings {{{
-set backup
-set undofile
-set noswapfile
-set backupskip=/tmp/*,/private/tmp/*
-set writebackup
-execute 'set backupdir=' . g:jms#vim_dir . '/.tmp/backup//'
-execute 'set undodir=' . g:jms#vim_dir . '/.tmp/undo//'
 " }}}
 
 " Tab settings {{{
@@ -55,6 +43,21 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 " }}}
+"
+" ----------------------------------------------------------------------------
+" Backups
+" ----------------------------------------------------------------------------
+
+execute 'set backupdir=' . g:jms#vim_dir . '/.tmp/backup//'
+set writebackup
+set nobackup
+set backupcopy=yes
+set backupskip+=/tmp/*,/private/tmp/*
+
+set undofile
+set undolevels=1000
+set undoreload=10000
+execute 'set undodir=' . g:jms#vim_dir . '/.tmp/undo//'
 
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode
