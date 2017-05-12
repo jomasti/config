@@ -208,6 +208,7 @@ function! s:LoadPlugins()
   nnoremap <leader>gw :Gwrite<CR>
 
   Plug 'edkolev/tmuxline.vim'
+  let g:tmuxline_powerline_separators = 0
 
   " ============================================================================
   " Plug: Completion
