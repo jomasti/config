@@ -25,6 +25,11 @@ set cmdheight=1
 set noshowmode
 set ruler
 
+set scrolloff=8
+set sidescrolloff=16
+
+set synmaxcol=512
+
 " ----------------------------------------------------------------------------
 " Input
 " ----------------------------------------------------------------------------
@@ -40,7 +45,7 @@ set autoindent
 set nocindent
 
 " ----------------------------------------------------------------------------
-" Splits
+" Splits and buffers
 " ----------------------------------------------------------------------------
 
 " split traversal
@@ -52,6 +57,10 @@ nnoremap <C-H> <C-W><C-H>
 " split defaults
 set splitbelow
 set splitright
+
+set switchbuf=useopen
+
+set nostartofline
 
 " ----------------------------------------------------------------------------
 " Tabs
