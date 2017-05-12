@@ -1,29 +1,48 @@
-" General settings {{{
-set autoread
-set number
-set autoindent
-set nocindent
-set cmdheight=1
-set ignorecase
-set smartcase
-set incsearch
-set noshowmode
-set ruler
+if has('vim_starting') | set encoding=utf-8 nobomb | endif
+scriptencoding utf-8
+
+" ----------------------------------------------------------------------------
+" Clipboard
+" ----------------------------------------------------------------------------
+
 set pastetoggle=<F3>
-set backspace=indent,eol,start
-set mouse=
+
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+" ----------------------------------------------------------------------------
+" Display
+" ----------------------------------------------------------------------------
+
+set number
 set cursorline
 set laststatus=2
+set cmdheight=1
+set noshowmode
+set ruler
+
+" ----------------------------------------------------------------------------
+" Input
+" ----------------------------------------------------------------------------
+
+set mouse=
 let g:mapleader = "\<Space>"
-" }}}
 
-" Tab settings {{{
-set expandtab
-set shiftwidth=2
-set softtabstop=2
-" }}}
+" ----------------------------------------------------------------------------
+" Indent
+" ----------------------------------------------------------------------------
 
-" Split settings {{{
+set autoindent
+set nocindent
+
+" ----------------------------------------------------------------------------
+" Splits
+" ----------------------------------------------------------------------------
+
 " split traversal
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -33,17 +52,23 @@ nnoremap <C-H> <C-W><C-H>
 " split defaults
 set splitbelow
 set splitright
-" }}}
 
-" Clipboard settings {{{
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-" }}}
+" ----------------------------------------------------------------------------
+" Tabs
+" ----------------------------------------------------------------------------
 
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set backspace=indent,eol,start
+
+" ----------------------------------------------------------------------------
+" Search
+" ----------------------------------------------------------------------------
+
+set ignorecase
+set smartcase
+set incsearch
 
 " ----------------------------------------------------------------------------
 " Swap
