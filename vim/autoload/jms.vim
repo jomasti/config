@@ -1,4 +1,23 @@
+" autoload/jms.vim
+
+" ============================================================================
+" Guards
+" ============================================================================
+
+if exists('g:loaded_jms') | finish | endif
+let g:loaded_jms = 1
+
+" ============================================================================
+" Setup vars
+" ============================================================================
+
 let g:jms#vim_dir = fnamemodify(resolve(expand('$MYVIMRC')), ':p:h')
+let g:jms#plug_dir = '/vendor/'
+let g:jms#plug_absdir = g:jms#vim_dir . g:jms#plug_dir
+
+" ============================================================================
+" Utility functions
+" ============================================================================
 
 " Output &runtimepath, one per line, to current buffer
 function! jms#Runtimepath() abort

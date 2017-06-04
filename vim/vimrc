@@ -193,6 +193,15 @@ let g:netrw_liststyle      = 3
 let g:netrw_home           = expand(g:jms#vim_dir . '/.tmp/cache')
 let g:netrw_browsex_viewer = has('mac') ? 'open' : 'xdg-open'
 
+" ----------------------------------------------------------------------------
+" Plugins: load - called when vim-plug available
+" ----------------------------------------------------------------------------
+
+function! PlugIf(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
 function! s:LoadPlugins()
   " ============================================================================
   " Plug: Colorscheme
@@ -209,11 +218,9 @@ function! s:LoadPlugins()
 
   Plug 'christoomey/vim-system-copy'
 
-  if executable('ctags')
-    Plug 'ludovicchabant/vim-gutentags'
-    Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-    nmap <F8> :TagbarToggle<CR>
-  endif
+  Plug 'ludovicchabant/vim-gutentags', PlugIf(executable('ctags'))
+  Plug 'majutsushi/tagbar', PlugIf(executable('ctags'), { 'on': 'TagbarToggle' })
+  nmap <F8> :TagbarToggle<CR>
 
   " ==========================================================================
   " Plug: Commands
@@ -252,40 +259,31 @@ function! s:LoadPlugins()
   " Plug: Completion
   " ============================================================================
 
-  if has('nvim')
-    Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-  endif
+  Plug 'autozimu/LanguageClient-neovim', PlugIf(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 
-  if has('lua')
-    Plug 'Shougo/neocomplete.vim'
-  elseif has('nvim') && has('python3')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  endif
+  Plug 'Shougo/neocomplete.vim', PlugIf(has('lua'))
+  Plug 'Shougo/deoplete.nvim', PlugIf(has('nvim') && has('python3'), { 'do': ':UpdateRemotePlugins' })
 
   let g:jms_has_completion =
         \ exists("g:plugs['neocomplete.vim']")
         \ || exists("g:plugs['deoplete.nvim']")
 
-  if g:jms_has_completion
-    "Full syntax completion - super slow, like syntaxcomplete
-    "Plug 'Shougo/neco-syntax', { 'for': ['scss'] }
+  "Full syntax completion - super slow, like syntaxcomplete
+  "Plug 'Shougo/neco-syntax', { 'for': ['scss'] }
 
-    " Mixed-filetype completion for Shougo complete, e.g. highlight JS within
-    " Markdown fenced code blocks.
-    Plug 'Shougo/context_filetype.vim'
+  " Mixed-filetype completion for Shougo complete, e.g. highlight JS within
+  " Markdown fenced code blocks.
+  Plug 'Shougo/context_filetype.vim', PlugIf(g:jms_has_completion)
 
-    " Include completion
-    Plug 'Shougo/neoinclude.vim'
+  " Include completion
+  Plug 'Shougo/neoinclude.vim', PlugIf(g:jms_has_completion)
 
-    Plug 'Shougo/neosnippet'
-          \| Plug 'honza/vim-snippets'
-          \| Plug 'Shougo/neosnippet-snippets'
-          \| Plug 'bentayloruk/vim-react-es6-snippets'
+  Plug 'Shougo/neosnippet'
+        \| Plug 'honza/vim-snippets'
+        \| Plug 'Shougo/neosnippet-snippets'
+        \| Plug 'bentayloruk/vim-react-es6-snippets'
 
-    if has('python3')
-      Plug 'zchee/deoplete-jedi'
-    endif
-  endif
+  Plug 'zchee/deoplete-jedi', PlugIf(g:jms_has_completion && has('python3'))
 
   " ========================================================================
   " Plug: Input, syntax, spacing
@@ -293,7 +291,7 @@ function! s:LoadPlugins()
 
   " Plug 'neomake/neomake'
   Plug 'w0rp/ale'
-  Plug 'Chiel92/vim-autoformat'
+  Plug 'sbdchd/neoformat'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'sgur/vim-editorconfig'
 
@@ -302,11 +300,8 @@ function! s:LoadPlugins()
   " Plug: Documentation
   " ========================================================================
 
-  if has('macunix')
-    Plug 'rizzatti/dash.vim'
-  else
-    Plug 'KabbAmine/zeavim.vim'
-  endif
+  Plug 'rizzatti/dash.vim', PlugIf(has('macunix'))
+  Plug 'KabbAmine/zeavim.vim'
 
   " ========================================================================
   " Plug: Editing keys
@@ -380,18 +375,12 @@ function! s:LoadPlugins()
   Plug 'justinj/vim-react-snippets', { 'for': 'javascript' }
 
   " Completion
-  if g:jms_has_completion
-    if executable('npm')
-      Plug 'marijnh/tern_for_vim', {'do': 'npm install --global tern'}
+  Plug 'marijnh/tern_for_vim', PlugIf(g:jms_has_completion && executable('npm'), {'do': 'npm install --global tern'})
 
-      if has('nvim')
-        Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install --global tern' }
-      endif
-    else
-      " Syntax completion
-      Plug '1995eaton/vim-better-javascript-completion'
-    endif
-  endif
+  Plug 'carlitux/deoplete-ternjs', PlugIf(g:jms_has_completion && has('nvim'), { 'do': 'npm install --global tern' })
+
+  " Syntax completion
+  Plug '1995eaton/vim-better-javascript-completion', PlugIf(g:jms_has_completion)
 
   " ==========================================================================
   " Language: Markdown, Pandoc
@@ -443,8 +432,7 @@ function! s:LoadPlugins()
   Plug 'lambdalisue/vim-backslash'
 
   " Completion
-  if g:jms_has_completion | Plug 'Shougo/neco-vim', { 'for': ['vim'] }
-  endif
+  Plug 'Shougo/neco-vim', PlugIf(g:jms_has_completion, { 'for': ['vim'] })
 
   " ========================================================================
   " Language: Misc
@@ -459,24 +447,28 @@ endfunction
 " ----------------------------------------------------------------------------
 
 let s:use_plugins = 1
-let s:plug_dir = '/vendor/'
-let s:plug_dir .= has('nvim') ? 'nvim' : 'vim'
-let s:jms_plug_absdir = g:jms#vim_dir . s:plug_dir
+let g:plug_window = 'tabnew'
 
 if s:use_plugins
+  let s:has_plug = !empty(glob(expand(g:jms#vim_dir . '/autoload/plug.vim')))
   " Load vim-plug and its plugins?
-  if empty(glob(expand(g:jms#vim_dir . '/autoload/plug.vim')))
-    execute 'silent !curl -fLo '
-          \ . g:jms#vim_dir . '/autoload/plug.vim '
-          \ . 'https://raw.githubusercontent.com/'
-          \ . 'junegunn/vim-plug/master/plug.vim'
+  if !s:has_plug
+    if executable('curl')
+      execute 'silent !curl -fLo '
+            \ . g:jms#vim_dir . '/autoload/plug.vim '
+            \ . 'https://raw.githubusercontent.com/'
+            \ . 'junegunn/vim-plug/master/plug.vim'
+      let s:has_plug = 1
+    endif
   endif
 
-  call plug#begin(s:jms_plug_absdir)
-    call s:LoadPlugins()
-    if !isdirectory(expand(s:jms_plug_absdir)) | PlugInstall
-    endif
-  call plug#end()
+  if s:has_plug
+    call plug#begin(g:jms#plug_absdir)
+      call s:LoadPlugins()
+      if !isdirectory(expand(g:jms#plug_absdir)) | PlugInstall
+      endif
+    call plug#end()
+  endif
 endif
 
 " vim:fdm=marker
