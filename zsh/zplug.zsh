@@ -12,20 +12,18 @@
 # Mine
 # ----------------------------------------------------------------------------
 
-zplug "${ZDOTDIR}", \
-  from:local, \
-  use:"{bindings,prompt}.zsh"
-#
+
 # ----------------------------------------------------------------------------
 # Vendor
 # ----------------------------------------------------------------------------
-
-zplug "zplug/zplug"
 
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 
 # Various program completions
 zplug "zsh-users/zsh-completions"
+
+# Suggestions like fish
+zplug "zsh-users/zsh-autosuggestions"
 
 # Remind me about my own aliases
 zplug "djui/alias-tips"
@@ -40,4 +38,12 @@ zplug "knu/z",  \
 zplug "lukechilds/zsh-better-npm-completion", defer:2
 
 # Inspire confidence that I am using an actual command/file
-zplug "zsh-users/zsh-syntax-highlighting", defer:3
+# zplug "zsh-users/zsh-syntax-highlighting", defer:3
+zplug "zdharma/fast-syntax-highlighting", defer:3
+
+# ==============================================================================
+# Add zplug's man to MANPATH
+# ==============================================================================
+
+MANPATH="${ZPLUG_ROOT}/doc/man:${MANPATH}"
+export MANPATH

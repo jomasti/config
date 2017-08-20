@@ -9,7 +9,7 @@ setopt pushd_silent
 setopt pushd_to_home
 
 # Completion
-setopt autolist
+setopt auto_list
 setopt no_complete_aliases
 setopt list_packed
 
