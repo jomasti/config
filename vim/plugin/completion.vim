@@ -4,7 +4,7 @@
 " @see <https://github.com/zeekay/vice-neocompletion/blob/master/autoload/vice/neocomplete.vim>
 "
 
-if !g:jms_has_completion | finish | endif
+if !g:jms_use_completion | finish | endif
 
 let s:cpo_save = &cpoptions
 set cpoptions&vim

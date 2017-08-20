@@ -178,7 +178,7 @@ augroup jmsproject
         \ call jmsproject#GetRoot()
 augroup END
 
-let g:jms_has_completion = 0
+let g:jms_use_completion = 0
 
 " ============================================================================
 " Plugins
@@ -259,31 +259,71 @@ function! s:LoadPlugins()
   " Plug: Completion
   " ============================================================================
 
-  Plug 'autozimu/LanguageClient-neovim', PlugIf(has('nvim'), { 'do': ':UpdateRemotePlugins' })
+  Plug 'roxma/nvim-completion-manager', PlugIf(g:jms_use_completion)
 
-  Plug 'Shougo/neocomplete.vim', PlugIf(has('lua'))
-  Plug 'Shougo/deoplete.nvim', PlugIf(has('nvim') && has('python3'), { 'do': ':UpdateRemotePlugins' })
+  Plug 'Shougo/deoplete.nvim', PlugIf(g:jms_use_deoplete, { 'do': ':UpdateRemotePlugins' })
 
-  let g:jms_has_completion =
-        \ exists("g:plugs['neocomplete.vim']")
-        \ || exists("g:plugs['deoplete.nvim']")
-
-  "Full syntax completion - super slow, like syntaxcomplete
-  "Plug 'Shougo/neco-syntax', { 'for': ['scss'] }
+  let l:use_langserver = !g:jms_use_deoplete
+  Plug 'autozimu/LanguageClient-neovim', PlugIf(g:jms_use_deoplete, { 'do': ':UpdateRemotePlugins' })
 
   " Mixed-filetype completion for Shougo complete, e.g. highlight JS within
   " Markdown fenced code blocks.
-  Plug 'Shougo/context_filetype.vim', PlugIf(g:jms_has_completion)
+  Plug 'Shougo/context_filetype.vim', PlugIf(g:jms_use_completion)
 
-  " Include completion
-  Plug 'Shougo/neoinclude.vim', PlugIf(g:jms_has_completion)
+  " --------------------------------------------------------------------------
+  " NCM/Deoplete functionality: Includes
+  " --------------------------------------------------------------------------
+
+  " Include completion, include tags
+  " For what langs are supported, see:
+  " https://github.com/Shougo/neoinclude.vim/blob/master/autoload/neoinclude.vim
+  "
+  " NCM Errors when can't find b:node_root
+  "Plug 'Shougo/neoinclude.vim', PlugIf(g:jms_use_completion)
+
+  " --------------------------------------------------------------------------
+  " Completion: CSS
+  " --------------------------------------------------------------------------
+
+  Plug 'calebeby/ncm-css', PlugIf(g:jms_use_completion)
+
+  " --------------------------------------------------------------------------
+  " Completion: JavaScript
+  " --------------------------------------------------------------------------
+
+  let l:use_tern = g:jms_use_completion && executable('npm')
+
+  " Completion
+  Plug 'marijnh/tern_for_vim', PlugIf(l:use_tern, {'do': 'npm install --global tern'})
+
+  Plug 'carlitux/deoplete-ternjs', PlugIf(g:jms_use_deoplete && l:use_tern, { 'do': 'npm install --global tern' })
+
+  " Syntax completion
+  Plug '1995eaton/vim-better-javascript-completion', PlugIf(!l:use_tern)
+
+  " --------------------------------------------------------------------------
+  " Completion: Python
+  " --------------------------------------------------------------------------
+
+  Plug 'zchee/deoplete-jedi', PlugIf(g:jms_use_deoplete)
+
+  " --------------------------------------------------------------------------
+  " Completion: Snippet engine
+  " --------------------------------------------------------------------------
 
   Plug 'Shougo/neosnippet'
         \| Plug 'honza/vim-snippets'
         \| Plug 'Shougo/neosnippet-snippets'
         \| Plug 'bentayloruk/vim-react-es6-snippets'
 
-  Plug 'zchee/deoplete-jedi', PlugIf(g:jms_has_completion && has('python3'))
+  " --------------------------------------------------------------------------
+  " Completion: Syntax
+  " --------------------------------------------------------------------------
+
+  " Full syntax completion. Keyed as [S]
+  " Only use with NCM - normally super slow, like syntaxcomplete
+  " DISABLED - Makes pandoc/markdown really slow.
+  "Plug 'Shougo/neco-syntax', PlugIf(g:jms_use_completion)
 
   " ========================================================================
   " Plug: Input, syntax, spacing
@@ -374,14 +414,6 @@ function! s:LoadPlugins()
   Plug 'othree/jspc.vim'
   Plug 'justinj/vim-react-snippets', { 'for': 'javascript' }
 
-  " Completion
-  Plug 'marijnh/tern_for_vim', PlugIf(g:jms_has_completion && executable('npm'), {'do': 'npm install --global tern'})
-
-  Plug 'carlitux/deoplete-ternjs', PlugIf(g:jms_has_completion && has('nvim'), { 'do': 'npm install --global tern' })
-
-  " Syntax completion
-  Plug '1995eaton/vim-better-javascript-completion', PlugIf(g:jms_has_completion)
-
   " ==========================================================================
   " Language: Markdown, Pandoc
   " ==========================================================================
@@ -432,7 +464,7 @@ function! s:LoadPlugins()
   Plug 'lambdalisue/vim-backslash'
 
   " Completion
-  Plug 'Shougo/neco-vim', PlugIf(g:jms_has_completion, { 'for': ['vim'] })
+  Plug 'Shougo/neco-vim', PlugIf(g:jms_use_completion, { 'for': ['vim'] })
 
   " ========================================================================
   " Language: Misc
@@ -448,6 +480,8 @@ endfunction
 
 let s:use_plugins = 1
 let g:plug_window = 'tabnew'
+let g:jms_use_completion = has('nvim') && has('python3')
+let g:jms_use_deoplete = g:jms_use_completion && 1
 
 if s:use_plugins
   let s:has_plug = !empty(glob(expand(g:jms#vim_dir . '/autoload/plug.vim')))
