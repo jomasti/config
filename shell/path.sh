@@ -4,7 +4,7 @@
 # pyenv, chruby, chphp, nvm pathing is done in shell/after
 #
 
-# export DKO_SOURCE="${DKO_SOURCE} -> shell/path.sh"
+# export JMS_SOURCE="${JMS_SOURCE} -> shell/path.sh"
 
 # ==============================================================================
 # Store default system path
@@ -18,35 +18,33 @@
 #
 # On arch, via /etc/profile, default path is:
 # /usr/local/sbin:/usr/local/bin:/usr/bin
-if [ -n "$DKO_SYSTEM_PATH" ]; then
-  export DKO_SYSTEM_PATH="${PATH}:${DKO_SYSTEM_PATH}"
+if [ -n "$JMS_SYSTEM_PATH" ]; then
+  export JMS_SYSTEM_PATH="${PATH}:${JMS_SYSTEM_PATH}"
 else
-  export DKO_SYSTEM_PATH="${PATH}"
+  export JMS_SYSTEM_PATH="${PATH}"
 fi
 
-# _add_my_paths
-#
-jms::add_paths() {
-  # Begin my_path composition --------------------------------------------------
-  # On BSD system, e.g. Darwin -- path_helper is called, reads /etc/paths
-  # Move local bin to front for homebrew compatibility
-  #if [ -x /usr/libexec/path_helper ]; then
-  my_path="$DKO_SYSTEM_PATH"
+# On BSD system, e.g. Darwin -- path_helper is called, reads /etc/paths
+# Move local bin to front for homebrew compatibility
+#if [ -x /usr/libexec/path_helper ]; then
+PATH="$JMS_SYSTEM_PATH"
 
-  # enforce local bin and sbin order
-  my_path="/usr/local/bin:/usr/local/sbin:${DKO_SYSTEM_PATH}"
+# enforce local bin and sbin order
+PATH="/usr/local/bin:/usr/local/sbin:${PATH}"
 
-  # local ----------------------------------------------------------------------
+# local ----------------------------------------------------------------------
 
-  my_path="${DOTFILES}/bin:${my_path}"
+PATH="${DOTFILES}/bin:${PATH}"
 
-  [ ! -d "${HOME}/.local/bin" ] && mkdir -p "${HOME}/.local/bin"
-  my_path="${HOME}/.local/bin:${my_path}"
+[ ! -d "${HOME}/.local/bin" ] && mkdir -p "${HOME}/.local/bin"
+PATH="${HOME}/.local/bin:${PATH}"
 
-  echo "${my_path}"
-}
 
-PATH="$(jms::add_paths)"
 export PATH
+
+if command -v manpath >/dev/null; then
+  MANPATH="$(manpath)"
+fi
+export MANPATH
 
 # vim: ft=sh :
