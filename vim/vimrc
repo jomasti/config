@@ -413,6 +413,7 @@ function! s:LoadPlugins()
   Plug 'moll/vim-node'
   Plug 'othree/jspc.vim'
   Plug 'justinj/vim-react-snippets', { 'for': 'javascript' }
+  Plug 'posva/vim-vue'
 
   " ==========================================================================
   " Language: Markdown, Pandoc
