@@ -80,6 +80,19 @@ function! GitInfo()
   endif
 endfunction
 
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
+
 set laststatus=2
 set statusline=
 set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
@@ -88,7 +101,7 @@ set statusline+=%8*\ [%n]                                " buffernr
 set statusline+=%8*\ %{GitInfo()}                        " Git Branch name
 set statusline+=%8*\ %<%t\ %{ReadOnly()}\ %m\ %w\        " File+path
 set statusline+=%#warningmsg#
-set statusline+=%{ALEGetStatusLine()}                    " ALE errors
+set statusline+=%{LinterStatus()}                        " ALE errors
 set statusline+=%*
 set statusline+=%9*\ %=                                  " Space
 set statusline+=%8*\ %y\                                 " FileType
