@@ -21,3 +21,9 @@ xmonad/.xmonad
 .zcache
 .zcompdump*
 *.log
+
+# Fish
+fish/fisher
+fish/functions/fisher.fish
+fish/fishd.*
+**/fish_history
