@@ -2,6 +2,8 @@
 
 set fish_greeting
 
+set -gx EDITOR nvim
+
 if status is-interactive
   source $HOME/.config/fish/abbreviations.fish
   source ~/.asdf/asdf.fish
