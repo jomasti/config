@@ -70,3 +70,12 @@
 	tool = vimdiff
 [difftool]
         prompt = false
+[merge]
+        conflictstyle = diff3
+[rerere]
+        enabled = 1
+[pager]
+       diff = diff-so-fancy | less --tabs=4 -RFX
+       show = diff-so-fancy | less --tabs=4 -RFX
+[include]
+        path = "~/.dotfiles/local/gitconfig"
