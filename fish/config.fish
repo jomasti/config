@@ -3,9 +3,10 @@
 set fish_greeting
 
 set -gx EDITOR nvim
+set -x DOTFILES ~/.dotfiles
 
 if status is-interactive
-  source $HOME/.config/fish/abbreviations.fish
+  source $XDG_CONFIG_HOME/fish/abbreviations.fish
   source ~/.asdf/asdf.fish
   if type -q theme_gruvbox
     theme_gruvbox dark medium
@@ -28,13 +29,3 @@ for file in $fisher_path/conf.d/*.fish
   builtin source $file 2> /dev/null
 end
 
-# aliases
-if available bat
-  alias cat=bat
-end
-
-if available exa
-  alias ls=exa
-  alias l='exa -l'
-  alias la='exa -la'
-end
