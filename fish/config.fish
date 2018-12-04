@@ -13,6 +13,10 @@ if status is-interactive
   end
 end
 
+# fzf
+echo $fisher_user_paths | grep ~/.fzf/bin > /dev/null
+or set --universal fish_user_paths $fish_user_paths ~/.fzf/bin
+
 # fisher
 if not functions -q fisher
     set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
