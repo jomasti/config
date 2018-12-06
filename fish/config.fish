@@ -5,6 +5,8 @@ set fish_greeting
 set -gx EDITOR nvim
 set -x DOTFILES ~/.dotfiles
 
+eval (python -m virtualfish compat_aliases)
+
 if status is-interactive
   source $XDG_CONFIG_HOME/fish/abbreviations.fish
   source ~/.asdf/asdf.fish
