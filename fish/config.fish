@@ -4,6 +4,9 @@ set fish_greeting
 
 set -gx EDITOR nvim
 set -x DOTFILES ~/.dotfiles
+set -x XDG_CONFIG_HOME ~/.config
+set -x XDG_CACHE_HOME ~/.cache
+set -x XDG_DATA_HOME ~/.local/share
 
 eval (python -m virtualfish compat_aliases)
 
@@ -35,3 +38,7 @@ for file in $fisher_path/conf.d/*.fish
   builtin source $file 2> /dev/null
 end
 
+# Local settings
+if test $DOTFILES/local/config.fish
+  source $DOTFILES/local/config.fish
+end
