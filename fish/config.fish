@@ -39,6 +39,6 @@ for file in $fisher_path/conf.d/*.fish
 end
 
 # Local settings
-if test $DOTFILES/local/config.fish
+if test -e $DOTFILES/local/config.fish
   source $DOTFILES/local/config.fish
 end
