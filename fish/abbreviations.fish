@@ -4,6 +4,7 @@ abbr -a pacins sudo pacman -Su
 abbr -a pacre sudo pacman -R
 abbr -a pacrem sudo pacman -Rns
 abbr -a pacrep pacman -Si
+abbr -a pacreps pacman -Ss
 abbr -a pacloc pacman -Qi
 abbr -a paclocs pacman -Qs
 abbr -a pacupl pacman -Qu

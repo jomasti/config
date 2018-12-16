@@ -7,12 +7,14 @@ set -x DOTFILES ~/.dotfiles
 set -x XDG_CONFIG_HOME ~/.config
 set -x XDG_CACHE_HOME ~/.cache
 set -x XDG_DATA_HOME ~/.local/share
-
-eval (python -m virtualfish compat_aliases)
+set -x PYENV_ROOT ~/.local/pyenv
+set -x PATH $PYENV_ROOT/shims $PYENV_ROOT/bin $PATH
+set -x PATH $HOME/.cargo/bin $PATH
 
 if status is-interactive
   source $XDG_CONFIG_HOME/fish/abbreviations.fish
   source ~/.asdf/asdf.fish
+  source (pyenv init -| psub)
   if type -q theme_gruvbox
     theme_gruvbox dark medium
   end
