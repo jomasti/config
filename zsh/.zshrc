@@ -1,15 +1,19 @@
-[ -z "$PS1" ] && return
+# .zshrc
 
-. "${DOTFILES}/shell/before.sh"
+[[ -n "$TMUX" ]] && JMS_SOURCE="${JMS_SOURCE} -> ____TMUX____ {"
+JMS_SOURCE="${JMS_SOURCE} -> .zshrc {"
 
-. "${ZDOTDIR}/config.zsh"
-. "${ZDOTDIR}/completion.zsh"
-. "${ZDOTDIR}/aliases.zsh"
-. "${ZDOTDIR}/bindings.zsh"
-. "${ZDOTDIR}/prompt.zsh"
+source "${HOME}/.dotfiles/shell/dot.profile"
+source "${DOTFILES}/shell/interactive.sh"
+
+source "${ZDOTDIR}/config.zsh"
+source "${ZDOTDIR}/completion.zsh"
+source "${ZDOTDIR}/aliases.zsh"
+source "${ZDOTDIR}/bindings.zsh"
+# source "${ZDOTDIR}/prompt.zsh"
 
 if [ "$(hostname)" = joshuastieferMBP ]; then
-  . "${ZDOTDIR}/work.zsh"
+  source "${ZDOTDIR}/work.zsh"
 fi
 
 typeset -gU cdpath fpath path manpath
@@ -18,7 +22,7 @@ typeset -gU cdpath fpath path manpath
 # zplug
 # ============================================================================
 
-. "${ZDOTDIR}/zplugdoctor.zsh"
+source "${ZDOTDIR}/zplugdoctor.zsh"
 export ZPLUG_HOME="${XDG_DATA_HOME}/zplug"
 # plugin definitions file -- don't set before zplug is installed
 export ZPLUG_LOADFILE="${ZDOTDIR}/zplug.zsh"
@@ -31,7 +35,7 @@ readonly JMS_ZPLUG_INIT="${ZPLUG_HOME}/init.zsh"
 
 __load_zplug_init() {
   if [ -f "$JMS_ZPLUG_INIT" ]; then
-    . "$JMS_ZPLUG_INIT"
+    source "$JMS_ZPLUG_INIT"
     # export JMS_SOURCE="${JMS_SOURCE} -> ${JMS_ZPLUG_INIT}"
   else
     jms::warn "Did not find zplug/init.zsh"
@@ -73,4 +77,12 @@ jms::source ~/.fzf.zsh
 
 jms::has fasd &&  eval "$(fasd --init auto)"
 
-. "${DOTFILES}/shell/after.sh"
+# ============================================================================
+# Local
+# ============================================================================
+
+source "${DOTFILES}/shell/after.sh"
+
+# ============================================================================
+
+export JMS_SOURCE="${JMS_SOURCE} }"

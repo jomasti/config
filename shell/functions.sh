@@ -1,3 +1,5 @@
+export JMS_SOURCE="${JMS_SOURCE} -> shell/functions.sh"
+
 define() {
   curl -s dict://dict.org/d:$1 | grep -v '^[0-9]'
 }

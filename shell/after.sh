@@ -3,7 +3,7 @@
 # Runs before local/* .zshrc and .bashrc
 #
 
-# export jms_SOURCE="${DKO_SOURCE} -> shell/after.sh {"
+JMS_SOURCE="${JMS_SOURCE} -> shell/after.sh {"
 
 # ==============================================================================
 # Use neovim
@@ -16,10 +16,6 @@ jms::has "nvim" && {
 }
 
 # ==============================================================================
-# Auto-manpath
-# ==============================================================================
 
-unset MANPATH
-
-# export jms_SOURCE="${DKO_SOURCE} }"
-# vim: ft=zsh :
+unset JMS_INIT
+export JMS_SOURCE="${JMS_SOURCE} }"

@@ -1,6 +1,20 @@
-export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
+JMS_SOURCE="${JMS_SOURCE} -> shell/node.sh {"
 
-jms::source "${NVM_DIR}/nvm.sh"
+# ==============================================================================
+# npmrc
+# ==============================================================================
 
 # npmrc switching (due to private repo use)
 export NPMRC_STORE="${XDG_CONFIG_HOME}/npmrcs"
+
+# ==============================================================================
+# nvm
+# ==============================================================================
+
+export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
+
+jms::source "${NVM_DIR}/nvm.sh" && JMS_SOURCE="${JMS_SOURCE} -> nvm"
+
+# ==============================================================================
+
+export JMS_SOURCE="${JMS_SOURCE} }"

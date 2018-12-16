@@ -4,7 +4,7 @@
 # pyenv, chruby, chphp, nvm pathing is done in shell/after
 #
 
-# export JMS_SOURCE="${JMS_SOURCE} -> shell/path.sh"
+export JMS_SOURCE="${JMS_SOURCE} -> shell/path.sh"
 
 # ==============================================================================
 # Store default system path
@@ -18,11 +18,7 @@
 #
 # On arch, via /etc/profile, default path is:
 # /usr/local/sbin:/usr/local/bin:/usr/bin
-if [ -n "$JMS_SYSTEM_PATH" ]; then
-  export JMS_SYSTEM_PATH="${PATH}:${JMS_SYSTEM_PATH}"
-else
-  export JMS_SYSTEM_PATH="${PATH}"
-fi
+export JMS_SYSTEM_PATH="${JMS_SYSTEM_PATH:-${PATH}}"
 
 # On BSD system, e.g. Darwin -- path_helper is called, reads /etc/paths
 # Move local bin to front for homebrew compatibility
@@ -32,19 +28,4 @@ PATH="$JMS_SYSTEM_PATH"
 # enforce local bin and sbin order
 PATH="/usr/local/bin:/usr/local/sbin:${PATH}"
 
-# local ----------------------------------------------------------------------
-
-PATH="${DOTFILES}/bin:${PATH}"
-
-[ ! -d "${HOME}/.local/bin" ] && mkdir -p "${HOME}/.local/bin"
-PATH="${HOME}/.local/bin:${PATH}"
-
-
 export PATH
-
-if command -v manpath >/dev/null; then
-  MANPATH="$(manpath)"
-fi
-export MANPATH
-
-# vim: ft=sh :

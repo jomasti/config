@@ -3,7 +3,7 @@
 # Uses vars from shell/vars and shell/os
 #
 
-# export DKO_SOURCE="${DKO_SOURCE} -> shell/ruby.sh {"
+JMS_SOURCE="${JMS_SOURCE} -> shell/ruby.sh {"
 
 export GEMRC="${DOTFILES}/ruby/gemrc"
 
@@ -24,9 +24,10 @@ export GEMRC="${DOTFILES}/ruby/gemrc"
 export CHRUBY_PREFIX="${BREW_PREFIX:-/usr}"
 
 # chruby and auto-switcher for .ruby-version
-jms::source "${CHRUBY_PREFIX}/share/chruby/chruby.sh" && \
-  # export DKO_SOURCE="${DKO_SOURCE} -> chruby"
+jms::source "${CHRUBY_PREFIX}/share/chruby/chruby.sh" \
+  && JMS_SOURCE="${JMS_SOURCE} -> chruby"
 jms::source "${CHRUBY_PREFIX}/share/chruby/auto.sh"
 
-# export DKO_SOURCE="${DKO_SOURCE} }"
+export JMS_SOURCE="${JMS_SOURCE} }"
+
 # vim: ft=sh :

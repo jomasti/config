@@ -41,6 +41,8 @@ zplug "lukechilds/zsh-better-npm-completion", defer:2
 # zplug "zsh-users/zsh-syntax-highlighting", defer:3
 zplug "zdharma/fast-syntax-highlighting", defer:3
 
+zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
+
 # ==============================================================================
 # Add zplug's man to MANPATH
 # ==============================================================================
