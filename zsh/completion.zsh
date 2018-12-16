@@ -1,5 +1,5 @@
-# autoload -U compinit
-# compinit
+autoload -U compinit
+compinit
 zmodload -i zsh/complist
 
 setopt noauto_remove_slash

@@ -7,7 +7,7 @@
 # NOTE: macOS always starts a login shell
 
 JMS_SOURCE="${JMS_SOURCE} -> shell/dot.profile {"
-source "${DOTFILES}/shell/helpers.sh"
+source "${HOME}/.dotfiles/shell/helpers.sh"
 [ -z "${JMS_INIT}" ] && source "${HOME}/.dotfiles/shell/init.sh"
 
 # ==============================================================================
